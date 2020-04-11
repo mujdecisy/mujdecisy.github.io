@@ -2,9 +2,9 @@
     "articles" : [
         {
             "name" : "test",
+            "description" : "this is a test article for testing",
             "date" : "09/02/2020",
             "tags" : ["test", "1", "2"],
-            "mdpath" : "/blog/test.md",
             "pagepath" : "/?p=blogDetail&a=test"
         }
     ]
