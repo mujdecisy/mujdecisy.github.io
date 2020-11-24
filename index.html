@@ -1,81 +1,139 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Dt. Kadir Bostanci</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <div id="loader" class="d-flex flex-column align-items-center justify-content-center fixed-top">
-            <div class="container d-flex flex-column justify-content-center">
-                <div class="row mx-auto loader_text">
-                    Diş Hekimi
-                </div>
-                <div class="row mx-auto box-row"></div>
-                <div class="row mx-auto box-row">
-                    <img src="11.png" class="visimg">
-                    <img src="12.png" class="nonvisimg">
-                    <img src="13.png" class="visimg">
-                </div>
-                <div class="row mx-auto box-row">
-                    <img src="21.png" class="nonvisimg">
-                    <img src="22.png" class="visimg">
-                    <img src="23.png" class="nonvisimg">
-                </div>
-                <div class="row mx-auto box-row">
-                    <img src="31.png" class="visimg">
-                    <img src="32.png" class="nonvisimg">
-                    <img src="33.png" class="visimg">
-                </div>
-                <div class="row mx-auto box-row"></div>
-                <div class="row mx-auto loader_text">
-                    Kadir Bostancı
-                </div>
-            </div>
-        </div>
-        <div id="landing" class="pt-4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-8 d-flex flex-column">
-                        <div style="font-size: 4vh;">Diş Hekimi</div>
-                        <div style="font-size: 4vh; font-weight: bold;">Kadir Bostancı</div>
-                    </div>
-                    <div class="col-4">
-                        <img src="dentistry.jpg" class="imagelogo float-right" alt="">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <hr class="col-10">
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3" style="max-height: 40vh;">
-                        <a href="https://goo.gl/maps/QHQTQ45V76x7hn4G9" target="_blank">
-                            <img src="map.png" class="image-map" alt="map" />
-                        </a>
-                    </div>
-                    <div class="col-md-6 d-flex flex-column align-items-center justify-content-center">
-                        <div style="font-size: 2.5vh">Osmanağa, Serasker Cd. No:41</div>
-                        <div style="font-size: 3vh; font-weight: 500;">Kadıköy/İstanbul</div>
-                        <div class="mt-4 px-3" style="font-size: 4vh; font-weight: 700">
-                            <a href="tel:0216 348 8608" style="text-decoration: none; color: black;">(0216) 348 86 08</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-3">
-                    <hr class="col-10">
-                </div>
-                <div class="row d-flex justify-content-center">
-                    <a href="https://www.ido.org.tr/">
-                        <img src="https://www.ido.org.tr/images/logo.png" alt="ido" style="width: 40vh; filter: grayscale(70%);"/>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="script.js"></script>
-    </body>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Safa Yasin Mujdeci</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
+
+	<style type="text/css" media="screen">
+		* {
+			font-family: 'Ubuntu Mono', monospace;
+		}
+
+		html,
+		body {
+			background-color: black;
+			color: white;
+			height: 100%;
+		}
+
+		@keyframes blink {
+			50% {
+				opacity: 1.0;
+			}
+		}
+
+		@-webkit-keyframes blink {
+			50% {
+				opacity: 1.0;
+			}
+		}
+
+		.blink {
+			animation: blink 1s step-start 0s infinite;
+			-webkit-animation: blink 1s step-start 0s infinite;
+		}
+
+		.nonblink {
+			margin-top: 41px;
+			margin-left: 5px;
+			height: 10px;
+			width: 25px;
+			background-color: white;
+			opacity: 0.0;
+		}
+
+		.dalink:hover {
+			cursor: pointer;
+		}
+
+		.square {
+			border-top : 0.1px solid white;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="container h-100" style="padding-top: 10vw;">
+		<div class="mb-5">
+			<h1>merhaba ben safa,</h1>
+			<h3>yazilim mimarisi ve veri bilimi konulari uzerinde calisan, merakli biriyim.</h3>
+		</div>
+
+		<div class="row col-md-6 mx-auto" style="font-size: 40px;">
+			<div class="col d-flex flex-row dalink justify-content-center">
+				<a href="" class="text-decoration-none text-white font-weight-bold">hakkinda</a>
+				<div class="nonblink"></div>
+			</div>
+			<div class="col d-flex flex-row dalink justify-content-center">
+				<a href="" class="text-decoration-none text-white font-weight-bold">blog</a>
+				<div class="nonblink"></div>
+			</div>
+		</div>
+
+		<div class="row fixed-bottom col-md-4 mx-auto" style="bottom: 50px;">
+			<div class="col px-0 d-flex justify-content-center">
+				<a href="" class="text-decoration-none text-white">
+					<i class="fab fa-github" style="font-size: 35px;"></i>
+				</a>
+			</div>
+			<div class="col px-0 d-flex justify-content-center">
+				<a href="" class="text-decoration-none text-white">
+					<i class="fab fa-linkedin-in" style="font-size: 35px;"></i>
+				</a>
+			</div>
+			<div class="col px-0 d-flex justify-content-center">
+				<a href="" class="text-decoration-none text-white">
+					<i class="fab fa-twitter" style="font-size: 35px;"></i>
+				</a>
+			</div>
+			<div class="col px-0 d-flex justify-content-center">
+				<a href="" class="text-decoration-none text-white">
+					<i class="fab fa-facebook-f" style="font-size: 35px;"></i>
+				</a>
+			</div>
+			<div class="col px-0 d-flex justify-content-center">
+				<a href="" class="text-decoration-none text-white">
+					<i class="fab fa-instagram" style="font-size: 35px;"></i>
+				</a>
+			</div>
+			<div class="col px-0 d-flex justify-content-center">
+				<a href="" class="text-decoration-none text-white">
+					<i class="fab fa-stack-overflow" style="font-size: 35px;"></i>
+				</a>
+			</div>
+		</div>
+
+		<div class="row fixed-bottom col-md-3 mx-auto">
+			<div class="col px-0 d-flex justify-content-center">
+				<a href="" class="text-decoration-none text-white square">tr</a>
+			</div>
+			<div class="col px-0 d-flex justify-content-center">
+				<a href="" class="text-decoration-none text-white square">en</a>
+			</div>
+			<div class="col px-0 d-flex justify-content-center">
+				<a href="" class="text-decoration-none text-white square">de</a>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+
+	<script>
+		$('.dalink').hover(
+			function(){ $(this).find('.nonblink').addClass('blink') },
+			function(){ $(this).find('.nonblink').removeClass('blink') }
+		)
+
+	</script>
+</body>
+
 </html>
