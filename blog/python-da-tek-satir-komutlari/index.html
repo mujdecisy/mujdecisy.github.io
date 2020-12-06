@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>python da tek satır komutları</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
+		<style type="text/css" media="screen">
+			* {
+				font-family: 'Ubuntu Mono', monospace;
+			}
+			html,
+			body {
+				background-color: black;
+				color: white;
+				height: 100%;
+			}
+			.menu-button {
+				font-size: 30px;
+				border-bottom: 1px solid white;
+				cursor: pointer;
+			}
+			.menu-small {
+				background-color: black;
+				border: 1px solid white;
+				margin-top: 45.8px;
+				display: block!important;
+				z-index: 1000!important;
+			}
+			.anchor_fill {}
+			.anchor_fill:hover {
+				fill: white;
+			}
+			pre {
+				background-color: gainsboro;
+				padding: 8px;
+			}
+			blockquote {
+				padding: 0 1em;
+				color: gray;
+				border-left: .25em solid gray;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="fixed-top d-none d-md-block menu-self" style="z-index: 0">
+			<div class="container">
+				<div class="row" style="font-size: 30px">
+					<div class="col-md-3 d-flex flex-column">
+						<a href="" id="homelink" class="text-decoration-none text-white font-weight-bold"></a>
+						<a href="" id="aboutlink" class="text-decoration-none text-white font-weight-bold"></a>
+						<a href="" id="bloglink" class="text-decoration-none text-white font-weight-bold"></a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-3">
+						<hr class="bg-white">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-3 mb-4">
+						<div class="row">
+							<div class="col-md-6 col-4 mx-auto">
+								<img src="https://avatars1.githubusercontent.com/u/16417535?s=460&u=1eba3036d68bf8cc8c94d4c089cacb498a9c1582&v=4" alt="mujdecisy" style="width: 100%; border-radius: 50%; border: 5px solid white;">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="fixed-top d-md-none" style="background-color: black;">
+			<div class="row pr-3">
+				<div class="col-auto ml-auto menu-button">
+					menu
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="d-md-none w-100" style="height: 46.8px;"></div>
+			<div class="row">
+				<div class="col-md-9 offset-md-3 mt-3">
+					<div class="Box-body readme blob js-code-block-container gist-border-0" id="readme">
+<article class="markdown-body entry-content" itemprop="text"><h1><a aria-hidden="true" class="anchor" href="#python-da-tek-satir-komutlari" id="user-content-python-da-tek-satir-komutlari"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z" fill-rule="evenodd"></path></svg></a>PYTHON DA TEK SATIR KOMUTLARI</h1>
+<h3><a aria-hidden="true" class="anchor" href="#-vakit-kaybetme" id="user-content--vakit-kaybetme"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z" fill-rule="evenodd"></path></svg></a><g-emoji alias="compass" class="g-emoji" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f9ed.png">🧭</g-emoji> vakit kaybetme</h3>
+<ul>
+<li><a href="#%C3%A7oklu-de%C4%9Fer-atama">çoklu değer atama</a></li>
+<li><a href="#if-else">if else</a></li>
+<li><a href="#liste-olu%C5%9Fturma">liste oluşturma</a></li>
+<li><a href="#set-ve-dictionary-olu%C5%9Fturma">set ve dictionary oluşturma</a></li>
+<li><a href="#filtreleme">filtreleme</a></li>
+</ul>
+<p>python dilinin en büyük avantajlarından biri olan tek satır komutlarına göz atıyoruz.
+doğru yerde kullanılmaları sayesinde kodu daha okunabilir ve sade tutmayı sağlayan bu tek satır komutlarını ben de sıklıkla kullanıyorum ve inanılmaz faydalı buluyorum.
+syntax larını unuttuğum zaman benimde sıklıkla internette aradığım bu komutları işe yarar bi şekilde derlemek istedim.
+bu sayfayı cheat sheet olarak kullanabilirsiniz. <g-emoji alias="ok_hand" class="g-emoji" fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f44c.png">👌</g-emoji></p>
+<p>anlatımda kullanılan kod bloklarını hepimizin çok sevdiği bir site olan <a href="https://www.tutorialspoint.com" rel="nofollow">TutorialsPoint</a> in <a href="https://www.tutorialspoint.com/execute_python3_online.php" rel="nofollow">python console</a> unda deneyebilirsiniz.
+hadi anlatıma geçelim.</p>
+<h2><a aria-hidden="true" class="anchor" href="#çoklu-değer-atama" id="user-content-çoklu-değer-atama"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z" fill-rule="evenodd"></path></svg></a>çoklu değer atama</h2>
+<p><strong>syntax</strong></p>
+<blockquote>
+<p>a,b,c = 1,2,3<br/>
+a,b = b,a<br/></p>
+</blockquote>
+<p>hızlıca birden fazla değişkene değer atamak istiyor olabilirsin ve değişken tiplerinin bu atama işleminde hiçbir önemi yok.</p>
+<div class="highlight highlight-source-python"><pre><span class="pl-s1">appleCount</span>, <span class="pl-s1">bananaColor</span>, <span class="pl-s1">isOrangeInBag</span>, <span class="pl-c1">=</span> <span class="pl-c1">4</span>, <span class="pl-s">"yellow"</span>, <span class="pl-c1">True</span> 
+<span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">appleCount</span><span class="pl-kos">}</span></span>, <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">bananaColor</span><span class="pl-kos">}</span></span>, <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">isOrangeInBag</span><span class="pl-kos">}</span></span>"</span>)</pre></div>
+<p>aynı örneği bir veya birden fazla objenin değerini atamak için de kullanabilirsin.</p>
+<div class="highlight highlight-source-python"><pre><span class="pl-k">class</span> <span class="pl-s1">fruit</span>:
+    <span class="pl-s1">color</span> <span class="pl-c1">=</span> <span class="pl-c1">None</span>
+    <span class="pl-s1">count</span> <span class="pl-c1">=</span> <span class="pl-c1">None</span>
+    <span class="pl-s1">isInBag</span> <span class="pl-c1">=</span> <span class="pl-c1">None</span>
+    
+<span class="pl-s1">apple</span> <span class="pl-c1">=</span> <span class="pl-en">fruit</span>()
+<span class="pl-s1">orange</span> <span class="pl-c1">=</span> <span class="pl-en">fruit</span>()
+<span class="pl-s1">banana</span> <span class="pl-c1">=</span> <span class="pl-en">fruit</span>()
+
+<span class="pl-s1">apple</span>.<span class="pl-s1">count</span>, <span class="pl-s1">banana</span>.<span class="pl-s1">color</span>, <span class="pl-s1">orange</span>.<span class="pl-s1">isInBag</span>, <span class="pl-c1">=</span> <span class="pl-c1">4</span>, <span class="pl-s">"yellow"</span>, <span class="pl-c1">True</span> 
+<span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">apple</span>.<span class="pl-s1">count</span><span class="pl-kos">}</span></span>, <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">banana</span>.<span class="pl-s1">color</span><span class="pl-kos">}</span></span>, <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">orange</span>.<span class="pl-s1">isInBag</span><span class="pl-kos">}</span></span>"</span>)</pre></div>
+<p>iki değişkenin değerini geçici değişken kullanmadan değiştirmek isteyebilirsin.</p>
+<div class="highlight highlight-source-python"><pre><span class="pl-s1">soldAppleCount</span> <span class="pl-c1">=</span> <span class="pl-c1">0</span>
+<span class="pl-s1">remainingAppleCount</span> <span class="pl-c1">=</span> <span class="pl-c1">5</span>
+<span class="pl-s1">soldAppleCount</span>, <span class="pl-s1">remainingAppleCount</span> <span class="pl-c1">=</span> <span class="pl-s1">remainingAppleCount</span>, <span class="pl-s1">soldAppleCount</span> 
+<span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">soldAppleCount</span><span class="pl-kos">}</span></span>, <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">remainingAppleCount</span><span class="pl-kos">}</span></span>"</span>)</pre></div>
+<h2><a aria-hidden="true" class="anchor" href="#if-else" id="user-content-if-else"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z" fill-rule="evenodd"></path></svg></a>if else</h2>
+<p><strong>syntax</strong></p>
+<blockquote>
+<p>a = 1 if condition else 0<br/></p>
+</blockquote>
+<p>bir değer atarken atanan değeri bir koşula göre atamak istediğini düşünelim.</p>
+<div class="highlight highlight-source-python"><pre><span class="pl-s1">dividend</span> <span class="pl-c1">=</span> <span class="pl-c1">15</span>
+<span class="pl-s1">divisor1</span> <span class="pl-c1">=</span> <span class="pl-c1">0</span>
+<span class="pl-s1">divisor2</span> <span class="pl-c1">=</span> <span class="pl-c1">None</span>
+<span class="pl-s1">divisor3</span> <span class="pl-c1">=</span> <span class="pl-c1">2.7</span>
+
+<span class="pl-s1">result1</span> <span class="pl-c1">=</span> <span class="pl-s1">dividend</span><span class="pl-c1">/</span><span class="pl-s1">divisor1</span> <span class="pl-k">if</span> <span class="pl-s1">divisor1</span> <span class="pl-c1">!=</span> <span class="pl-c1">0</span> <span class="pl-k">else</span> <span class="pl-s">"out of condition"</span>
+<span class="pl-s1">result2</span> <span class="pl-c1">=</span> <span class="pl-s1">dividend</span><span class="pl-c1">/</span><span class="pl-s1">divisor2</span> <span class="pl-k">if</span> <span class="pl-s1">divisor2</span> <span class="pl-c1">!=</span> <span class="pl-c1">None</span> <span class="pl-k">else</span> <span class="pl-s">"out of condition"</span>
+<span class="pl-s1">result3</span> <span class="pl-c1">=</span> <span class="pl-s1">dividend</span><span class="pl-c1">/</span><span class="pl-s1">divisor3</span> <span class="pl-k">if</span> <span class="pl-en">isinstance</span>(<span class="pl-s1">divisor3</span>, <span class="pl-s1">int</span>) <span class="pl-k">else</span> <span class="pl-s">"out of condition"</span>
+
+<span class="pl-en">print</span>(<span class="pl-s">f"<span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">result1</span><span class="pl-kos">}</span></span>, <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">result2</span><span class="pl-kos">}</span></span>, <span class="pl-s1"><span class="pl-kos">{</span><span class="pl-s1">result3</span><span class="pl-kos">}</span></span>"</span>)</pre></div>
+<p>hızlıca null-check, type-check yapabilirsin veya zero-division hatalarını bertaraf edebilirsin.</p>
+<h2><a aria-hidden="true" class="anchor" href="#liste-oluşturma" id="user-content-liste-oluşturma"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z" fill-rule="evenodd"></path></svg></a>liste oluşturma</h2>
+<p><strong>syntax</strong></p>
+<blockquote>
+<p>a = [process(i) for i in x]<br/>
+b = [[process(i,j) for j in a] for i in a]<br/>
+c = [j for i in b for j in i]<br/></p>
+</blockquote>
+<p>hemen istediğimiz uzunlukta tüm değerleri 2 olan bir liste oluşturalım.
+ardından bu listeyi manipule edelim. tek satırda bu listenin değerlerinin karesini veren yeni bir liste oluşturalım.</p>
+<div class="highlight highlight-source-python"><pre><span class="pl-s1">branchCountInCites</span> <span class="pl-c1">=</span> [<span class="pl-c1">2</span> <span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">81</span>)]
+<span class="pl-en">print</span>(<span class="pl-s1">branchCountInCites</span>)
+
+<span class="pl-s1">branchCountGoalInCites</span> <span class="pl-c1">=</span> [<span class="pl-s1">e</span><span class="pl-c1">**</span><span class="pl-c1">2</span> <span class="pl-k">for</span> <span class="pl-s1">e</span> <span class="pl-c1">in</span> <span class="pl-s1">branchCountInCites</span>]
+<span class="pl-en">print</span>(<span class="pl-s1">branchCountGoalInCites</span>)</pre></div>
+<p>peki ya çok boyutlu bir matris oluşturmak istiyorsak?
+ardından bu matrisimizi tek boyutlu bir listeye dönüştürelim.</p>
+<div class="highlight highlight-source-python"><pre><span class="pl-s1">coordinatMatrix</span> <span class="pl-c1">=</span> [[[<span class="pl-en">str</span>(<span class="pl-s1">i</span>)<span class="pl-c1">+</span><span class="pl-en">str</span>(<span class="pl-s1">j</span>)<span class="pl-c1">+</span><span class="pl-en">str</span>(<span class="pl-s1">k</span>) <span class="pl-k">for</span> <span class="pl-s1">k</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">3</span>)] <span class="pl-k">for</span> <span class="pl-s1">j</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">3</span>)] <span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">3</span>)]
+<span class="pl-en">print</span>(<span class="pl-s1">coordinats</span>)
+
+<span class="pl-s1">coordinatList</span> <span class="pl-c1">=</span> [<span class="pl-s1">k</span> <span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-c1">in</span> <span class="pl-s1">coordinats</span> <span class="pl-k">for</span> <span class="pl-s1">j</span> <span class="pl-c1">in</span> <span class="pl-s1">i</span> <span class="pl-k">for</span> <span class="pl-s1">k</span> <span class="pl-c1">in</span> <span class="pl-s1">j</span>]
+<span class="pl-en">print</span>(<span class="pl-s1">coordinatList</span>)</pre></div>
+<h2><a aria-hidden="true" class="anchor" href="#set-ve-dictionary-oluşturma" id="user-content-set-ve-dictionary-oluşturma"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z" fill-rule="evenodd"></path></svg></a>set ve dictionary oluşturma</h2>
+<p><strong>syntax</strong></p>
+<blockquote>
+<p>a = {process(i) for i in x}<br/>
+b = {keyit(i) : valueit(i) for i in x}<br/></p>
+</blockquote>
+<p>verilen bir listeden küme oluşturmayı öğrenelim.</p>
+<div class="highlight highlight-source-python"><pre><span class="pl-s1">modulusByThree</span> <span class="pl-c1">=</span> [<span class="pl-s1">i</span><span class="pl-c1">%</span><span class="pl-c1">3</span> <span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">10</span>)]
+<span class="pl-s1">uniqueModulus</span> <span class="pl-c1">=</span> {<span class="pl-s1">i</span> <span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-c1">in</span> <span class="pl-s1">modulusByThree</span>}
+<span class="pl-en">print</span>(<span class="pl-s1">uniqueModulus</span>)</pre></div>
+<p>verilen iki listeden bir dictionary oluşturalım.</p>
+<div class="highlight highlight-source-python"><pre><span class="pl-s1">clothes</span> <span class="pl-c1">=</span> [<span class="pl-s">"skirt"</span>, <span class="pl-s">"tshirt"</span>, <span class="pl-s">"dress"</span>]
+<span class="pl-s1">prices</span> <span class="pl-c1">=</span> [<span class="pl-c1">12</span>, <span class="pl-c1">9</span>, <span class="pl-c1">17</span>]
+
+<span class="pl-s1">pricesByClothes</span> <span class="pl-c1">=</span> {<span class="pl-s1">clothes</span>[<span class="pl-s1">i</span>] : <span class="pl-s1">prices</span>[<span class="pl-s1">i</span>] <span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-en">len</span>(<span class="pl-s1">clothes</span>))}
+<span class="pl-en">print</span>(<span class="pl-s1">pricesByClothes</span>)</pre></div>
+<h2><a aria-hidden="true" class="anchor" href="#filtreleme" id="user-content-filtreleme"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z" fill-rule="evenodd"></path></svg></a>filtreleme</h2>
+<p><strong>syntax</strong></p>
+<blockquote>
+<p>a = [e for e in x if condition(e)]<br/></p>
+</blockquote>
+<p>verilen bir listeden bir koşula bağlı olarak yeni bir liste çıkartmamız gerektiğini düşünelim.</p>
+<div class="highlight highlight-source-python"><pre><span class="pl-s1">students</span> <span class="pl-c1">=</span> [<span class="pl-s1">i</span> <span class="pl-k">for</span> <span class="pl-s1">i</span> <span class="pl-c1">in</span> <span class="pl-en">range</span>(<span class="pl-c1">10</span>)]
+<span class="pl-s1">studentsExaminingAtClassA</span> <span class="pl-c1">=</span> [<span class="pl-s1">e</span> <span class="pl-k">for</span> <span class="pl-s1">e</span> <span class="pl-c1">in</span> <span class="pl-s1">students</span> <span class="pl-k">if</span> <span class="pl-s1">e</span><span class="pl-c1">%</span><span class="pl-c1">2</span> <span class="pl-c1">==</span> <span class="pl-c1">0</span>]
+<span class="pl-s1">studentsExaminingAtClassB</span> <span class="pl-c1">=</span> [<span class="pl-s1">e</span> <span class="pl-k">for</span> <span class="pl-s1">e</span> <span class="pl-c1">in</span> <span class="pl-s1">students</span> <span class="pl-k">if</span> <span class="pl-s1">e</span><span class="pl-c1">%</span><span class="pl-c1">2</span> <span class="pl-c1">==</span> <span class="pl-c1">1</span>]
+
+<span class="pl-en">print</span>(<span class="pl-s1">students</span>)
+<span class="pl-en">print</span>(<span class="pl-s1">studentsExaminingAtClassA</span>)
+<span class="pl-en">print</span>(<span class="pl-s1">studentsExaminingAtClassB</span>)</pre></div>
+</article>
+</div>
+				</div>
+			</div>
+		</div>
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+		<script>
+			var menutoggle = false;
+			var defaultmenuname = $(".menu-button").text();
+			$(".menu-button").click(function(){
+				if (menutoggle === false) {
+					$(".menu-self").addClass("menu-small");
+					$(this).text("X");
+				} else {
+					$(".menu-self").removeClass("menu-small");
+					$(this).text(defaultmenuname);
+				}
+				menutoggle = !menutoggle;
+			});
+			$(".anchor").parent().addClass("anchor_fill");
+			let loc = window.location.href;
+			let homelink = $("#homelink");
+			let aboutlink = $("#aboutlink");
+			let bloglink = $("#bloglink");
+			if (loc.includes("/en/")) {
+				homelink.text("home");
+				homelink.attr("href", "/en/");
+				aboutlink.text("about");
+				aboutlink.attr("href", "/en/about");
+				bloglink.text("blog");
+				bloglink.attr("href", "/en/blog");
+			} else if (loc.includes("/de/")) {
+				homelink.text("hauptseite");
+				homelink.attr("href", "/de/");
+				aboutlink.text("über");
+				aboutlink.attr("href", "/de/about");
+				bloglink.text("blog");
+				bloglink.attr("href", "/de/blog");
+			} else {
+				homelink.text("ana sayfa");
+				homelink.attr("href", "/");
+				aboutlink.text("hakkında");
+				aboutlink.attr("href", "/about");
+				bloglink.text("blog");
+				bloglink.attr("href", "/blog");
+			}
+		</script>
+	</body>
+</html>
