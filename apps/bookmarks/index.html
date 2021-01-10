@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS9YRJ940Q"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'G-QS9YRJ940Q');
+		</script>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>apps/bookmarks</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+		<link rel="preconnect" href="https://fonts.gstatic.com">
+		<link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"/>
+		<style type="text/css" media="screen">
+			* {
+				font-family: 'Ubuntu Mono', monospace;
+			}
+			html,
+			body {
+				background-color: black;
+				color: white;
+				height: 100%;
+			}
+			.menu-button {
+				font-size: 30px;
+				border-bottom: 1px solid white;
+				cursor: pointer;
+			}
+			.menu-small {
+				background-color: black;
+				border: 1px solid white;
+				margin-top: 45.8px;
+				display: block!important;
+				z-index: 1000!important;
+			}
+			.anchor_fill {}
+			.anchor_fill:hover {
+				fill: white;
+			}
+			pre {
+				background-color: slategray;
+				color: white;
+				padding: 8px;
+			}
+			blockquote {
+				padding: 0 1em;
+				color: slategray;
+				border-left: .25em solid gray;
+			}
+			h6 {
+				color: slategray;
+				display: none;
+			}
+			table {
+				border-collapse: collapse;
+				background-color: slategray;
+			}
+			thead {
+				background-color: dimgray;
+				color: whitesmoke;
+			}
+			td, th {
+				border: 0.1px solid white;
+				padding: 0px 5px;
+			}
+
+			.bookmarklist {
+				display: block;
+				height: calc(100vh - 100px);
+				overflow-x : auto;
+				overflow-y : auto;
+			}
+
+			.bookmarklist > li > a {
+				text-decoration: none;
+				font-size: 30px;
+				color: white;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="fixed-top d-none d-md-block menu-self" style="z-index: 0">
+			<div class="container">
+				<div class="row" style="font-size: 30px">
+					<div class="col-md-3 d-flex flex-column">
+						<a href="" id="homelink" class="text-decoration-none text-white font-weight-bold"></a>
+						<a href="" id="aboutlink" class="text-decoration-none text-white font-weight-bold"></a>
+						<a href="" id="bloglink" class="text-decoration-none text-white font-weight-bold"></a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-3">
+						<hr class="bg-white">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-3 mb-4">
+						<div class="row">
+							<div class="col-md-6 col-4 mx-auto">
+								<img src="https://avatars1.githubusercontent.com/u/16417535?s=460&u=1eba3036d68bf8cc8c94d4c089cacb498a9c1582&v=4" alt="mujdecisy" style="width: 100%; border-radius: 50%; border: 5px solid white;">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="fixed-top d-md-none" style="background-color: black;">
+			<div class="row pr-3">
+				<div class="col-auto ml-auto menu-button">
+					menu
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="d-md-none w-100" style="height: 46.8px;"></div>
+			<div class="row">
+				<div class="col-md-9 offset-md-3 mt-3" style="height: calc(100vh - 100px)">
+					
+					<div class="bookmarklist"></div>
+					<div style="display: flex; justify-content: space-between;">
+						<a href="edit"> Edit </a>	
+					</div>
+					
+				</div>
+			</div>
+		</div>
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+
+		<script>
+			var itemkey = "app_bookmarks_edit"
+			var bookmarks = localStorage.getItem(itemkey);
+			if (bookmarks === null) {
+				bookmarks = ""
+				localStorage.setItem(itemkey, bookmarks);
+			}
+
+			var bmlist = bookmarks.split("\n").sort();
+			for (var i = bmlist.length - 1; i >= 0; i--) {
+				let bm = bmlist[i];
+				let tokens = bm.split("=");
+				bmlist[i] = `<li><a href="${tokens[1]}">${tokens[0]}</a></li>`
+			}
+
+			bmlist = bmlist.join("\n");
+
+
+			$(".bookmarklist")[0].innerHTML = bmlist;
+
+		</script>
+
+		<script>
+			var menutoggle = false;
+			var defaultmenuname = $(".menu-button").text();
+			$(".menu-button").click(function(){
+				if (menutoggle === false) {
+					$(".menu-self").addClass("menu-small");
+					$(this).text("X");
+				} else {
+					$(".menu-self").removeClass("menu-small");
+					$(this).text(defaultmenuname);
+				}
+				menutoggle = !menutoggle;
+			});
+			$(".anchor").parent().addClass("anchor_fill");
+			let loc = window.location.href;
+			let homelink = $("#homelink");
+			let aboutlink = $("#aboutlink");
+			let bloglink = $("#bloglink");
+			if (loc.includes("/en/")) {
+				homelink.text("home");
+				homelink.attr("href", "/en/");
+				aboutlink.text("about");
+				aboutlink.attr("href", "/en/about");
+				bloglink.text("blog");
+				bloglink.attr("href", "/en/blog");
+			} else if (loc.includes("/de/")) {
+				homelink.text("hauptseite");
+				homelink.attr("href", "/de/");
+				aboutlink.text("über");
+				aboutlink.attr("href", "/de/about");
+				bloglink.text("blog");
+				bloglink.attr("href", "/de/blog");
+			} else {
+				homelink.text("ana sayfa");
+				homelink.attr("href", "/");
+				aboutlink.text("hakkında");
+				aboutlink.attr("href", "/about");
+				bloglink.text("blog");
+				bloglink.attr("href", "/blog");
+			}
+		</script>
+	</body>
+</html>
