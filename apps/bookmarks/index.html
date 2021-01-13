@@ -77,7 +77,11 @@
 				overflow-y : auto;
 			}
 
-			.bookmarklist > li > a {
+			.bookmarkitem {
+				width: 100%;
+			}
+
+			.bookmarkitem > a {
 				text-decoration: none;
 				font-size: 30px;
 				color: white;
@@ -121,8 +125,9 @@
 			<div class="d-md-none w-100" style="height: 46.8px;"></div>
 			<div class="row">
 				<div class="col-md-9 offset-md-3 mt-3" style="height: calc(100vh - 100px)">
-					
+
 					<div class="bookmarklist"></div>
+
 					<div style="display: flex; justify-content: space-between;">
 						<a href="edit"> Edit </a>	
 					</div>
@@ -144,8 +149,8 @@
 			var bmlist = bookmarks.split("\n").sort();
 			for (var i = bmlist.length - 1; i >= 0; i--) {
 				let bm = bmlist[i];
-				let tokens = bm.split("=");
-				bmlist[i] = `<li><a href="${tokens[1]}">${tokens[0]}</a></li>`
+				let tokens = bm.split(">>>");
+				bmlist[i] = `<div class="bookmarkitem"><a target="_blank" href="${tokens[1]}">${tokens[0]}</a></div>`
 			}
 
 			bmlist = bmlist.join("\n");
