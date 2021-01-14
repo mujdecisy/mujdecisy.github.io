@@ -1,14 +1,6 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<!-- Global site tag (gtag.js) - Google Analytics -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS9YRJ940Q"></script>
-		<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-		gtag('config', 'G-QS9YRJ940Q');
-		</script>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -119,6 +111,7 @@
 						<a href="" id="homelink" class="text-decoration-none text-white font-weight-bold"></a>
 						<a href="" id="aboutlink" class="text-decoration-none text-white font-weight-bold"></a>
 						<a href="" id="bloglink" class="text-decoration-none text-white font-weight-bold"></a>
+						<a href="edit"> edit links </a>
 					</div>
 				</div>
 				<div class="row">
@@ -151,9 +144,10 @@
 
 					<div class="bookmarklist"></div>
 
-					<div style="display: flex; justify-content: space-between;">
-						<a href="edit"> Edit </a>
-					</div>
+					<form style="display: flex; justify-content: space-between;" action="javascript:void(0);">
+						<input type="text" id="duckduck" placeholder="search on DuckDuckGo 🦆" style="width: 100%; margin: 0px 10px"/>
+						<button type="submit" onclick="search()" style="height: 30px; width: 30px; display: flex; justify-content: center; border-radius: 15px;" >🔎</button>
+					</form>
 					
 				</div>
 			</div>
@@ -165,7 +159,18 @@
 			var itemkey = "app_bookmarks_edit"
 			var bookmarks = localStorage.getItem(itemkey);
 			if (bookmarks === null) {
-				bookmarks = ""
+
+				bookmarks = `/comm/discord>>>https://discord.com/channels/@me
+/comm/whatsapp>>>https://web.whatsapp.com
+/comm/telegram>>>https://web.telegram.org
+/comm/gmail>>>https://mail.google.com
+/search/wolframalpha>>>https://www.wolframalpha.com/
+/search/googleacademics>>>https://scholar.google.com/
+/search/scihub>>>https://sci-hub.se
+/social/twitter>>>https://twitter.com
+/social/linkedin>>>https://linkedin.com
+/social/facebook>>>https://facebook.com
+/social/instagram>>>https://instagram.com`
 				localStorage.setItem(itemkey, bookmarks);
 			}
 
@@ -205,6 +210,20 @@
 			}
 
 			$(".bookmarklist")[0].innerHTML = htmlstr;
+		</script>
+
+		<script>
+			window.onload = function() {
+				$("#duckduck").focus();
+			}
+
+			function search() {
+				let duckduck = $("#duckduck");
+				let search = encodeURIComponent(duckduck.val());
+				duckduck.val("");
+				var win = window.open( `https://duckduckgo.com/?q=${search}` , '_blank');
+  				win.focus();
+			}
 
 		</script>
 
