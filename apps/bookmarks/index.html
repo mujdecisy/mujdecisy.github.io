@@ -71,20 +71,33 @@
 			}
 
 			.bookmarklist {
-				display: block;
 				height: calc(100vh - 100px);
 				overflow-x : auto;
 				overflow-y : auto;
+
+				display: flex;
+				flex-direction: column;
+				flex-wrap: wrap;
+				max-height: calc(100vh - 150px);
 			}
 
-			.bookmarkitem {
-				width: 100%;
+			.maspanel {
+				border : .1px solid white;
+
+				margin : 5px;
+				padding : 5px;
 			}
 
-			.bookmarkitem > a {
+			.masheader {
+				text-align: right;
+				font-size: 20px;
+				color: gray;
+				border-bottom: 1px gray dotted;
+			}
+
+			.masitem > a {
+				color : white;
 				text-decoration: none;
-				font-size: 30px;
-				color: white;
 			}
 		</style>
 	</head>
@@ -124,12 +137,12 @@
 		<div class="container">
 			<div class="d-md-none w-100" style="height: 46.8px;"></div>
 			<div class="row">
-				<div class="col-md-9 offset-md-3 mt-3" style="height: calc(100vh - 150px)">
+				<div class="col-md-9 offset-md-3 mt-3">
 
 					<div class="bookmarklist"></div>
 
 					<div style="display: flex; justify-content: space-between;">
-						<a href="edit"> Edit </a>	
+						<a href="edit"> Edit </a>
 					</div>
 					
 				</div>
@@ -139,24 +152,78 @@
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
 
 		<script>
+			/*
 			var itemkey = "app_bookmarks_edit"
 			var bookmarks = localStorage.getItem(itemkey);
 			if (bookmarks === null) {
 				bookmarks = ""
 				localStorage.setItem(itemkey, bookmarks);
 			}
+			*/
+
+			var bookmarks = `/comm/discord>>>https://discord.com/channels/@me
+/comm/whatsapp>>>https://web.whatsapp.com
+/comm/telegram>>>https://web.telegram.org
+/comm/gmail>>>https://mail.google.com
+/edu/obs>>>https://obs.gtu.edu.tr/oibs/ogrenci/login.aspx
+/edu/mail>>>https://outlook.office.com/mail/inbox
+/edu/office>>>https://www.office.com/
+/edu/onedrive>>>https://gtu-my.sharepoint.com
+/edu/teams>>>https://teams.microsoft.com
+/edu/notifications>>>https://www.gtu.edu.tr/kategori/120/0/display.aspx
+/edu/lib>>>https://kutuphane.gtu.edu.tr/vetisbt/?dil=tr
+/edu/moodle>>>https://bilmuh.gtu.edu.tr/moodle
+/social/twitter>>>https://twitter.com
+/social/linkedin>>>https://linkedin.com
+/social/facebook>>>https://facebook.com
+/social/instagram>>>https://instagram.com
+/work/github>>>https://github.com
+/work/gist>>>https://gist.github.com/
+/work/jira>>>http://192.168.144.27:8080
+/work/scm>>>http://192.168.144.34:9080/scm
+/work/gitea>>>http://192.168.144.59:8080
+/work/mail>>>https://webmail.infina.com.tr
+/work/wiki>>>http://192.168.144.64:3001/tr/home
+/search/wolframalpha>>>https://www.wolframalpha.com/
+/search/googleacademics>>>https://scholar.google.com/
+/search/scihub>>>https://sci-hub.se/`
 
 			var bmlist = bookmarks.split("\n").sort();
+			var bmdict = {}
 			for (var i = bmlist.length - 1; i >= 0; i--) {
 				let bm = bmlist[i];
 				let tokens = bm.split(">>>");
-				bmlist[i] = `<div class="bookmarkitem"><a target="_blank" href="${tokens[1]}">${tokens[0]}</a></div>`
+
+				let folder = tokens[0].split("/");
+				let tag = folder[2];
+				folder = folder[1];
+
+				if (!(folder in bmdict)) {
+					bmdict[folder] = [];
+				}
+
+				bmdict[folder].push({
+					tag : tag,
+					link : tokens[1]
+				})
 			}
 
-			bmlist = bmlist.join("\n");
+			htmlstr = ""
+			for( let[key, value] of Object.entries(bmdict)) {
 
+				htmlstr += '<div class="maspanel">';
+				htmlstr += `<div class="masheader"> ${key} </div>`;
 
-			$(".bookmarklist")[0].innerHTML = bmlist;
+				for (var i = 0; i < value.length; i++) {
+					htmlstr += '<div class="masitem">';
+					htmlstr += `<a target="_blank" href="${value[i].link}"> ${value[i].tag} </a>`; 
+					htmlstr += '</div>';
+				}
+
+				htmlstr += '</div>';
+			}
+
+			$(".bookmarklist")[0].innerHTML = htmlstr;
 
 		</script>
 
