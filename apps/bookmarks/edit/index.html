@@ -128,7 +128,9 @@
 					
 					<textarea id="bookmarks_text" style="width: 100%; height: calc(100vh - 150px)"></textarea>
 					<div style="display: flex; justify-content: space-between;">
-						<a href="../"> Go Back </a>	
+						<a href="../"> Go Back </a>
+						<button onclick="cleartext()">copy</button>
+						<button onclick="copyclipboard()">copy</button>
 						<button onclick="saveBookmarks()">save</button>	
 					</div>
 					
@@ -152,6 +154,18 @@
 				let editedbookmarks = $("#bookmarks_text").val();
 				localStorage.setItem(itemkey, editedbookmarks);
 				alert("saved")
+			}
+
+			function copyclipboard() {
+				var copyText = document.getElementById("bookmarks_text");
+				copyText.select();
+				copyText.setSelectionRange(0, 99999);
+				document.execCommand("copy");
+				alert("bookmarks copied");
+			}
+
+			function cleartext() {
+				$("#bookmarks_text").val("");
 			}
 
 		</script>
