@@ -78,7 +78,6 @@
 
 				display: flex;
 				flex-direction: column;
-				flex-wrap: wrap;
 				max-height: calc(100vh - 150px);
 			}
 
@@ -103,10 +102,6 @@
 			.mastag {
 				width: 100%;
 				text-align: center;
-			}
-
-			.masval {
-
 			}
 		</style>
 	</head>
@@ -167,7 +162,7 @@
 					localStorage.setItem(itemkey, weekcheck);
 				}
 
-				let wclist = weekcheck.split("\n").sort();
+				let wclist = weekcheck.split("\n").sort((e1,e2)=> e1.split(">>>")[1].localeCompare(e2.split(">>>")[1]));
 				let wcdict = {}
 				for (let i = wclist.length - 1; i >= 0; i--) {
 					let bm = wclist[i];

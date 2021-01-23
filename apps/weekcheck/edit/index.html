@@ -126,13 +126,13 @@
 			<div class="row">
 				<div class="col-md-9 offset-md-3 mt-3" style="height: calc(100vh - 100px)">
 					
-					<textarea id="bookmarks_text" style="width: 100%; height: calc(100vh - 150px)"></textarea>
+					<textarea id="weekchecks_text" style="width: 100%; height: calc(100vh - 150px)"></textarea>
 					<div style="display: flex; justify-content: space-between;">
 						<a href="../"> Go Back </a>
 						<button onclick="cleartext()">clear</button>
 						<button onclick="resetchecklist()">reset</button>
 						<button onclick="copyclipboard()">copy</button>
-						<button onclick="saveBookmarks()">save</button>	
+						<button onclick="saveweekchecks()">save</button>	
 					</div>
 					
 				</div>
@@ -143,34 +143,34 @@
 
 		<script>
 			var itemkey = "app_weekcheck_edit"
-			var bookmarks = localStorage.getItem(itemkey);
-			if (bookmarks === null) {
-				bookmarks = ""
-				localStorage.setItem(itemkey, bookmarks);
+			var weekchecks = localStorage.getItem(itemkey);
+			if (weekchecks === null) {
+				weekchecks = ""
+				localStorage.setItem(itemkey, weekchecks);
 			}
 
-			$("#bookmarks_text").val(bookmarks);
+			$("#weekchecks_text").val(weekchecks);
 			
-			function saveBookmarks() {
-				let editedbookmarks = $("#bookmarks_text").val();
-				localStorage.setItem(itemkey, editedbookmarks);
+			function saveweekchecks() {
+				let editedweekchecks = $("#weekchecks_text").val();
+				localStorage.setItem(itemkey, editedweekchecks);
 				alert("saved")
 			}
 
 			function copyclipboard() {
-				var copyText = document.getElementById("bookmarks_text");
+				var copyText = document.getElementById("weekchecks_text");
 				copyText.select();
 				copyText.setSelectionRange(0, 99999);
 				document.execCommand("copy");
-				alert("bookmarks copied");
+				alert("weekchecks copied");
 			}
 
 			function cleartext() {
-				$("#bookmarks_text").val("");
+				$("#weekchecks_text").val("");
 			}
 
 			function resetchecklist() {
-				let wclist = bookmarks.split("\n").sort();
+				let wclist = weekchecks.split("\n").sort();
 				let wcdict = {}
 				for (let i = wclist.length - 1; i >= 0; i--) {
 					let bm = wclist[i];
