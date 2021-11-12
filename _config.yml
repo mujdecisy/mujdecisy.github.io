@@ -2,5 +2,5 @@ theme: jekyll-theme-hacker
 title: mujdecisy
 author: Safa Yasin Müjdeci
 navbar-links:
-  About Me: "/aboutme"
-  Blog: "/blog"
+  About Me: "aboutme"
+  Blog: "blog"
