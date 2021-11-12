@@ -1,6 +1,4 @@
 theme: jekyll-theme-hacker
 title: mujdecisy
-author: Safa Yasin Müjdeci
-navbar-links:
-  About Me: "aboutme"
-  Blog: "blog"
+description: personal web page 敖
+show_downloads: false
