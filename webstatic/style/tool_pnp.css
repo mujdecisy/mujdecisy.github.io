@@ -1,0 +1,75 @@
+.calendar {
+    padding-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-column-gap: 2px;
+    grid-row-gap: 2px;
+}
+
+.calendar-header-item {
+    font-weight: bold;
+}
+
+.calendar-item {
+    height: 25px;
+    cursor: pointer;
+}
+
+.daily-slot-shell {
+    width: 100%;
+    overflow-y: auto;
+}
+
+.daily-slot {
+    margin-top: 20px;
+    width: calc(22px*48);
+}
+
+.daily-slot-item {
+    float: left;
+    height: 40px;
+    width: 18px;
+    border: 1px solid var(--g1);
+    margin-right: 2px;
+    writing-mode: vertical-lr;
+    font-size: 13px;
+    font-weight: bold;
+    color: gray;
+    text-align: center;
+    cursor: pointer;
+}
+
+.navbutton {
+    cursor: pointer;
+}
+
+.new-item-form {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-row-gap: 5px;
+}
+
+.task-list {
+    margin-top: 10px;
+}
+
+.task-item {
+    padding: 5px;
+    margin-top: 2px;
+}
+
+.action-modal {
+    position: fixed;
+    width: 320px;
+    height: 100%;
+    top: 0;
+    background-color: white;
+    padding-top: 50px;
+    padding-left: 10px;
+}
+
+.todo-item {
+    padding: 5px;
+    margin-top: 2px;
+}

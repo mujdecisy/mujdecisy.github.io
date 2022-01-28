@@ -1,0 +1,48 @@
+<html>
+
+<head>
+    <title>mujdecisy</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/webstatic/style/main.css">
+    <link rel="stylesheet" href="/webstatic/style/tool_pnp.css">
+</head>
+
+<body>
+    <div class="opacity-layer">
+        <div class="container">
+
+            <div style="padding-top:10px; display:flex;">
+                <a href="/tool">🏠</a>
+                <a href="/tool/pnp/edit">📝</a>
+            </div>
+
+            <div class="calendar"></div>
+            <div class="daily-slot-shell">
+                <div class="daily-slot"></div>
+            </div>
+
+            <div class="todos"></div>
+
+            <div class="action-modal" style="display: none;">
+                <input type="hidden" id="action-time-slot" />
+                <input type="hidden" id="action-date" />
+                <select id="task-select"></select>
+                <button id="add-action" onclick="addNewAction()">✅</button>
+                <button id="cancel-action" onclick="closeModal()">❌</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="/webstatic/script/main.js"></script>
+    <script src="/webstatic/script/tool_pnp.js"></script>
+    <script>
+        window.onload = function() {
+            mainInit();
+            renderPreviewPage();
+        }
+    </script>
+</body>
+
+</html>

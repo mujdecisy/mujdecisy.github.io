@@ -1,0 +1,41 @@
+:root {
+    --g1 : #216e39;
+    --g2 : #30a14e;
+    --g3 : #40c463;
+    --g4 : #9be9a8;
+    --g5 : #ebedf0;
+}
+
+* {
+    font-family: 'Helvetica', 'Arial', sans-serif;
+}
+
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("/webstatic/img/activity.png");
+    background-repeat: repeat;
+}
+
+a {
+    color: var(--g2);
+    font-weight: bold;
+}
+
+.opacity-layer {
+    width: 100%;
+    height: 100%;
+    background-color: #333333aa;
+}
+
+.container {
+    width: 320px;
+    height: 100%;
+    margin: 0 auto;
+    background-color: whitesmoke;
+    padding-left: 20px;
+    padding-right: 20px;
+    opacity: 1;
+}

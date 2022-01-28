@@ -1,0 +1,68 @@
+<html>
+
+<head>
+    <title>mujdecisy</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/webstatic/style/main.css">
+    <link rel="stylesheet" href="/webstatic/style/tool_pnp.css">
+</head>
+
+<body>
+    <div class="opacity-layer">
+        <div class="container">
+
+            <div style="padding-top:10px; display:flex;">
+                <a href="/tool/pnp">⬅</a>
+            </div>
+
+            <div class="new-item-form">
+                <span style="font-weight: bolder;">ADD NEW</span>
+                <span></span>
+
+                <span>Name</span>
+                <input type="text" id="name" autocomplete="off">
+
+                <span>Period</span>
+                <select id="period">
+                    <option value="daily">daily</option>
+                    <option value="weekly">weekly</option>
+                </select>
+
+                <span>Slot</span>
+                <input type="number" id="slot">
+
+                <span>Color</span>
+                <select id="color">
+                    <option value="#D57E7E">red</option>
+                    <option value="#EEC373">orange</option>
+                    <option value="#FCFFA6">yellow</option>
+                    <option value="#ADC2A9">green</option>
+                    <option value="#9AD0EC">blue</option>
+                </select>
+            </div>
+            <br/>
+            <button onclick="addNewTask()">💾</button>
+
+            <div class="task-list"></div>
+
+            <div class="action-modal" style="display: none;">
+                <input type="hidden" id="edit-task-name" />
+                <button id="add-action" onclick="deleteTask()">🚮</button>
+                <button id="cancel-action" onclick="closeModal()">❌</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="/webstatic/script/main.js"></script>
+    <script src="/webstatic/script/tool_pnp.js"></script>
+    <script>
+        window.onload = function() {
+            mainInit();
+            fillTasks();
+        }
+    </script>
+</body>
+
+</html>
