@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>mujdecisy</title>
+    <title>pnp</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/webstatic/style/main.css">
@@ -46,7 +46,7 @@
 
             <div class="task-list"></div>
 
-            <div class="action-modal" style="display: none;">
+            <div class="pnp-modal" style="display: none;">
                 <input type="hidden" id="edit-task-name" />
                 <button id="add-action" onclick="deleteTask()">🚮</button>
                 <button id="cancel-action" onclick="closeModal()">❌</button>
@@ -60,7 +60,7 @@
     <script>
         window.onload = function() {
             mainInit();
-            fillTasks();
+            renderEditPage();
         }
     </script>
 </body>

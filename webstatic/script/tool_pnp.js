@@ -1,6 +1,20 @@
 var today = new Date();
 var active = today;
+var tasks = null;
+var actions = null;
 
+// ........................................................ DATA MANIPULATION
+function loadTasksAndActions() {
+    tasks = getFromStorage(LS_TOOL_PNP_TASKS);
+    actions = getFromStorage(LS_TOOL_PNP_ACTIONS);
+}
+
+function updateTasksAndActions() {
+    persistToStorage(LS_TOOL_PNP_TASKS, tasks);
+    persistToStorage(LS_TOOL_PNP_ACTIONS, actions);
+}
+
+// ........................................................ DATE UTILS
 function getDateAsString(date) {
     return date.toISOString().substring(0, 10);
 }
@@ -9,10 +23,10 @@ function getActiveDateAsString() {
     return getDateAsString(active);
 }
 
-function getCalendarDates() {
+function getCalendarDates(date) {
     let dates = [];
-    let start = new Date(today.getTime());
-    let end = new Date(today.getTime());
+    let start = new Date(date.getTime());
+    let end = new Date(date.getTime());
 
     while(start.getMonth() === today.getMonth() || start.getDay() != 0) {
         dates.push(new Date(start.getTime()));
@@ -29,9 +43,27 @@ function getCalendarDates() {
     return dates;
 }
 
+function getWeekDays(date) {
+    let weekdays = [];
+    let tempday = new Date(date);
+    while(tempday.getDay() !== 1) {
+        tempday.setDate(tempday.getDate() - 1);
+        weekdays.push(getDateAsString(tempday));
+    }
+    tempday = new Date(date);
+    while(tempday.getDay() !== 0) {
+        tempday.setDate(tempday.getDate() + 1);
+        weekdays.push(getDateAsString(tempday));
+    }
+    weekdays.push(getDateAsString(date));
+    weekdays.sort();
+    return weekdays;
+}
+
+// ........................................................ COMPONENT - CALENDAR
 function buildCalendarHeader() {
     let calendarElement = document.getElementsByClassName("calendar")[0];
-    let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", ""];
     days.forEach(e => {
         let item = document.createElement("div");
         item.classList.add("calendar-header-item");
@@ -41,12 +73,26 @@ function buildCalendarHeader() {
 }
 
 function buildCalendarItem(date) {
+    let todos = getTodos(date, []);
+    let status = "";
+    if (getDateAsString(date) <= getDateAsString(today) && Object.keys(todos.daily).length > 0) {
+        status = "☀";
+        for (let k in todos.daily) {
+            if (tasks[k].slot > todos.daily[k]["done_count"]) {
+                status = "🌧";
+                break;
+            }
+        }
+    }
+
     let item = document.createElement("div");
     item.classList.add("calendar-item");
-    item.innerHTML = date.getDate();
+    item.innerHTML = date.getDate() + " " + status;
     item.onclick = () => {
-        active = date;
-        renderPreviewPage();
+        if (date.getMonth() === today.getMonth()) {
+            active = date;
+            renderPreviewPage();
+        }
     }
     item.style["background-color"] = (date.getMonth() === today.getMonth()) ? "var(--g4)" : "var(--g5)";
     item.style["border"] = (date.getTime() === active.getTime()) ? "2px solid red" : "2px solid transparent";
@@ -54,12 +100,51 @@ function buildCalendarItem(date) {
 }
 
 function buildCalendar(dateList) {
+    let weekdays = getWeekDays(dateList[0]);
+    let weeklyDone = {};
+    for (let i=0; i<dateList.length; i++) {
+        if (i%8 === 7) {
+            let status = "";
+            if (getDateAsString(dateList[i-7]) <= getDateAsString(today) && Object.keys(weeklyDone).length > 0) {
+                status = "☀";
+                for (let k in weeklyDone) {
+                    if (weeklyDone[k].must_do > weeklyDone[k].done_count) {
+                        status = "🌧";
+                        break;
+                    }
+                }
+            }
+            weekdays = getWeekDays(dateList[i]);
+            weeklyDone = {};
+            dateList.splice(i, 0, status);
+        } else {
+            let todos = getTodos(dateList[i], weekdays);
+            for (let k in todos.weekly) {
+                if (weeklyDone[k] === undefined) {
+                    weeklyDone[k] = {
+                        "done_count": 0,
+                        "must_do" : tasks[k].slot
+                    };
+
+                }
+                weeklyDone[k]["done_count"] += todos.weekly[k]["done_count"];
+            }
+        }
+    }
     let calendarElement = document.getElementsByClassName("calendar")[0];
     dateList.forEach(e => {
-        calendarElement.appendChild(buildCalendarItem(e));
+        if (e instanceof Date) {
+            calendarElement.appendChild(buildCalendarItem(e));
+        } else {
+            let item = document.createElement("div");
+            item.classList.add("calendar-item-small");
+            item.innerHTML = e;
+            calendarElement.appendChild(item);
+        }
     });
 }
 
+// ........................................................ COMPONENT - TIMESLOT
 function getTimeSlots() {
     let timeSlots = [];
     let d = new Date(today.getTime());
@@ -81,8 +166,6 @@ function buildDailySlot() {
     let dailySlotElement = document.getElementsByClassName("daily-slot")[0];
     let timeSlots = getTimeSlots();
 
-    let tasks = getFromStorage(LS_TOOL_PNP_TASKS);
-    let actions = getFromStorage(LS_TOOL_PNP_ACTIONS);
     let daily_slots = {};
     if (actions[getActiveDateAsString()]) {
         daily_slots = actions[getActiveDateAsString()];
@@ -99,7 +182,7 @@ function buildDailySlot() {
         item.onclick = () => {
             document.getElementById("action-time-slot").value = e;
             document.getElementById("action-date").value = getActiveDateAsString();
-            let modal = document.getElementsByClassName("action-modal")[0];
+            let modal = document.getElementsByClassName("pnp-modal")[0];
             modal.style["display"] = "block";
         }
         dailySlotElement.appendChild(item);
@@ -112,58 +195,73 @@ function buildDailySlot() {
     document.getElementsByClassName("daily-slot-shell")[0].scrollLeft += scrollSize;
 }
 
+// ........................................................ PAGE - PREVIEW
 function clearPreviewPage() {
     document.getElementsByClassName("calendar")[0].innerHTML = "";
     document.getElementsByClassName("daily-slot")[0].innerHTML = "";
+    document.getElementById("task-select").innerHTML = "";
+    document.getElementsByClassName("todos")[0].innerHTML = "";
 }
 
 function renderPreviewPage() {
+    loadTasksAndActions();
     clearPreviewPage();
     buildCalendarHeader();
-    dateList = getCalendarDates();
+    dateList = getCalendarDates(active);
     buildCalendar(dateList);
     buildDailySlot();
     fillTaskSelect();
-    fillTodos();
+    fillTodos(active);
 }
 
-function addNewTask() {
-    let tasks = getFromStorage(LS_TOOL_PNP_TASKS);
-    tasks[document.getElementById("name").value] = {
-        "name": document.getElementById("name").value,
-        "period": document.getElementById("period").value,
-        "slot": document.getElementById("slot").value,
-        "color": document.getElementById("color").value,
-    };
-    persistToStorage(LS_TOOL_PNP_TASKS, tasks);
+// ........................................................ PAGE - EDIT
+function clearEditPage() {
+    document.getElementsByClassName("task-list")[0].innerHTML = "";
+}
+
+function renderEditPage() {
+    loadTasksAndActions();
+    clearEditPage();
     fillTasks();
 }
 
+
+
+// ........................................................ COMPONENT - TASK
+function addNewTask() {
+    tasks[document.getElementById("name").value] = {
+        "name": document.getElementById("name").value,
+        "period": document.getElementById("period").value,
+        "slot": parseInt(document.getElementById("slot").value),
+        "color": document.getElementById("color").value,
+        "start": getActiveDateAsString()
+    };
+    updateTasksAndActions();
+    renderEditPage();
+}
+
 function fillTasks() {
-    let tasks = getFromStorage(LS_TOOL_PNP_TASKS);
     let tasksElement = document.getElementsByClassName("task-list")[0];
-    tasksElement.innerHTML = "";
 
     for (let k in tasks) {
         let item = document.createElement("div");
         item.classList.add("task-item");
-        item.innerHTML = tasks[k].name + " > " + tasks[k].period + " > " + tasks[k].slot;
+        item.innerHTML = tasks[k].name + " > " + tasks[k].period + " > " + tasks[k].slot + " > " + tasks[k].start;
         item.style["background-color"] = tasks[k].color;
         item.style["cursor"] = "pointer";
         item.onclick = () => {
             document.getElementById("edit-task-name").value = tasks[k].name;
-            let modal = document.getElementsByClassName("action-modal")[0];
+            let modal = document.getElementsByClassName("pnp-modal")[0];
             modal.style["display"] = "block";
         }
         tasksElement.appendChild(item);
     }
 }
 
+
+// ........................................................ COMPONENT - TASK SELECT
 function fillTaskSelect() {
-    let tasks = getFromStorage(LS_TOOL_PNP_TASKS);
     let tasksElement = document.getElementById("task-select");
-    
-    tasksElement.innerHTML = "";
 
     nullitem = document.createElement("option");
     nullitem.innerHTML = "none";
@@ -171,19 +269,24 @@ function fillTaskSelect() {
     tasksElement.appendChild(nullitem);
 
     for (let k in tasks) {
-        let item = document.createElement("option");
-        item.innerHTML = tasks[k].name;
-        item.value = tasks[k].name;
-        tasksElement.appendChild(item);
+        if (tasks[k].start <= getActiveDateAsString()) {
+            let item = document.createElement("option");
+            item.innerHTML = tasks[k].name;
+            item.value = tasks[k].name;
+            tasksElement.appendChild(item);
+        }
     }
 }
 
-function addNewAction() {
-    let timeslot = document.getElementById("action-time-slot").value;
+// ........................................................ COMPONENT - MODAL
+function closeModal() {
+    document.getElementsByClassName("pnp-modal")[0].style["display"] = "none";
+}
+
+// ........................................................ EVENT - ADD ACTION
+function addNewAction() {   let timeslot = document.getElementById("action-time-slot").value;
     let date = document.getElementById("action-date").value;
     let task = document.getElementById("task-select").value;
-
-    let actions = getFromStorage(LS_TOOL_PNP_ACTIONS);
 
     if(!actions[date]) {
         actions[date] = {};
@@ -192,29 +295,23 @@ function addNewAction() {
     if (!actions[date][timeslot]) {
         if (task !== "none") {
             actions[date][timeslot] = task;
-            persistToStorage(LS_TOOL_PNP_ACTIONS, actions);
         }
     } else {
         if (task === "none") {
             delete actions[date][timeslot];
-            persistToStorage(LS_TOOL_PNP_ACTIONS, actions);
         } else {
             alert("This timeslot is already taken!");
         }
     }
 
+    updateTasksAndActions();
     closeModal();
     renderPreviewPage();
 }
 
-function closeModal() {
-    document.getElementsByClassName("action-modal")[0].style["display"] = "none";
-}
-
+// ........................................................ EVENT - DELETE TASK
 function deleteTask() {
     let taskname = document.getElementById("edit-task-name");
-    let tasks = getFromStorage(LS_TOOL_PNP_TASKS);
-    let actions = getFromStorage(LS_TOOL_PNP_ACTIONS);
     delete tasks[taskname.value];
     for (let k in actions) {
         for (let l in actions[k]) {
@@ -223,69 +320,75 @@ function deleteTask() {
             }
         }
     }
-    persistToStorage(LS_TOOL_PNP_TASKS, tasks);
-    persistToStorage(LS_TOOL_PNP_ACTIONS, actions);
+    updateTasksAndActions();
 
     closeModal();
-    fillTasks();
+    renderEditPage();
 }
 
-function getWeekDays() {
-    let weekdays = [];
-    let tempday = new Date(active);
-    while(tempday.getDay() !== 1) {
-        tempday.setDate(tempday.getDate() - 1);
-        weekdays.push(getDateAsString(tempday));
+
+// ........................................................ COMPONENT - TODOS
+function getTodos(date, weekdays) {
+    todos = {
+        daily: {},
+        weekly: {}
     }
-    tempday = new Date(active);
-    while(tempday.getDay() !== 0) {
-        tempday.setDate(tempday.getDate() + 1);
-        weekdays.push(getDateAsString(tempday));
-    }
-    weekdays.push(getActiveDateAsString());
-    weekdays.sort();
-
-    return weekdays;
-}
-
-function fillTodos() {
-    let todos = document.getElementsByClassName("todos")[0];
-    todos.innerHTML = "";
-
-    let tasks = getFromStorage(LS_TOOL_PNP_TASKS);
-    let actions = getFromStorage(LS_TOOL_PNP_ACTIONS);
-    let weekdays = getWeekDays();
 
     for (let k in tasks) {
         task = tasks[k];
-        if (task.period === "daily") {
+        if (task.period === "daily" && task.start <= getDateAsString(date)) {
             let done_count = 0;
-            for (let k1 in actions[getActiveDateAsString()]) {
-                action = actions[getActiveDateAsString()][k1];
+            for (let k1 in actions[getDateAsString(date)]) {
+                action = actions[getDateAsString(date)][k1];
                 if (action === task.name) {
                     done_count++;
                 }
             }
-            let item = document.createElement("div");
-            item.classList.add("todo-item");
-            item.innerHTML = task.name + " (" + done_count + "/" + task.slot + ")";
-            item.style["background-color"] = task.color;
-            todos.appendChild(item);
-        } else if (task.period === "weekly") {
+            todos.daily[task.name] = {
+                done_count: done_count,
+            }
+        } else if (task.period === "weekly" && getDateAsString(date) >= task.start) {
             let done_count = 0;
             weekdays.forEach(day => {
-                for (let k1 in actions[day]) {
-                    action = actions[day][k1];
-                    if (action === task.name) {
-                        done_count++;
+                    for (let k1 in actions[day]) {
+                        action = actions[day][k1];
+                        if (action === task.name) {
+                            done_count++;
+                        }
                     }
-                }
             });
-            let item = document.createElement("div");
-            item.classList.add("todo-item");
-            item.innerHTML = task.name + " (" + done_count + "/" + task.slot + ")";
-            item.style["background-color"] = task.color;
-            todos.appendChild(item);
+            todos.weekly[task.name] = {
+                done_count: done_count,
+            }
         }
     }
+
+    return todos;
 }
+
+function createTodoItem(task, done_count) {
+    let item = document.createElement("div");
+    item.classList.add("todo-item");
+    item.innerHTML = task.name + " (" + done_count + "/" + task.slot + ")";
+    item.style["background-color"] = task.color;
+    return item;
+}
+
+function fillTodos(date) {
+    let todos = document.getElementsByClassName("todos")[0];
+    todos.innerHTML = "";
+
+    let weekdays = getWeekDays(date);
+
+    let todo_list = getTodos(date, weekdays);
+
+
+    for (const [key, value] of Object.entries(todo_list.daily)) {
+        todos.appendChild(createTodoItem(tasks[key], value["done_count"]));
+    }
+
+    for (const [key, value] of Object.entries(todo_list.weekly)) {
+        todos.appendChild(createTodoItem(tasks[key], value["done_count"]));
+    }
+}
+

@@ -1,7 +1,7 @@
 .calendar {
     padding-top: 10px;
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(7, 1fr) 0.1fr;
     grid-column-gap: 2px;
     grid-row-gap: 2px;
 }
@@ -13,6 +13,12 @@
 .calendar-item {
     height: 25px;
     cursor: pointer;
+    font-size: 13px;
+}
+
+.calendar-item-small {
+    font-size: 13px;
+
 }
 
 .daily-slot-shell {
@@ -51,7 +57,7 @@
 }
 
 .task-list {
-    margin-top: 10px;
+    margin-top: 20px;
 }
 
 .task-item {
@@ -59,7 +65,7 @@
     margin-top: 2px;
 }
 
-.action-modal {
+.pnp-modal {
     position: fixed;
     width: 320px;
     height: 100%;
@@ -67,6 +73,10 @@
     background-color: white;
     padding-top: 50px;
     padding-left: 10px;
+}
+
+.todos {
+    margin-top: 20px;
 }
 
 .todo-item {
