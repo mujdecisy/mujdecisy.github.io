@@ -1,0 +1,46 @@
+<html>
+
+<head>
+    <title>pnp</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/webstatic/style/main.css">
+    <link rel="stylesheet" href="/webstatic/style/tool_pnp.css">
+</head>
+
+<body>
+    <div class="opacity-layer">
+        <div class="container">
+
+            <div style="padding-top:10px; display:flex;">
+                <a href="/tool/pnp/edit">⬅</a>
+            </div>
+
+            <div class="chain-shell">
+                <div class="chain"></div>    
+            </div>
+            
+            <table class="detail">
+                <tr><td>Name</td><td><span id="name"></span></td></tr>
+                <tr><td>Slot</td><td><span id="slot"></span></td></tr>
+                <tr><td>Period</td><td><span id="period"></span></td></tr>
+                <tr><td>Start Date</td><td><span id="start_date"></span></td></tr>
+                <tr><td>Success Rate</td><td><span id="success_rate"></span></td></tr>
+            </table>
+
+            <button onclick="deleteTask()">🚮</button>
+
+        </div>
+    </div>
+
+    <script src="/webstatic/script/main.js"></script>
+    <script src="/webstatic/script/tool_pnp.js"></script>
+    <script>
+        window.onload = function() {
+            mainInit();
+            renderDetailPage();
+        }
+    </script>
+</body>
+
+</html>

@@ -3,6 +3,9 @@ var active = today;
 var tasks = null;
 var actions = null;
 
+var currentTaskName = null;
+var currentTaskHistory = null;
+
 // ........................................................ DATA MANIPULATION
 function loadTasksAndActions() {
     tasks = getFromStorage(LS_TOOL_PNP_TASKS);
@@ -58,6 +61,16 @@ function getWeekDays(date) {
     weekdays.push(getDateAsString(date));
     weekdays.sort();
     return weekdays;
+}
+
+function getStringDatesBetween(date1, date2) {
+    let dates = [];
+    let temp = new Date(date1);
+    while(temp.getTime() <= date2.getTime()) {
+        dates.push( getDateAsString(temp) );
+        temp.setDate(temp.getDate() + 1);
+    }
+    return dates;
 }
 
 // ........................................................ COMPONENT - CALENDAR
@@ -250,9 +263,7 @@ function fillTasks() {
         item.style["background-color"] = tasks[k].color;
         item.style["cursor"] = "pointer";
         item.onclick = () => {
-            document.getElementById("edit-task-name").value = tasks[k].name;
-            let modal = document.getElementsByClassName("pnp-modal")[0];
-            modal.style["display"] = "block";
+            window.location.href = item.href = "/tool/pnp/detail?task_name=" + k;
         }
         tasksElement.appendChild(item);
     }
@@ -311,19 +322,16 @@ function addNewAction() {   let timeslot = document.getElementById("action-time-
 
 // ........................................................ EVENT - DELETE TASK
 function deleteTask() {
-    let taskname = document.getElementById("edit-task-name");
-    delete tasks[taskname.value];
+    delete tasks[currentTaskName];
     for (let k in actions) {
         for (let l in actions[k]) {
-            if (actions[k][l] === taskname.value) {
+            if (actions[k][l] === currentTaskName) {
                 delete actions[k][l];
             }
         }
     }
     updateTasksAndActions();
-
-    closeModal();
-    renderEditPage();
+    window.location.href = "/tool/pnp/edit";
 }
 
 
@@ -392,3 +400,96 @@ function fillTodos(date) {
     }
 }
 
+// ------------------------------------------------------------ PAGE - DETAIL
+function renderDetailPage() {
+    currentTaskName = new URLSearchParams(window.location.search).get("task_name");
+    loadTasksAndActions();
+    currentTaskHistory = calculateTaskHistory(currentTaskName);
+    createTaskTable();
+    createChainItem();
+}
+
+// ------------------------------------------------------------ COMPONENT - CHAIN
+function createChainItem() {
+    let dates = Object.keys(currentTaskHistory);
+    dates.sort();
+    let chain = document.getElementsByClassName("chain")[0];
+
+    dates.forEach(date => {
+        let item = document.createElement("div");
+        item.classList.add("chain-item");
+        if (currentTaskHistory[date] === 0) {
+            item.innerHTML = "🟠";
+        } else {
+            item.innerHTML = "🟢";
+        }
+        chain.appendChild(item);
+    });
+
+    for (let i=0; i<40-dates.length; i++) {
+        let item = document.createElement("div");
+        item.classList.add("chain-item");
+        item.innerHTML = "⚪";
+        chain.appendChild(item);
+    }
+    
+}
+
+
+// ------------------------------------------------------------ COMPONENT - TASK TABLE
+function createTaskTable() {
+    let task = tasks[currentTaskName];
+
+    let dates = Object.keys(currentTaskHistory);
+    dates.sort();
+
+    let successRate = 0;
+    let positive = 100/40;
+    let negative = positive*-0.8;
+
+    dates.forEach(date=>{
+        successRate += (currentTaskHistory[date] === 1) ? positive : negative;
+        if (successRate > 100) {
+            successRate = 100;
+        }
+        if (successRate < 0) {
+            successRate = 0;
+        }
+    });
+    
+    document.getElementById("name").innerHTML = task.name;
+    document.getElementById("slot").innerHTML = task.slot;
+    document.getElementById("period").innerHTML = task.period;
+    document.getElementById("start_date").innerHTML = task.start;
+    document.getElementById("success_rate").innerHTML = successRate.toFixed(2) + "%";
+
+}
+
+// ------------------------------------------------------------ EVENT - TASK HISTORY
+function calculateTaskHistory() {
+    let task = tasks[currentTaskName];
+    let taskStart = new Date(task.start);
+
+    let strDates = getStringDatesBetween(taskStart, today);
+    let history = {};
+
+    let done = 0;
+    strDates.forEach(date => {
+        for (let timekey in actions[date]) {
+            if (actions[date][timekey] === currentTaskName) {
+                done++;
+            }
+        }
+        if (task.period === "daily") {
+            history[date] = (done >= task.slot)? 1:0;
+            done = 0;
+        } else {
+            if (new Date(date).getDay() == 0) {
+                history[date] = (done >= task.slot)? 1:0;
+                done = 0;
+            }
+        }
+    });
+
+    return history;   
+}
