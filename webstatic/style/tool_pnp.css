@@ -114,3 +114,11 @@ table, tbody, tr {
 td {
     width: 50%;
 }
+
+.anav {
+    border-bottom: 1px solid gray;
+    border-right: 1px solid gray;
+    padding: 1px 3px;
+    text-decoration: none;
+    margin-right: 5px;
+}
