@@ -16,6 +16,10 @@ function mainInit () {
     });
 }
 
+function getStorageKeys() {
+    return Object.keys(localStorage);
+}
+
 function getFromStorage(key) {
     return JSON.parse(localStorage.getItem(key));
 }

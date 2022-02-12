@@ -1,0 +1,45 @@
+<html>
+
+<head>
+    <title>mujdecisy</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/webstatic/style/main.css">
+    <link rel="stylesheet" href="/webstatic/style/tool.css">
+    <link rel="stylesheet" href="/webstatic/style/tool_io.css">
+</head>
+
+<body>
+    <div class="opacity-layer">
+
+        <div class="container">
+            <div class="tool-nav"></div>
+            <div class="tool-header">Storage Manager</div>
+
+            <div>
+                <select id="storage-keys"></select>
+                <button onclick="loadStorageData()">GET</button>
+            </div>
+
+            <div class="storage-area">
+                <textarea id="payload" cols="30" rows="10"></textarea>
+                <button onclick="saveStorageData()">💾</button>
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <script src="/webstatic/script/main.js"></script>
+    <script src="/webstatic/script/tool_io.js"></script>
+    <script>
+        window.onload = function() {
+            mainInit();
+            renderIOPage();
+        }
+    </script>
+
+</body>
+
+</html>

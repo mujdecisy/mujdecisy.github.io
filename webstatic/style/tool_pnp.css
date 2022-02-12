@@ -1,5 +1,5 @@
 .calendar {
-    padding-top: 10px;
+    padding-top: 1px;
     display: grid;
     grid-template-columns: repeat(7, 1fr) 0.1fr;
     grid-column-gap: 2px;
