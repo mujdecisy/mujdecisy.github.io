@@ -26,7 +26,7 @@ function saveStorageData() {
     let key = document.getElementById("storage-keys").value;
     
     let elem = document.getElementById("payload");
-    let data = JSON.parse(elem.innerHTML);
+    let data = JSON.parse(elem.value);
 
     persistToStorage(key, data);
 }

@@ -114,14 +114,15 @@ function buildCalendarItem(date) {
 
 function buildCalendar(dateList) {
     let weekdays = getWeekDays(dateList[0]);
-    let weeklyDone = {};
+    weeklyDone = {}
     for (let i=0; i<dateList.length; i++) {
         if (i%8 === 7) {
+            let todos = getTodos(dateList[i], weekdays);
             let status = "";
-            if (getDateAsString(dateList[i-7]) <= getDateAsString(today) && Object.keys(weeklyDone).length > 0) {
+            if (getDateAsString(dateList[i-7]) <= getDateAsString(today) && Object.keys(todos.weekly).length > 0) {
                 status = "☀";
-                for (let k in weeklyDone) {
-                    if (weeklyDone[k].must_do > weeklyDone[k].done_count) {
+                for (let k in todos.weekly) {
+                    if (tasks[k].slot > todos.weekly[k].done_count) {
                         status = "🌧";
                         break;
                     }
@@ -130,18 +131,6 @@ function buildCalendar(dateList) {
             weekdays = getWeekDays(dateList[i]);
             weeklyDone = {};
             dateList.splice(i, 0, status);
-        } else {
-            let todos = getTodos(dateList[i], weekdays);
-            for (let k in todos.weekly) {
-                if (weeklyDone[k] === undefined) {
-                    weeklyDone[k] = {
-                        "done_count": 0,
-                        "must_do" : tasks[k].slot
-                    };
-
-                }
-                weeklyDone[k]["done_count"] += todos.weekly[k]["done_count"];
-            }
         }
     }
     let calendarElement = document.getElementsByClassName("calendar")[0];
