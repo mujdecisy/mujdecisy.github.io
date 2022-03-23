@@ -76,7 +76,7 @@ function getStringDatesBetween(date1, date2) {
 // ........................................................ COMPONENT - CALENDAR
 function buildCalendarHeader() {
     let calendarElement = document.getElementsByClassName("calendar")[0];
-    let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", ""];
+    let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     days.forEach(e => {
         let item = document.createElement("div");
         item.classList.add("calendar-header-item");
@@ -86,12 +86,12 @@ function buildCalendarHeader() {
 }
 
 function buildCalendarItem(date) {
-    let todos = getTodos(date, []);
+    let todos = getTodos(date);
     let status = "";
-    if (getDateAsString(date) <= getDateAsString(today) && Object.keys(todos.daily).length > 0) {
+    if (getDateAsString(date) <= getDateAsString(today) && Object.keys(todos).length > 0) {
         status = "☀";
-        for (let k in todos.daily) {
-            if (tasks[k].slot > todos.daily[k]["done_count"]) {
+        for (let k in todos) {
+            if (tasks[k].slot > todos[k]["done_count"]) {
                 status = "🌧";
                 break;
             }
@@ -113,36 +113,9 @@ function buildCalendarItem(date) {
 }
 
 function buildCalendar(dateList) {
-    let weekdays = getWeekDays(dateList[0]);
-    weeklyDone = {}
-    for (let i=0; i<dateList.length; i++) {
-        if (i%8 === 7) {
-            let todos = getTodos(dateList[i], weekdays);
-            let status = "";
-            if (getDateAsString(dateList[i-7]) <= getDateAsString(today) && Object.keys(todos.weekly).length > 0) {
-                status = "☀";
-                for (let k in todos.weekly) {
-                    if (tasks[k].slot > todos.weekly[k].done_count) {
-                        status = "🌧";
-                        break;
-                    }
-                }
-            }
-            weekdays = getWeekDays(dateList[i]);
-            weeklyDone = {};
-            dateList.splice(i, 0, status);
-        }
-    }
     let calendarElement = document.getElementsByClassName("calendar")[0];
     dateList.forEach(e => {
-        if (e instanceof Date) {
-            calendarElement.appendChild(buildCalendarItem(e));
-        } else {
-            let item = document.createElement("div");
-            item.classList.add("calendar-item-small");
-            item.innerHTML = e;
-            calendarElement.appendChild(item);
-        }
+        calendarElement.appendChild(buildCalendarItem(e));
     });
 }
 
@@ -231,9 +204,15 @@ function renderEditPage() {
 
 // ........................................................ COMPONENT - TASK
 function addNewTask() {
+    let days = [];
+    [1,2,3,4,5,6,7].forEach(x => {
+        if (document.getElementById("D" + x).checked) {
+            days.push(x);
+        }
+    });
     tasks[document.getElementById("name").value] = {
         "name": document.getElementById("name").value,
-        "period": document.getElementById("period").value,
+        "days": days,
         "slot": parseInt(document.getElementById("slot").value),
         "color": document.getElementById("color").value,
         "start": getActiveDateAsString()
@@ -248,7 +227,7 @@ function fillTasks() {
     for (let k in tasks) {
         let item = document.createElement("div");
         item.classList.add("task-item");
-        item.innerHTML = tasks[k].name + " > " + tasks[k].period + " > " + tasks[k].slot + " > " + tasks[k].start;
+        item.innerHTML = tasks[k].name + " > " + tasks[k].days.join(",") + " > " + tasks[k].slot + " > " + tasks[k].start;
         item.style["background-color"] = tasks[k].color;
         item.style["cursor"] = "pointer";
         item.onclick = () => {
@@ -263,7 +242,7 @@ function fillTasks() {
 function fillTaskSelect() {
     let tasksElement = document.getElementById("task-select");
 
-    nullitem = document.createElement("option");
+    let nullitem = document.createElement("option");
     nullitem.innerHTML = "none";
     nullitem.value = "none";
     tasksElement.appendChild(nullitem);
@@ -325,39 +304,28 @@ function deleteTask() {
 
 
 // ........................................................ COMPONENT - TODOS
-function getTodos(date, weekdays) {
-    todos = {
-        daily: {},
-        weekly: {}
-    }
+function getTodos(date) {
+    let todos = {};
+    let day = (date.getDay() === 0)? 7 : date.getDay();
 
+    let dateStr = getDateAsString(date);
+    let dayActions = actions[dateStr];
+    
     for (let k in tasks) {
-        task = tasks[k];
-        if (task.period === "daily" && task.start <= getDateAsString(date)) {
-            let done_count = 0;
-            for (let k1 in actions[getDateAsString(date)]) {
-                action = actions[getDateAsString(date)][k1];
-                if (action === task.name) {
-                    done_count++;
-                }
-            }
-            todos.daily[task.name] = {
-                done_count: done_count,
-            }
-        } else if (task.period === "weekly" && getDateAsString(date) >= task.start) {
-            let done_count = 0;
-            weekdays.forEach(day => {
-                    for (let k1 in actions[day]) {
-                        action = actions[day][k1];
-                        if (action === task.name) {
-                            done_count++;
-                        }
-                    }
-            });
-            todos.weekly[task.name] = {
-                done_count: done_count,
+        if (!tasks[k].days.includes(day) || dateStr < tasks[k].start) {
+            continue;
+        }
+
+        let done_count = 0;
+        for (let key in dayActions) {
+            if (dayActions[key] === tasks[k].name) {
+                done_count += 1;
             }
         }
+
+        todos[k] = {
+            "done_count" : done_count
+        };
     }
 
     return todos;
@@ -375,16 +343,9 @@ function fillTodos(date) {
     let todos = document.getElementsByClassName("todos")[0];
     todos.innerHTML = "";
 
-    let weekdays = getWeekDays(date);
+    let todo_list = getTodos(date);
 
-    let todo_list = getTodos(date, weekdays);
-
-
-    for (const [key, value] of Object.entries(todo_list.daily)) {
-        todos.appendChild(createTodoItem(tasks[key], value["done_count"]));
-    }
-
-    for (const [key, value] of Object.entries(todo_list.weekly)) {
+    for (const [key, value] of Object.entries(todo_list)) {
         todos.appendChild(createTodoItem(tasks[key], value["done_count"]));
     }
 }
@@ -393,7 +354,7 @@ function fillTodos(date) {
 function renderDetailPage() {
     currentTaskName = new URLSearchParams(window.location.search).get("task_name");
     loadTasksAndActions();
-    currentTaskHistory = calculateTaskHistory(currentTaskName);
+    currentTaskHistory = calculateTaskHistory();
     createTaskTable();
     createChainItem();
 }
@@ -448,7 +409,7 @@ function createTaskTable() {
     
     document.getElementById("name").innerHTML = task.name;
     document.getElementById("slot").innerHTML = task.slot;
-    document.getElementById("period").innerHTML = task.period;
+    document.getElementById("period").innerHTML = task.days.join("-");
     document.getElementById("start_date").innerHTML = task.start;
     document.getElementById("success_rate").innerHTML = successRate.toFixed(2) + "%";
 
