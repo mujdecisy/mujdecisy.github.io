@@ -423,22 +423,14 @@ function calculateTaskHistory() {
     let strDates = getStringDatesBetween(taskStart, today);
     let history = {};
 
-    let done = 0;
     strDates.forEach(date => {
+        let done = 0;
         for (let timekey in actions[date]) {
             if (actions[date][timekey] === currentTaskName) {
                 done++;
             }
         }
-        if (task.period === "daily") {
-            history[date] = (done >= task.slot)? 1:0;
-            done = 0;
-        } else {
-            if (new Date(date).getDay() == 0) {
-                history[date] = (done >= task.slot)? 1:0;
-                done = 0;
-            }
-        }
+        history[date] = (done >= task.slot)? 1:0;
     });
 
     return history;   
