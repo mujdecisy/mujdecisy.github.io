@@ -19,7 +19,8 @@ function updateTasksAndActions() {
 
 // ........................................................ DATE UTILS
 function getDateAsString(date) {
-    return date.toISOString().substring(0, 10);
+    let localDateForISO = new Date(+date - date.getTimezoneOffset() * 60000);
+    return localDateForISO.toISOString().substring(0, 10);
 }
 
 function getActiveDateAsString() {
