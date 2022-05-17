@@ -19,7 +19,7 @@ function loadStorageData() {
     let data = getFromStorage(key);
     
     let elem = document.getElementById("payload");
-    elem.innerHTML = JSON.stringify(data);
+    elem.value = JSON.stringify(data);
 }
 
 function saveStorageData() {

@@ -23,3 +23,25 @@
 .li-div {
     margin: 0px 15px;
 }
+
+.links {
+    list-style-type: none;
+}
+
+.links > li {
+    display: flex;
+}
+
+.links > li > span {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.links > li > a {
+    height: 30px;
+    display: flex;
+    align-items: center;
+}
