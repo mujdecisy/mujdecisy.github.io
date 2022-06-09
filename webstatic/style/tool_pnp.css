@@ -133,3 +133,9 @@ td {
     display: flex;
     flex-direction: row;
 }
+
+@media (min-width: 720px) {
+    .pnp-modal {
+        width: 700px;
+    }
+}

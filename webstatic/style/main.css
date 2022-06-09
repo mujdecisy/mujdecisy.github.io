@@ -40,3 +40,9 @@ a {
     padding-right: 20px;
     opacity: 1;
 }
+
+@media (min-width: 720px) {
+    .container {
+        width: 700px;
+    }
+}

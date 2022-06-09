@@ -1,16 +1,19 @@
 .greeting {
+    width: 300px;
+    margin: 0px auto;
     padding-top: 50px;
     font-size: xx-large;
 }
 
 .meeting {
-    margin-top: 30px;
+    width: 300px;
+    margin: 30px auto;
     font-size: large;
 }
 
 .communication {
     padding: 0px;
-    margin-top: 50px;
+    margin-top: 20px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -24,24 +27,20 @@
     margin: 0px 15px;
 }
 
-.links {
-    list-style-type: none;
-}
 
-.links > li {
-    display: flex;
-}
+@media (min-width: 720px) {
+    .greeting {
+        width: 500px;
+        font-size: 50px;
+    }
 
-.links > li > span {
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+    .meeting {
+        width: 500px;
+        font-size: 30px;
+    }
 
-.links > li > a {
-    height: 30px;
-    display: flex;
-    align-items: center;
+    .communication {
+        margin-top: 50px;
+        font-size: 25px;
+    }
 }
