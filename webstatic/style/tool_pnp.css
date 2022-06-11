@@ -49,23 +49,7 @@
     cursor: pointer;
 }
 
-.new-item-form {
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    grid-row-gap: 5px;
-}
-
-.task-list {
-    margin-top: 20px;
-}
-
-.task-item {
-    padding: 5px;
-    margin-top: 2px;
-}
-
-.pnp-modal {
+.modal {
     position: fixed;
     width: 320px;
     height: 100%;
@@ -115,14 +99,6 @@ td {
     width: 50%;
 }
 
-.anav {
-    border-bottom: 1px solid gray;
-    border-right: 1px solid gray;
-    padding: 1px 3px;
-    text-decoration: none;
-    margin-right: 5px;
-}
-
 .period-day {
     display: flex;
     flex-direction: column;
@@ -135,7 +111,7 @@ td {
 }
 
 @media (min-width: 720px) {
-    .pnp-modal {
+    .modal {
         width: 700px;
     }
 }

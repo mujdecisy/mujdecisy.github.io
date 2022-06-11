@@ -1,10 +1,10 @@
 :root {
-    --g1 : #216e39;
-    --g2 : #30a14e;
-    --g3 : #40c463;
-    --g4 : #9be9a8;
-    --g5 : #ebedf0;
-    --g6 : #a1a1a1;
+    --g1: #216e39;
+    --g2: #30a14e;
+    --g3: #40c463;
+    --g4: #9be9a8;
+    --g5: #ebedf0;
+    --g6: #a1a1a1;
 }
 
 * {
@@ -39,6 +39,38 @@ a {
     padding-left: 20px;
     padding-right: 20px;
     opacity: 1;
+}
+
+.new-item-form {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-row-gap: 5px;
+}
+
+.anav {
+    max-width: 40px;
+    border-bottom: 2px solid gray;
+    border-right: 2px solid gray;
+    padding: 1px 3px;
+    text-decoration: none;
+    text-align: center;
+    margin-right: 5px;
+    cursor: pointer;
+    background-color: #00000022;
+    margin-left: 5px;
+}
+
+.item-list {
+    margin-top: 20px;
+}
+
+.item-element {
+    padding: 5px;
+    margin-top: 2px;
+    cursor: pointer;
+    background-color: #00000022;
+    border: 1px solid gray;
 }
 
 @media (min-width: 720px) {

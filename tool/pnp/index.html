@@ -27,23 +27,24 @@
 
             <div class="todos"></div>
 
-            <div class="pnp-modal" style="display: none;">
-                <input type="hidden" id="action-time-slot" />
-                <input type="hidden" id="action-date" />
-                <select id="task-select"></select>
-                <button id="add-action" onclick="addNewAction()">✅</button>
-                <button id="cancel-action" onclick="closeModal()">❌</button>
+            <div class="modal task-assign" style="display: none;">
+                    <input type="hidden" id="action-time-slot" />
+                    <input type="hidden" id="action-date" />
+                    <select id="task-select"></select>
+                    <div class="anav" id="add-action" onclick="addNewAction()">✅</div>
+                    <div class="anav" id="cancel-action" onclick="closeModal()">❌</div>
             </div>
 
         </div>
     </div>
 
     <script src="/webstatic/script/main.js"></script>
-    <script src="/webstatic/script/tool_pnp.js"></script>
+    <script src="/webstatic/script/tool_pnp/main.js"></script>
+    <script src="/webstatic/script/tool_pnp/page_calendar.js"></script>
     <script>
         window.onload = function() {
             mainInit();
-            renderPreviewPage();
+            renderCalendarPage();
         }
     </script>
 </body>

@@ -1,0 +1,47 @@
+<html>
+
+<head>
+    <title>trc</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/webstatic/style/main.css">
+    <link rel="stylesheet" href="/webstatic/style/tool.css">
+</head>
+
+<body>
+    <div class="opacity-layer">
+        <div class="container">
+
+            <div class="tool-nav">
+            </div>
+
+            <div class="tool-header">Trace - Add</div>
+
+            <div class="new-item-form">
+                <span style="font-weight: bolder;">APPEND VALUE</span>
+                <span></span>
+
+                <span>Date</span>
+                <input type="date" id="date" autocomplete="off">
+
+                <span>Value</span>
+                <input type="number" id="value" autocomplete="off">
+            </div>
+            <div class="anav" onclick="saveValue()">💾</div>
+
+            <div class="item-list"></div>
+        </div>
+    </div>
+
+    <script src="/webstatic/script/main.js"></script>
+    <script src="/webstatic/script/tool_trc/main.js"></script>
+    <script src="/webstatic/script/tool_trc/page_add.js"></script>
+
+    <script>
+        mainInit();
+        renderAddPage();
+    </script>
+    
+</body>
+
+</html>

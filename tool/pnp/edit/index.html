@@ -14,6 +14,7 @@
 
             <div style="padding-top:10px; display:flex;">
                 <a class="anav" href="/tool/pnp">⬅</a>
+                <span class="anav" onclick="showModal('show-info')">❓</span>
             </div>
 
             <div class="new-item-form">
@@ -27,35 +28,35 @@
                 <div class="period-day-container">
                     <div class="period-day">
                         <div>M</div>
-                        <input type="checkbox" id="D1"/>
+                        <input type="checkbox" id="D1" />
                     </div>
                     <div class="period-day">
                         <div>T</div>
-                        <input type="checkbox" id="D2"/>
+                        <input type="checkbox" id="D2" />
                     </div>
                     <div class="period-day">
                         <div>W</div>
-                        <input type="checkbox" id="D3"/>
+                        <input type="checkbox" id="D3" />
                     </div>
                     <div class="period-day">
                         <div>T</div>
-                        <input type="checkbox" id="D4"/>
+                        <input type="checkbox" id="D4" />
                     </div>
                     <div class="period-day">
                         <div>F</div>
-                        <input type="checkbox" id="D5"/>
+                        <input type="checkbox" id="D5" />
                     </div>
                     <div class="period-day">
                         <div>S</div>
-                        <input type="checkbox" id="D6"/>
+                        <input type="checkbox" id="D6" />
                     </div>
                     <div class="period-day">
                         <div>S</div>
-                        <input type="checkbox" id="D7"/>
+                        <input type="checkbox" id="D7" />
                     </div>
                 </div>
 
-                <span>Slot</span>
+                <span>Slot Count ??</span>
                 <input type="number" id="slot">
 
                 <span>Color</span>
@@ -70,21 +71,24 @@
                 </select>
             </div>
             <br/>
-            <button onclick="addNewTask()">💾</button>
+            <div class="anav" onclick="addNewTask()">💾</div>
 
-            <div class="task-list"></div>
+            <div class="item-list"></div>
 
-            <div class="pnp-modal" style="display: none;">
-                <input type="hidden" id="edit-task-name" />
-                <button id="add-action" onclick="deleteTask()">🚮</button>
-                <button id="cancel-action" onclick="closeModal()">❌</button>
+            <div class="modal show-info" style="display: none;">
+                <div style="display: flex;">
+                    <div style="width: 100%;"></div>
+                    <span class="anav" onclick="closeModal()">❌</span>
+                </div>
+                <span>1 slot = 30 minutes</span>
             </div>
 
         </div>
     </div>
 
     <script src="/webstatic/script/main.js"></script>
-    <script src="/webstatic/script/tool_pnp.js"></script>
+    <script src="/webstatic/script/tool_pnp/main.js"></script>
+    <script src="/webstatic/script/tool_pnp/page_edit.js"></script>
     <script>
         window.onload = function() {
             mainInit();
