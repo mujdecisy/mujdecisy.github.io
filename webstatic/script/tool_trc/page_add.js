@@ -22,8 +22,14 @@ function addNavButtonToDetail() {
 }
 
 function saveValue() {
+    let today = getDateAsString(new Date());
     let date = getDateAsString(new Date(document.getElementById("date").value));
-    let value = document.getElementById("value").value;
+    let value = Number.parseFloat(document.getElementById("value").value);
+
+    if (date > today) {
+        alert(`date can not be greater than today. (${today})`);
+        return;
+    }
 
     values[targetName][date] = value;
     updateData();

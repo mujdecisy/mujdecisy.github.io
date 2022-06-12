@@ -14,19 +14,35 @@
 
             <div class="tool-nav">
                 <a class="anav" href="/tool/trc">⬅</a>
-                
             </div>
 
             <div class="tool-header">Trace - Detail</div>
 
-            
+            <div style="display: flex; justify-content: center;">
+                <canvas id="line-chart" width="300" height="200" style="border:1px solid gray;">
+            </div>
 
-            <div class="item-list"></div>
+            <table class="detail">
+                <tr><td>Name</td><td><span id="name"></span></td></tr>
+                <tr><td>Start Date</td><td><span id="start_date"></span></td></tr>
+                <tr><td>Initial Value</td><td><span id="init_val"></span></td></tr>
+                <tr><td>Current Value</td><td><span id="current_val"></span></td></tr>
+                <tr><td>Target Value</td><td><span id="target_value"></span></td></tr>
+                <tr><td></td><td></td></tr>
+                <tr><td></td><td></td></tr>
+                <tr><td>Passed Day</td><td><span id="passed_day"></span></td></tr>
+                <tr><td>Remaining Day</td><td><span id="remaining_day"></span></td></tr>
+            </table>
+            
+            <div class="anav" onclick="deleteTarget()">🚮</div>
+
+            
         </div>
     </div>
 
     <script src="/webstatic/script/main.js"></script>
     <script src="/webstatic/script/tool_trc/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/regression/2.0.1/regression.min.js"></script>
     <script src="/webstatic/script/tool_trc/page_detail.js"></script>
 
     <script>

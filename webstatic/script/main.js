@@ -48,3 +48,13 @@ function getDateAsString(date) {
     let localDateForISO = new Date(+date - date.getTimezoneOffset() * 60000);
     return localDateForISO.toISOString().substring(0, 10);
 }
+
+function getStringDatesBetween(date1, date2) {
+    let dates = [];
+    let temp = new Date(date1);
+    while(temp.getTime() <= date2.getTime()) {
+        dates.push( getDateAsString(temp) );
+        temp.setDate(temp.getDate() + 1);
+    }
+    return dates;
+}

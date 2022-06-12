@@ -73,6 +73,19 @@ a {
     border: 1px solid gray;
 }
 
+.detail {
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.detail > tbody, tr {
+    width: 100%;
+}
+.detail > tbody > tr > td {
+    width: 50%;
+}
+
 @media (min-width: 720px) {
     .container {
         width: 700px;

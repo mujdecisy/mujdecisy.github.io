@@ -87,17 +87,6 @@
     margin: 2px 2px;
 }
 
-.detail {
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-table, tbody, tr {
-    width: 100%;
-}
-td {
-    width: 50%;
-}
 
 .period-day {
     display: flex;

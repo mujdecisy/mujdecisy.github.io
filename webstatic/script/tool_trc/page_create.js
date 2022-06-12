@@ -6,8 +6,8 @@ function renderCreatePage() {
 
 function addNewTarget() {
     let name = document.getElementById("name").value;
-    let init = document.getElementById("init").value;
-    let target = document.getElementById("target").value;
+    let init = Number.parseFloat(document.getElementById("init").value);
+    let target = Number.parseFloat(document.getElementById("target").value);
 
     let dateString = getDateAsString(new Date());
 

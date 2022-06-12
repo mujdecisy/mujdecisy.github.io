@@ -42,12 +42,3 @@ function getCalendarDates(date) {
     return dates;
 }
 
-function getStringDatesBetween(date1, date2) {
-    let dates = [];
-    let temp = new Date(date1);
-    while(temp.getTime() <= date2.getTime()) {
-        dates.push( getDateAsString(temp) );
-        temp.setDate(temp.getDate() + 1);
-    }
-    return dates;
-}
