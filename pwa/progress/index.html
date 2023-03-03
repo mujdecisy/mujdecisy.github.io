@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress</title>
+    <link rel="manifest" href="/pwa/manifest-progress.json" />
+    <!-- ios support -->
+    <link rel="apple-touch-icon" href="images/icons/icon-192x192.png" />
+    <link rel="apple-touch-icon" href="images/icons/icon-256x256.png" />
+    <link rel="apple-touch-icon" href="images/icons/icon-384x384.png" />
+    <link rel="apple-touch-icon" href="images/icons/icon-512x512.png" />
+    <meta name="apple-mobile-web-app-status-bar" content="#f6c935" />
+    <meta name="theme-color" content="#f6c935" />
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("/pwa/progress/sw.js").then(reg => {
+                console.log("serviceworker registration SUCCESS!")
+                console.log(reg)
+            }).catch(err => {
+                console.log("serviceworker registration FAILED!")
+            })
+        }
+    </script>
+</head>
+<body>
+    <main style="width: 500px;">
+        <h1>PWA/PROGRESS</h1>
+    </main>
+</body>
+</html>

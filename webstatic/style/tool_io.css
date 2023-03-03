@@ -1,9 +1,0 @@
-.storage-area {
-    margin-top: 20px;
-}
-
-.storage-area > textarea {
-    width: 100%;
-    margin-bottom: 10px;
-    resize: none;
-}
