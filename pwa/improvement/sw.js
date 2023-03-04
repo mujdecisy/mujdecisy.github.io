@@ -2,7 +2,7 @@ const cacheList = [
     "/pwa/improvement/index.html",
     "/pwa/improvement/style.css",
     "/pwa/improvement/script.js",
-    "/pwa/icon-192x192.png"
+    "/pwa/_conf/icon-192x192.png"
 ]
 
 

@@ -4,29 +4,47 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Progress</title>
-    <link rel="manifest" href="/pwa/manifest-progress.json" />
+    <link rel="manifest" href="/pwa/_conf/manifest-progress.json" />
     <!-- ios support -->
-    <link rel="apple-touch-icon" href="images/icons/icon-192x192.png" />
-    <link rel="apple-touch-icon" href="images/icons/icon-256x256.png" />
-    <link rel="apple-touch-icon" href="images/icons/icon-384x384.png" />
-    <link rel="apple-touch-icon" href="images/icons/icon-512x512.png" />
+    <link rel="apple-touch-icon" href="/pwa/_conf/icon-192x192.png" />
+    <link rel="apple-touch-icon" href="/pwa/_conf/icon-256x256.png" />
+    <link rel="apple-touch-icon" href="/pwa/_conf/icon-384x384.png" />
+    <link rel="apple-touch-icon" href="/pwa/_conf/icon-512x512.png" />
     <meta name="apple-mobile-web-app-status-bar" content="#f6c935" />
     <meta name="theme-color" content="#f6c935" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <main class="pwa-main">
+        <h1>PWA/PROGRESS</h1>
+        <div id="calendar-header"></div>
+        <div id="calendar"></div>
+        <div id="timeslot"></div>
+
+    </main>
+    
+    <script src="script.js"></script>
+
     <script>
         if ("serviceWorker" in navigator) {
             navigator.serviceWorker.register("/pwa/progress/sw.js").then(reg => {
                 console.log("serviceworker registration SUCCESS!")
-                console.log(reg)
             }).catch(err => {
                 console.log("serviceworker registration FAILED!")
             })
         }
+
+        var TARGET_DATE = new Date();
+
+        window.onload = (e) => {
+            renderCalendarHeaderById(TARGET_DATE);
+            renderCalendarById(TARGET_DATE);
+            renderTimeslotById();
+        }
     </script>
-</head>
-<body>
-    <main style="width: 500px;">
-        <h1>PWA/PROGRESS</h1>
-    </main>
+
 </body>
 </html>

@@ -1,0 +1,82 @@
+* {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+html, body {
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+.pwa-main {
+    max-width: 500px;
+    margin: 0px auto;
+}
+
+button {
+    background-color: gainsboro;
+    border: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    cursor: pointer;
+    min-width: 30px;
+    height: 30px;
+}
+
+
+/* ///////////////////////////////////// CALENDAR */
+.cal-table {
+    width: 100%;
+    table-layout: fixed;
+    border-spacing: 0px;
+}
+
+.cal-item {
+    height: 30px;
+    background-color: gainsboro;
+    padding: 5px;
+    font-size: small;
+    border-top: 1px solid gray;
+    cursor: pointer;
+}
+
+td + td {
+  border-left: 1px solid gray;
+}
+
+.cal-in-month {
+    background-color: gold;
+}
+
+.cal-in-day {
+    background-color: goldenrod;
+}
+
+.cal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+
+/* ///////////////////////////////////// TIMESLOT */
+#timeslot {
+    width: 100%;
+    overflow-y: auto;
+}
+.slot-cont {
+    display: flex;
+}
+.slot-item {
+    width: 30px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    font-size: small;
+    align-items: center;
+    transform: rotate(-90deg);
+    transform-origin: center;
+}

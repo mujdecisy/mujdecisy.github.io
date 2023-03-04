@@ -2,7 +2,7 @@ const cacheList = [
     "/pwa/progress/index.html",
     "/pwa/progress/style.css",
     "/pwa/progress/script.js",
-    "/pwa/icon-192x192.png"
+    "/pwa/_conf/icon-192x192.png"
 ]
 
 
