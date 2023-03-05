@@ -2,7 +2,8 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-html, body {
+html,
+body {
     width: 100%;
     padding: 0px;
     margin: 0px;
@@ -42,8 +43,8 @@ button {
     cursor: pointer;
 }
 
-td + td {
-  border-left: 1px solid gray;
+td+td {
+    border-left: 1px solid gray;
 }
 
 .cal-in-month {
@@ -66,10 +67,13 @@ td + td {
 #timeslot {
     width: 100%;
     overflow-y: auto;
+    margin-top: 5px;
 }
+
 .slot-cont {
     display: flex;
 }
+
 .slot-item {
     width: 30px;
     height: 50px;
@@ -79,4 +83,39 @@ td + td {
     align-items: center;
     transform: rotate(-90deg);
     transform-origin: center;
+}
+
+
+/* ///////////////////////////////////// TASKLIST */
+#tasklist {
+    margin-top: 20px;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.task-color {
+    background-color: var(--task-color);
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    margin-right: 10px;
+    border: 1px solid gray;
+}
+
+.task-name {
+    flex: 1;
+}
+
+.task-counts {
+    width: 80px;
+    text-align: right;
+}
+
+.task-total {
+    margin-top: 20px;
+    text-align: right;
 }

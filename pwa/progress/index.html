@@ -23,7 +23,7 @@
         <div id="calendar-header"></div>
         <div id="calendar"></div>
         <div id="timeslot"></div>
-
+        <div id="tasklist"></div>
     </main>
     
     <script src="script.js"></script>
@@ -43,6 +43,11 @@
             renderCalendarHeaderById(TARGET_DATE);
             renderCalendarById(TARGET_DATE);
             renderTimeslotById();
+            renderTaskListById([
+                {name: "asdf", color: "red", doneCount: 5, requiredCount: 10},
+                {name: "qwer", color: "yellow", doneCount: 2, requiredCount: 6},
+                {name: "zxcv", color: "green", doneCount: 3, requiredCount: 4},
+            ]);
         }
     </script>
 

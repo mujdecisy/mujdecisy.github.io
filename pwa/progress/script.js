@@ -88,7 +88,7 @@ function renderCalendarById(paramDate) {
         for (let j = 0; j < numCols; j++) {
             const date = week[j];
             const cell = document.createElement("td");
-            
+
 
             const cellBox = document.createElement("div");
             cellBox.style.display = "flex";
@@ -112,7 +112,7 @@ function renderCalendarById(paramDate) {
             }
             if (date.getMonth() === paramDate.getMonth()) {
                 cell.classList.add("cal-in-month");
-                cell.onclick = function() {
+                cell.onclick = function () {
                     changeTargetDate(date);
                 }
             }
@@ -134,37 +134,37 @@ function renderCalendarHeaderById(paramDate) {
     // Create the container element for the header
     const header = document.createElement("div");
     header.classList.add("cal-header")
-  
+
     // Create the navigation button for the previous month
     const prevMonthBtn = document.createElement("button");
     prevMonthBtn.innerHTML = '<i class="fa-solid fa-chevron-left"></i>';
     prevMonthBtn.addEventListener("click", () => {
-      paramDate.setMonth(paramDate.getMonth() - 1);
-      changeTargetDate(paramDate);
+        paramDate.setMonth(paramDate.getMonth() - 1);
+        changeTargetDate(paramDate);
     });
-  
+
     // Create the navigation button for the next month
     const nextMonthBtn = document.createElement("button");
     nextMonthBtn.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
     nextMonthBtn.addEventListener("click", () => {
-      paramDate.setMonth(paramDate.getMonth() + 1);
-      changeTargetDate(paramDate);
+        paramDate.setMonth(paramDate.getMonth() + 1);
+        changeTargetDate(paramDate);
     });
-  
+
     // Create the month and year text element
     const monthYearText = document.createElement("div");
     monthYearText.textContent = `${paramDate.toLocaleString('default', { month: 'long' })} ${paramDate.getFullYear()}`;
     monthYearText.style.textAlign = "center";
     monthYearText.style.fontWeight = "bold";
-  
+
     // Add the navigation buttons and month/year text to the header container
     header.appendChild(prevMonthBtn);
     header.appendChild(monthYearText);
     header.appendChild(nextMonthBtn);
-  
+
     // Add the header container to the document body
     document.getElementById("calendar-header").replaceChildren(header);
-  }
+}
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -175,27 +175,83 @@ function renderTimeslotById() {
     // Create a container element for the time slots
     const container = document.createElement("div");
     container.classList.add("slot-cont");
-  
+
     // Loop through all the half-hour time slots of the day (48 in total)
     for (let i = 0; i < 48; i++) {
-      // Calculate the hour and minute values for the current time slot
-      const hour = Math.floor(i / 2);
-      const minute = (i % 2) * 30;
-  
-      // Create a new div element to represent the current time slot
-      const timeContainer = document.createElement("div");
-      timeContainer.classList.add("slot-item");
-  
-      // Create a new div element to represent the current time
-      const time = document.createElement("div");
-      time.textContent = `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
-  
-      // Add the time div element to the time slot div element
-      timeContainer.appendChild(time);
-  
-      // Add the time slot div element to the container div element
-      container.appendChild(timeContainer);
+        // Calculate the hour and minute values for the current time slot
+        const hour = Math.floor(i / 2);
+        const minute = (i % 2) * 30;
+
+        // Create a new div element to represent the current time slot
+        const timeContainer = document.createElement("div");
+        timeContainer.classList.add("slot-item");
+
+        // Create a new div element to represent the current time
+        const time = document.createElement("div");
+        time.textContent = `${hour.toString().padStart(2, "0")}:${minute.toString().padStart(2, "0")}`;
+
+        // Add the time div element to the time slot div element
+        timeContainer.appendChild(time);
+
+        // Add the time slot div element to the container div element
+        container.appendChild(timeContainer);
     }
 
     document.getElementById("timeslot").replaceChildren(container);
+}
+
+
+//////////////////////////////////////////////////////////////////////////
+//////////////////////////////// TASKLIST ////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+
+
+function renderTaskListById(tasks) {
+    // Create a new container div for the task list.
+    const container = document.createElement('div');
+  
+    // Loop through each task object in the array.
+    for (const task of tasks) {
+      // Create a new div element for each task.
+      const taskElem = document.createElement('div');
+      taskElem.classList.add('task');
+  
+      // Create a new div element for the task color and set its color.
+      const colorElem = document.createElement('div');
+      colorElem.classList.add('task-color');
+      colorElem.style.setProperty('--task-color', task.color);
+  
+      // Create a new div element for the task name and set its text content.
+      const nameElem = document.createElement('div');
+      nameElem.classList.add('task-name');
+      nameElem.textContent = task.name;
+  
+      // Create a new div element for the task counts and set its text content.
+      const countsElem = document.createElement('div');
+      countsElem.classList.add('task-counts');
+      countsElem.textContent = `${task.doneCount}/${task.requiredCount}`;
+  
+      // Append the color, name, and counts elements to the task element.
+      taskElem.appendChild(colorElem);
+      taskElem.appendChild(nameElem);
+      taskElem.appendChild(countsElem);
+  
+      // Append the task element to the container element.
+      container.appendChild(taskElem);
+    }
+  
+    // Get the sum of all doneCounts and requiredCounts in the task array.
+    const doneCount = tasks.reduce((sum, task) => sum + task.doneCount, 0);
+    const requiredCount = tasks.reduce((sum, task) => sum + task.requiredCount, 0);
+  
+    // Create a new div element for the task total and set its text content.
+    const totalElem = document.createElement('div');
+    totalElem.classList.add('task-total');
+    totalElem.textContent = `Total: ${doneCount}/${requiredCount}`;
+  
+    // Append the total element to the container element.
+    container.appendChild(totalElem);
+  
+    // Replace the child elements of the tasklist element with the container element.
+    document.getElementById("tasklist").replaceChildren(container);
   }
