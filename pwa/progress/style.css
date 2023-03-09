@@ -1,3 +1,11 @@
+:root {
+    --red: #ffb6b9;
+    --blue: #89bcce;
+    --green: #c8e6c9;
+    --yellow: #ffe0b2;
+    --pink: #ffb6ed;
+  }
+
 * {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -12,19 +20,81 @@ body {
 .pwa-main {
     max-width: 500px;
     margin: 0px auto;
+    padding: 10px;
 }
 
-button {
+.btn {
     background-color: gainsboro;
     border: 0px;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 5px;
+    padding: 5px !important;
     cursor: pointer;
     min-width: 30px;
     height: 30px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: black;
 }
+
+.btn-tp {
+    background-color: transparent;
+}
+
+.btn-ul {
+    text-decoration: underline;
+    text-decoration-color: gold;
+    text-decoration-thickness: 2px;
+    text-decoration-style: wavy;
+}
+
+.no-deco {
+    text-decoration: none;
+    color: black;
+}
+
+input,
+select {
+    -webkit-appearance: none;
+    /* Remove default appearance */
+    appearance: none;
+    padding: 5px;
+    background-color: white;
+    border: 1px solid gainsboro;
+    border-radius: 5px;
+}
+
+input:active,
+input:focus-visible,
+input:focus,
+select:active,
+select:focus-visible,
+select:focus {
+    border-color: gold;
+    outline-color: gold !important;
+}
+
+
+/* ///////////////////////////////////// NAVIGATION */
+nav {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.nav-header {
+    font-weight: bolder;
+    font-size: xx-large;
+}
+
+
+#nav-additions {
+    display: flex;
+}
+
 
 
 /* ///////////////////////////////////// CALENDAR */
@@ -36,7 +106,7 @@ button {
 
 .cal-item {
     height: 30px;
-    background-color: gainsboro;
+    background-color: whitesmoke;
     padding: 5px;
     font-size: small;
     border-top: 1px solid gray;
@@ -48,11 +118,11 @@ td+td {
 }
 
 .cal-in-month {
-    background-color: gold;
+    background-color: lemonchiffon;
 }
 
 .cal-in-day {
-    background-color: goldenrod;
+    background-color: gold;
 }
 
 .cal-header {
@@ -74,7 +144,7 @@ td+td {
     display: flex;
 }
 
-.slot-item {
+.slot-item > div {
     width: 30px;
     height: 50px;
     display: flex;
@@ -83,6 +153,7 @@ td+td {
     align-items: center;
     transform: rotate(-90deg);
     transform-origin: center;
+    cursor: pointer;
 }
 
 
@@ -99,9 +170,9 @@ td+td {
 
 .task-color {
     background-color: var(--task-color);
-    border-radius: 50%;
-    width: 10px;
-    height: 10px;
+    border-radius: 3px;
+    width: 12px;
+    height: 12px;
     margin-right: 10px;
     border: 1px solid gray;
 }
@@ -118,4 +189,89 @@ td+td {
 .task-total {
     margin-top: 20px;
     text-align: right;
+}
+
+
+/* ///////////////////////////////////// TASKADDFORM*/
+.task-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0px auto;
+}
+
+.task-form>label {
+    margin-top: 20px;
+}
+
+/* ///////////////////////////////////// TASKLISTPAGE */
+.days-of-week {
+    display: flex;
+    justify-content: space-around;
+    padding: 2px 10px;
+    background-color: gold;
+    border-radius: 10px;
+}
+
+#tasklistp {
+    display: grid;
+    grid-template-columns: 1fr 5fr 3fr 1fr 1fr;
+    grid-gap: 15px;
+}
+
+#tasklistp>div {
+    margin: auto 0px;
+}
+
+
+/* ///////////////////////////////////// TASKDETAILPAGE */
+.coin-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    max-width: 400px;
+    margin: 0px auto;
+}
+
+.coin {
+    width: 30px;
+    height: 30px;
+    border-radius: 18px;
+    border: 2px solid goldenrod;
+    background-color: gold;
+    margin: 5px auto;
+}
+
+#metrics {
+    margin-top: 50px;
+}
+
+.metric-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+    max-width: 400px;
+    margin: 0px auto;
+}
+
+.metric-key {
+    font-weight: bold;
+}
+
+.metric-value {
+    text-align: right;
+}
+
+
+
+/* ///////////////////////////////////// TASKASSIGN */
+.assign-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.datetime-cont {
+    display: flex;
+    justify-content: end;
+    font-size: large;
+    margin-bottom: 20px;
 }

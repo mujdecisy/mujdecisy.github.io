@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="style.css">
     <title>Progress</title>
     <link rel="manifest" href="/pwa/_conf/manifest-progress.json" />
@@ -15,17 +16,17 @@
     <meta name="apple-mobile-web-app-status-bar" content="#f6c935" />
     <meta name="theme-color" content="#f6c935" />
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
     <main class="pwa-main">
-        <h1>PWA/PROGRESS</h1>
-        <div id="calendar-header"></div>
-        <div id="calendar"></div>
-        <div id="timeslot"></div>
-        <div id="tasklist"></div>
+        <div id="navigation"></div>
+        <div id="content"></div>
     </main>
-    
+
     <script src="script.js"></script>
 
     <script>
@@ -38,18 +39,67 @@
         }
 
         var TARGET_DATE = new Date();
+        var TARGET_TASKLOG = null;
+        var TARGET_TASKDEFS = null;
+        const K_TASKDEFS = "progress_taskdefs";
+        const K_TASKLOG = "progress_tasklog";
 
         window.onload = (e) => {
-            renderCalendarHeaderById(TARGET_DATE);
-            renderCalendarById(TARGET_DATE);
-            renderTimeslotById();
-            renderTaskListById([
-                {name: "asdf", color: "red", doneCount: 5, requiredCount: 10},
-                {name: "qwer", color: "yellow", doneCount: 2, requiredCount: 6},
-                {name: "zxcv", color: "green", doneCount: 3, requiredCount: 4},
-            ]);
+            const searchParams = new URLSearchParams(window.location.search);
+            const page = searchParams.get("page");
+            const targetDate = searchParams.get("targetDate");
+            const taskId = parseInt(searchParams.get("taskId") || "0");
+            if (targetDate) {
+                TARGET_DATE = new Date(targetDate);
+            }
+            const content = document.getElementById("content");
+            renderNavigationBarById();
+
+            if (!page) {
+                TARGET_TASKLOG = JSON.parse(localStorage.getItem(K_TASKLOG) || "{}")[dateToString(TARGET_DATE)] || {};
+                TARGET_TASKDEFS = getTaskDefs(TARGET_DATE.getDay().toString(), TARGET_DATE);
+                content.innerHTML = `
+                    <div id="calendar-header"></div>
+                    <div id="calendar"></div>
+                    <div id="timeslot"></div>
+                    <div id="tasklist"></div>
+                `;
+                renderAdditionalsIndexPage();
+                renderCalendarHeaderById(TARGET_DATE);
+                renderCalendarById(TARGET_DATE);
+                renderTimeslotById();
+                renderTaskListById(getDailyTasksWithDoneCounts());
+            } else if (page === "task-add") {
+                content.innerHTML = `
+                    <div id="taskaddform"></div>
+                `;
+                renderTaskFormById();
+            } else if (page === "task-list") {
+                content.innerHTML = `
+                    <div id="tasklistp"></div>
+                `;
+                renderTaskListPageById(getTaskDefs());
+                renderAdditionalsTaskListPage();
+            } else if (page === "task-detail") {
+                content.innerHTML = `
+                    <div id="coins"></div>
+                    <div id="metrics"></div>
+                `;
+
+                const dailySuccesArray = getDailySuccessOfTask(taskId);
+                renderAdditionalsDetailPage(taskId);
+                renderCoinsById(dailySuccesArray);
+                renderMetricListById(taskId, dailySuccesArray);
+            } else if (page === "assignment") {
+                TARGET_TASKDEFS = getTaskDefs(TARGET_DATE.getDay().toString(), TARGET_DATE);
+                content.innerHTML = `
+                    <div id="assign"></div>
+                `;
+                renderTaskAssignById(TARGET_TASKDEFS);
+            }
         }
     </script>
 
 </body>
+
 </html>
