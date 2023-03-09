@@ -29,13 +29,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 5px !important;
     cursor: pointer;
     min-width: 30px;
-    height: 30px;
+    height: 50px;
     border-radius: 10px;
     text-decoration: none;
     color: black;
+    font-size: 1.2rem;
 }
 
 .btn-tp {
@@ -47,6 +47,11 @@ body {
     text-decoration-color: gold;
     text-decoration-thickness: 2px;
     text-decoration-style: wavy;
+}
+
+.btn-sm {
+    height: 30px;
+    font-size: 1rem;
 }
 
 .no-deco {
@@ -63,6 +68,11 @@ select {
     background-color: white;
     border: 1px solid gainsboro;
     border-radius: 5px;
+    font-size: 1.1rem;
+}
+
+label {
+    font-size: 1.2rem;
 }
 
 input:active,
@@ -93,6 +103,7 @@ nav {
 
 #nav-additions {
     display: flex;
+    font-size: 1.2rem;
 }
 
 
@@ -146,7 +157,7 @@ td+td {
 
 .slot-item > div {
     width: 30px;
-    height: 50px;
+    height: 60px;
     display: flex;
     justify-content: center;
     font-size: small;
@@ -154,6 +165,9 @@ td+td {
     transform: rotate(-90deg);
     transform-origin: center;
     cursor: pointer;
+    padding-right: 10px;
+    padding-left: 10px;
+    border-right: 2px dashed gray;
 }
 
 
@@ -198,6 +212,7 @@ td+td {
     flex-direction: column;
     width: 100%;
     margin: 0px auto;
+    font-size: 1.3rem;
 }
 
 .task-form>label {

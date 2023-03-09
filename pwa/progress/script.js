@@ -373,7 +373,7 @@ function renderCalendarHeaderById(paramDate) {
 
     // Create the navigation button for the previous month
     const prevMonthBtn = document.createElement("button");
-    prevMonthBtn.classList.add("btn");
+    prevMonthBtn.className = "btn btn-sm";
     prevMonthBtn.innerHTML = '<i class="fa-solid fa-chevron-left"></i>';
     prevMonthBtn.addEventListener("click", () => {
         paramDate.setMonth(paramDate.getMonth() - 1);
@@ -382,7 +382,7 @@ function renderCalendarHeaderById(paramDate) {
 
     // Create the navigation button for the next month
     const nextMonthBtn = document.createElement("button");
-    nextMonthBtn.classList.add("btn");
+    nextMonthBtn.className = "btn btn-sm";
     nextMonthBtn.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
     nextMonthBtn.addEventListener("click", () => {
         paramDate.setMonth(paramDate.getMonth() + 1);
@@ -585,7 +585,6 @@ function renderTaskFormById() {
     // Create submit button
     const submitButton = document.createElement("button");
     submitButton.style.marginTop = "30px";
-    submitButton.style.fontSize = "16px";
     submitButton.classList.add("btn");
     submitButton.setAttribute("type", "submit");
     submitButton.textContent = "Create Task";
