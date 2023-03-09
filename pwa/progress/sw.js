@@ -2,7 +2,8 @@ const cacheList = [
     "/pwa/progress/index.html",
     "/pwa/progress/style.css",
     "/pwa/progress/script.js",
-    "/pwa/_conf/icon-192x192.png"
+    "/pwa/_conf/icon-192x192.png",
+    "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
 ]
 
 
@@ -16,10 +17,9 @@ self.addEventListener("install", e => {
 
 
 self.addEventListener("fetch", e => {
-    fetch(e.request);
-    // e.respondWith(
-    //     caches.match(e.request).then(resp => {
-    //         return resp || fetch(e.request)
-    //     })
-    // )
+    e.respondWith(
+        caches.match(e.request).then(resp => {
+            return resp || fetch(e.request)
+        })
+    )
 })

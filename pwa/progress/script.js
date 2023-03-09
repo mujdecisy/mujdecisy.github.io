@@ -492,17 +492,33 @@ function renderTaskListById(tasks) {
         container.appendChild(taskElem);
     }
 
-    // Get the sum of all doneCounts and requiredCounts in the task array.
-    const doneCount = tasks.reduce((sum, task) => sum + task.doneCount, 0);
-    const requiredCount = tasks.reduce((sum, task) => sum + task.slotCount, 0);
+    if (tasks.length > 0) {
+        // Get the sum of all doneCounts and requiredCounts in the task array.
+        const doneCount = tasks.reduce((sum, task) => sum + task.doneCount, 0);
+        const requiredCount = tasks.reduce((sum, task) => sum + task.slotCount, 0);
 
-    // Create a new div element for the task total and set its text content.
-    const totalElem = document.createElement('div');
-    totalElem.classList.add('task-total');
-    totalElem.textContent = `Total: ${doneCount}/${requiredCount}`;
+        // Create a new div element for the task total and set its text content.
+        const totalElem = document.createElement('div');
+        totalElem.classList.add('task-total');
+        totalElem.textContent = `Total: ${doneCount}/${requiredCount}`;
 
-    // Append the total element to the container element.
-    container.appendChild(totalElem);
+        // Append the total element to the container element.
+        container.appendChild(totalElem);
+    } else {
+        const msgElement = document.createElement("p");
+        msgElement.textContent = "There is no task to do for today."
+        msgElement.style.textAlign = "center";
+        const aElement = document.createElement("a");
+        aElement.href = "/pwa/progress/index.html?page=task-add"
+        aElement.textContent = "Create New Task"
+        aElement.className = "btn btn-sm"
+        aElement.style.maxWidth = "350px";
+        aElement.style.margin = "0px auto";
+        container.appendChild(msgElement);
+        container.appendChild(aElement);
+    }
+
+
 
     // Replace the child elements of the tasklist element with the container element.
     document.getElementById("tasklist").replaceChildren(container);
@@ -679,6 +695,22 @@ function renderTaskListPageById(tasks) {
             window.location.href = `/pwa/progress/index.html?page=task-detail&taskId=${task.id}`;
         });
         taskListElement.appendChild(buttonElement);
+    }
+
+    if (tasks.length < 1) {
+        const msgElement = document.createElement("p");
+        msgElement.textContent = "There is no defined task."
+        msgElement.style.textAlign = "center";
+        const aElement = document.createElement("a");
+        aElement.href = "/pwa/progress/index.html?page=task-add"
+        aElement.textContent = "Create New Task"
+        aElement.className = "btn btn-sm"
+        aElement.style.maxWidth = "350px";
+        aElement.style.margin = "0px auto";
+
+        taskListElement.appendChild(msgElement);
+        taskListElement.appendChild(aElement);
+        taskListElement.style.display = "block";
     }
 }
 
