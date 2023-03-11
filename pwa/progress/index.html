@@ -30,74 +30,35 @@
     <script src="script.js"></script>
 
     <script>
-        if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("/pwa/progress/sw.js").then(reg => {
-                console.log("serviceworker registration SUCCESS!")
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/pwa/progress/sw.js').then(_ => {
+                console.log('serviceworker registration SUCCESS!');
             }).catch(err => {
-                console.log("serviceworker registration FAILED!")
-            })
+                console.error('serviceworker registration FAILED!', err);
+            });
         }
 
-        var TARGET_DATE = new Date();
-        var TARGET_TASKLOG = null;
-        var TARGET_TASKDEFS = null;
-        const K_TASKDEFS = "progress_taskdefs";
-        const K_TASKLOG = "progress_tasklog";
+        var TARGET_DATE = new Date(sessionStorage.getItem(KS_TARGETDATE));
+        var TARGET_TIME = sessionStorage.getItem(KS_TARGETTIME);
+        var TARGET_TASKID = parseInt(sessionStorage.getItem(KS_TARGETTASKID), '0');
 
-        window.onload = (e) => {
+        window.onload = _ => {
             const searchParams = new URLSearchParams(window.location.search);
-            const page = searchParams.get("page");
-            const targetDate = searchParams.get("targetDate");
-            const taskId = parseInt(searchParams.get("taskId") || "0");
-            if (targetDate) {
-                TARGET_DATE = new Date(targetDate);
-            }
-            const content = document.getElementById("content");
+            const page = searchParams.get('page');
+            const content = document.getElementById('content');
             renderNavigationBarById();
-
-            if (!page) {
-                TARGET_TASKLOG = JSON.parse(localStorage.getItem(K_TASKLOG) || "{}")[dateToString(TARGET_DATE)] || {};
-                TARGET_TASKDEFS = getTaskDefs(TARGET_DATE.getDay().toString(), TARGET_DATE);
-                content.innerHTML = `
-                    <div id="calendar-header"></div>
-                    <div id="calendar"></div>
-                    <div id="timeslot"></div>
-                    <div id="tasklist"></div>
-                `;
-                renderAdditionalsIndexPage();
-                renderCalendarHeaderById(TARGET_DATE);
-                renderCalendarById(TARGET_DATE);
-                renderTimeslotById();
-                renderTaskListById(getDailyTasksWithDoneCounts());
-            } else if (page === "task-add") {
-                content.innerHTML = `
-                    <div id="taskaddform"></div>
-                `;
-                renderTaskFormById();
-            } else if (page === "task-list") {
-                content.innerHTML = `
-                    <div id="tasklistp"></div>
-                `;
-                renderTaskListPageById(getTaskDefs());
-                renderAdditionalsTaskListPage();
-            } else if (page === "task-detail") {
-                content.innerHTML = `
-                    <div id="coins"></div>
-                    <div id="metrics"></div>
-                `;
-
-                const dailySuccesArray = getDailySuccessOfTask(taskId);
-                renderAdditionalsDetailPage(taskId);
-                renderCoinsById(dailySuccesArray);
-                renderMetricListById(taskId, dailySuccesArray);
-            } else if (page === "assignment") {
-                TARGET_TASKDEFS = getTaskDefs(TARGET_DATE.getDay().toString(), TARGET_DATE);
-                content.innerHTML = `
-                    <div id="assign"></div>
-                `;
-                renderTaskAssignById(TARGET_TASKDEFS);
+            if (page === 'task-add') {
+                renderPageTaskAdd(content);
+            } else if (page === 'task-list') {
+                renderPageTaskList(content);
+            } else if (page === 'task-detail') {
+                renderPageTaskDetail(content, TARGET_TASKID);
+            } else if (page === 'assignment') {
+                renderPageAssignment(content, TARGET_DATE, TARGET_TIME);
+            } else {
+                renderPageDashBoard(content, TARGET_DATE);
             }
-        }
+        };
     </script>
 
 </body>
