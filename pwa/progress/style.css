@@ -60,7 +60,8 @@ body {
 }
 
 input,
-select {
+select,
+textarea {
     -webkit-appearance: none;
     /* Remove default appearance */
     appearance: none;
@@ -80,7 +81,10 @@ input:focus-visible,
 input:focus,
 select:active,
 select:focus-visible,
-select:focus {
+select:focus,
+textarea:active,
+textarea:focus-visible,
+textarea:focus {
     border-color: gold;
     outline-color: gold !important;
 }

@@ -262,6 +262,14 @@ function renderPageAssignment(content, date, time) {
     renderTaskAssignById(taskDefs, date, time);
 }
 
+function renderPageIo(content) {
+    content.innerHTML = `
+        <div id="data-json" />
+    `;
+    renderAdditionalsIoPage();
+    renderIoTextById();
+}
+
 
 //?///////////////////////////////////////////////////////////////////////
 ////////////////////////////// NAVIGATION ////////////////////////////////
@@ -289,20 +297,23 @@ function renderNavigationBarById() {
 
 function renderAdditionalsDashboardPage() {
     const navAdds = document.getElementById('nav-additions');
-    const goToday = document.createElement('button');
-    goToday.innerHTML = '<i class="fa-solid fa-clock-rotate-left"></i>';
-    goToday.className = 'btn btn-tp';
-    goToday.onclick = function () {
+    const ioButton = createAnchor(`${PATH}?page=io`, '<i class="fa-regular fa-floppy-disk"></i>');
+    ioButton.className = 'btn btn-tp';
+    navAdds.appendChild(ioButton);
+    const todayButton = document.createElement('button');
+    todayButton.innerHTML = '<i class="fa-solid fa-clock-rotate-left"></i>';
+    todayButton.className = 'btn btn-tp';
+    todayButton.onclick = function () {
         sessionStorage.setItem(KS_TARGETDATE, dateToString(new Date()));
         window.location.href = PATH;
     };
-    navAdds.appendChild(goToday);
-    const ancAllTasks = createAnchor(
+    navAdds.appendChild(todayButton);
+    const allTasksButton = createAnchor(
         `${PATH}?page=task-list`,
         '<i class="fa-solid fa-list-check"></i>'
     );
-    ancAllTasks.className = 'btn btn-tp';
-    navAdds.appendChild(ancAllTasks);
+    allTasksButton.className = 'btn btn-tp';
+    navAdds.appendChild(allTasksButton);
 }
 
 //?///////////////////////////////////////////////////////////////////////
@@ -398,11 +409,11 @@ function renderCalendarById(paramDate) {
 }
 
 function renderCalendarHeaderById(paramDate) {
-   
+
     const header = document.createElement('div');
     header.classList.add('cal-header');
 
-   
+
     const prevMonthBtn = document.createElement('button');
     prevMonthBtn.className = 'btn btn-sm';
     prevMonthBtn.innerHTML = '<i class="fa-solid fa-chevron-left"></i>';
@@ -411,7 +422,7 @@ function renderCalendarHeaderById(paramDate) {
         changeTargetDate(paramDate);
     });
 
-   
+
     const nextMonthBtn = document.createElement('button');
     nextMonthBtn.className = 'btn btn-sm';
     nextMonthBtn.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
@@ -438,8 +449,8 @@ function halfHourCountdown() {
     const now = new Date();
     const hours = now.getHours();
     const minutes = now.getMinutes();
-    return hours*CNT_HALFHOURINONEHOUR + ((minutes > CNT_HALFHOURINMINS)?1:0);
-  }
+    return hours * CNT_HALFHOURINONEHOUR + ((minutes > CNT_HALFHOURINMINS) ? 1 : 0);
+}
 
 function renderTimeslotById(taskDefs, taskLogs, date) {
     const container = document.createElement('div');
@@ -472,7 +483,7 @@ function renderTimeslotById(taskDefs, taskLogs, date) {
     timeSlotElement.replaceChildren(container);
     const nthHalfHour = halfHourCountdown();
     timeSlotElement.scrollBy({
-        left: nthHalfHour*SIZE_WIDTHTSBLOCK,
+        left: nthHalfHour * SIZE_WIDTHTSBLOCK,
         behavior: 'smooth'
     });
 }
@@ -791,3 +802,46 @@ function renderTaskAssignById(taskList, date, time) {
     contentElem.appendChild(form);
 }
 
+//?///////////////////////////////////////////////////////////////////////
+////////////////////////////// INPUTOUTPUT ///////////////////////////////
+//////////////////////////////////////////////////////////////////////////
+function renderAdditionalsIoPage() {
+    const navAdds = document.getElementById('nav-additions');
+    const copyButton = document.createElement('button');
+    copyButton.innerHTML = '<i class="fa-solid fa-copy"></i>';
+    copyButton.className = 'btn btn-tp';
+    copyButton.addEventListener('click', () => {
+        document.getElementById('data-json').getElementsByTagName('textarea')[0].select();
+        document.execCommand('copy');
+    });
+    navAdds.appendChild(copyButton);
+}
+
+
+function renderIoTextById() {
+    const dataJsonInit = {
+        [KL_TASKDEFS] : jsonFromLocal(KL_TASKDEFS),
+        [KL_TASKLOGS] : jsonFromLocal(KL_TASKLOGS)
+    };
+
+    const textArea = document.createElement('textarea');
+    textArea.rows = '10';
+    textArea.style.width = '98%';
+    textArea.value = JSON.stringify(dataJsonInit, undefined, 2);
+
+    const saveButton = document.createElement('button');
+    saveButton.innerText = 'Save';
+    saveButton.className = 'btn btn-sm';
+    saveButton.style.margin = '20px auto';
+    saveButton.style.width = '60%';
+    saveButton.addEventListener('click', () => {
+        const dataJson = JSON.parse(textArea.value);
+        jsonToLocal(KL_TASKDEFS, dataJson[KL_TASKDEFS]);
+        jsonToLocal(KL_TASKLOGS, dataJson[KL_TASKLOGS]);
+        window.location.href = `${PATH}?page=io`;
+    });
+
+    const container = document.getElementById('data-json');
+    container.appendChild(textArea);
+    container.appendChild(saveButton);
+}

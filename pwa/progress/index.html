@@ -38,7 +38,7 @@
             });
         }
 
-        var TARGET_DATE = new Date(sessionStorage.getItem(KS_TARGETDATE));
+        var TARGET_DATE = new Date(sessionStorage.getItem(KS_TARGETDATE) || new Date().getTime());
         var TARGET_TIME = sessionStorage.getItem(KS_TARGETTIME);
         var TARGET_TASKID = parseInt(sessionStorage.getItem(KS_TARGETTASKID), '0');
 
@@ -55,6 +55,8 @@
                 renderPageTaskDetail(content, TARGET_TASKID);
             } else if (page === 'assignment') {
                 renderPageAssignment(content, TARGET_DATE, TARGET_TIME);
+            } else if (page === 'io') {
+                renderPageIo(content);
             } else {
                 renderPageDashBoard(content, TARGET_DATE);
             }
