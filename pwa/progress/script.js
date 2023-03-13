@@ -1,8 +1,6 @@
 //?///////////////////////////////////////////////////////////////////////
 ///////////////////////////////// UTILITY ////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
-const PAD_NUM = 2;
-const PAD_VAL = '0';
 const LENMAX_TASKNAME = 20;
 const LEN_SUCCEEDDAY = 35;
 const CNT_SUCCEEDSTEP = 28;
@@ -19,13 +17,6 @@ const KL_TASKLOGS = 'progress_taskLogs';
 const KS_TARGETDATE = 'progress_targetDate';
 const KS_TARGETTIME = 'progress_targetTime';
 const KS_TARGETTASKID = 'progress_targetTaskId';
-
-function dateToString(dateDate) {
-    const year = dateDate.getFullYear();
-    const month = (dateDate.getMonth() + 1).toString().padStart(PAD_NUM, PAD_VAL);
-    const day = dateDate.getDate().toString().padStart(PAD_NUM, PAD_VAL);
-    return `${year}-${month}-${day}`;
-}
 
 function changeTargetDate(paramDate) {
     sessionStorage.setItem(KS_TARGETDATE, dateToString(paramDate));
@@ -48,19 +39,6 @@ function checkNewTask(taskDict, taskName, taskColor) {
         }
     }
 }
-
-function jsonFromLocal(key, defaultValue = {}) {
-    const value = localStorage.getItem(key);
-    if (value) {
-        return JSON.parse(value);
-    }
-    return defaultValue;
-}
-
-function jsonToLocal(key, value) {
-    localStorage.setItem(key, JSON.stringify(value));
-}
-
 
 function saveTaskToLocalStorage(taskId, taskName, slotCount, daysOfWeek, startDate, color) {
     const taskDefinition = {
@@ -184,30 +162,6 @@ function clearTaskFromLocalStorage(taskId) {
     jsonToLocal(KL_TASKDEFS, taskDefs);
 }
 
-function createAnchor(link, innerHTML) {
-    const anchor = document.createElement('a');
-    anchor.href = link;
-    anchor.innerHTML = innerHTML;
-    return anchor;
-}
-
-function createConductToPage(message, buttonLabel, link) {
-    const container = document.createElement('div');
-
-    const msgElement = document.createElement('p');
-    msgElement.textContent = message;
-    msgElement.style.textAlign = 'center';
-    const aElement = createAnchor(link, buttonLabel);
-    aElement.className = 'btn btn-tp btn-ul';
-    aElement.style.maxWidth = '350px';
-    aElement.style.margin = '0px auto';
-
-    container.appendChild(msgElement);
-    container.appendChild(aElement);
-
-    return container;
-}
-
 //?///////////////////////////////////////////////////////////////////////
 ////////////////////////////////// PAGES /////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
@@ -267,28 +221,7 @@ function renderPageIo(content) {
         <div id="data-json" />
     `;
     renderAdditionalsIoPage();
-    renderIoTextById();
-}
-
-
-//?///////////////////////////////////////////////////////////////////////
-////////////////////////////// NAVIGATION ////////////////////////////////
-//////////////////////////////////////////////////////////////////////////
-
-function renderNavigationBarById() {
-    const navigationBar = document.createElement('nav');
-
-    const appName = createAnchor(PATH, 'Progress.');
-    appName.style.borderBottom = '5px solid gold';
-    appName.className = 'no-deco nav-header';
-
-    const additionals = document.createElement('div');
-    additionals.id = 'nav-additions';
-
-    navigationBar.appendChild(appName);
-    navigationBar.appendChild(additionals);
-
-    document.getElementById('navigation').replaceChildren(navigationBar);
+    renderIoTextById([KL_TASKDEFS, KL_TASKLOGS]);
 }
 
 //?///////////////////////////////////////////////////////////////////////
@@ -483,8 +416,8 @@ function renderTimeslotById(taskDefs, taskLogs, date) {
     timeSlotElement.replaceChildren(container);
     const nthHalfHour = halfHourCountdown();
     timeSlotElement.scrollBy({
-        left: nthHalfHour * SIZE_WIDTHTSBLOCK,
-        behavior: 'smooth'
+        left: Math.max((nthHalfHour-2) * SIZE_WIDTHTSBLOCK, 0),
+        behavior: 'auto'
     });
 }
 
@@ -525,7 +458,7 @@ function renderDailyTasksById(tasks) {
         container.appendChild(
             createConductToPage(
                 'There is no task to do for today.',
-                'Create New Task',
+                'Create A New Task',
                 `${PATH}?page=task-add`
             )
         );
@@ -540,7 +473,7 @@ function renderDailyTasksById(tasks) {
 
 function renderTaskFormById() {
     const form = document.createElement('form');
-    form.classList.add('task-form');
+    form.classList.add('form-cont');
     const nameLabel = document.createElement('label');
     nameLabel.textContent = 'Task Name';
     const nameInput = document.createElement('input');
@@ -676,7 +609,7 @@ function renderTaskListPageById(tasks) {
         taskListElement.appendChild(
             createConductToPage(
                 'There is no defined task.',
-                'Create New Task',
+                'Create A New Task',
                 `${PATH}?page=task-add`
             )
         );
@@ -737,18 +670,7 @@ function renderMetricListById(taskId, dailySuccessArray) {
             return ax;
         }, 0)
     };
-    const metricGrid = document.createElement('div');
-    metricGrid.classList.add('metric-grid');
-    for (const [key, value] of Object.entries(metrics)) {
-        const keyCell = document.createElement('div');
-        keyCell.classList.add('metric-key');
-        keyCell.textContent = `${key}:`;
-        const valueCell = document.createElement('div');
-        valueCell.classList.add('metric-value');
-        valueCell.textContent = `${value}`;
-        metricGrid.appendChild(keyCell);
-        metricGrid.appendChild(valueCell);
-    }
+    const metricGrid = createMetricGrid(metrics);
     document.getElementById('metrics').replaceChildren(metricGrid);
 }
 
@@ -802,46 +724,4 @@ function renderTaskAssignById(taskList, date, time) {
     contentElem.appendChild(form);
 }
 
-//?///////////////////////////////////////////////////////////////////////
-////////////////////////////// INPUTOUTPUT ///////////////////////////////
-//////////////////////////////////////////////////////////////////////////
-function renderAdditionalsIoPage() {
-    const navAdds = document.getElementById('nav-additions');
-    const copyButton = document.createElement('button');
-    copyButton.innerHTML = '<i class="fa-solid fa-copy"></i>';
-    copyButton.className = 'btn btn-tp';
-    copyButton.addEventListener('click', () => {
-        document.getElementById('data-json').getElementsByTagName('textarea')[0].select();
-        document.execCommand('copy');
-    });
-    navAdds.appendChild(copyButton);
-}
 
-
-function renderIoTextById() {
-    const dataJsonInit = {
-        [KL_TASKDEFS] : jsonFromLocal(KL_TASKDEFS),
-        [KL_TASKLOGS] : jsonFromLocal(KL_TASKLOGS)
-    };
-
-    const textArea = document.createElement('textarea');
-    textArea.rows = '10';
-    textArea.style.width = '98%';
-    textArea.value = JSON.stringify(dataJsonInit, undefined, 2);
-
-    const saveButton = document.createElement('button');
-    saveButton.innerText = 'Save';
-    saveButton.className = 'btn btn-sm';
-    saveButton.style.margin = '20px auto';
-    saveButton.style.width = '60%';
-    saveButton.addEventListener('click', () => {
-        const dataJson = JSON.parse(textArea.value);
-        jsonToLocal(KL_TASKDEFS, dataJson[KL_TASKDEFS]);
-        jsonToLocal(KL_TASKLOGS, dataJson[KL_TASKLOGS]);
-        window.location.href = `${PATH}?page=io`;
-    });
-
-    const container = document.getElementById('data-json');
-    container.appendChild(textArea);
-    container.appendChild(saveButton);
-}

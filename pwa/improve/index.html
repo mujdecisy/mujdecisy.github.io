@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" href="/pwa/_util/style.css">
     <link rel="stylesheet" href="style.css">
-    <title>Progress</title>
-    <link rel="manifest" href="/pwa/_conf/manifest-progress.json" />
+    <title>Improve</title>
+    <link rel="manifest" href="/pwa/_conf/manifest-improve.json" />
     <!-- ios support -->
     <link rel="apple-touch-icon" href="/pwa/_conf/icon-192x192.png" />
     <link rel="apple-touch-icon" href="/pwa/_conf/icon-256x256.png" />
@@ -28,40 +28,39 @@
         <div id="content"></div>
     </main>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/regression/2.0.1/regression.min.js" integrity="sha512-0k6FXllQktdobw8Nc8KQN2WtZrOuxpMn7jC2RKCF6LR7EdOhhrg3H5cBPxhs3CFzQVlO6ni1B9SDLUPhBs0Alg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
     <script src="/pwa/_util/script.js"></script>
     <script src="script.js"></script>
 
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/pwa/progress/sw.js').then(_ => {
+            navigator.serviceWorker.register('/pwa/improve/sw.js').then(_ => {
                 console.log('serviceworker registration SUCCESS!');
             }).catch(err => {
                 console.error('serviceworker registration FAILED!', err);
             });
         }
 
-        var TARGET_DATE = new Date(sessionStorage.getItem(KS_TARGETDATE) || new Date().getTime());
-        var TARGET_TIME = sessionStorage.getItem(KS_TARGETTIME);
-        var TARGET_TASKID = parseInt(sessionStorage.getItem(KS_TARGETTASKID), '0');
 
         window.onload = _ => {
             const searchParams = new URLSearchParams(window.location.search);
             const page = searchParams.get('page');
             const content = document.getElementById('content');
-            renderNavigationBarById(PATH, 'Progress.');
-            if (page === 'task-add') {
-                renderPageTaskAdd(content);
-            } else if (page === 'task-list') {
-                renderPageTaskList(content);
-            } else if (page === 'task-detail') {
-                renderPageTaskDetail(content, TARGET_TASKID);
-            } else if (page === 'assignment') {
-                renderPageAssignment(content, TARGET_DATE, TARGET_TIME);
+            renderNavigationBarById(PATH, 'Improve.');
+            if (page === 'topic-add') {
+                renderPageTopicAdd(content);
+            } else if (page === 'topic-detail') {
+                renderPageTopicDetail(content);
+            } else if (page === 'iter-add') {
+                renderPageIteration(content);
             } else if (page === 'io') {
                 renderPageIo(content);
             } else {
-                renderPageDashBoard(content, TARGET_DATE);
+                renderPageDashboard(content);
             }
+            
         };
     </script>
 

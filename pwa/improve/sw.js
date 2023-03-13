@@ -1,13 +1,11 @@
 const CACHE_LIST = [
-    '/pwa/progress/index.html',
-    '/pwa/progress/index.html?page=task-list',
-    '/pwa/progress/index.html?page=task-detail',
-    '/pwa/progress/index.html?page=task-add',
-    '/pwa/progress/index.html?page=assignment',
+    '/pwa/improve/index.html',
+    '/pwa/improve/index.html?page=topic-add',
+    '/pwa/improve/index.html?page=topic-detail',
     '/pwa/_util/style.css',
-    '/pwa/progress/style.css',
+    '/pwa/improve/style.css',
     '/pwa/_util/script.js',
-    '/pwa/progress/script.js',
+    '/pwa/improve/script.js',
     '/pwa/_conf/icon-192x192.png',
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css'
 ];
@@ -15,7 +13,7 @@ const CACHE_LIST = [
 
 self.addEventListener('install', e => {
     e.waitUntil(
-        caches.open('static_progress').then(cache =>
+        caches.open('static_improve').then(cache =>
             cache.addAll(CACHE_LIST)
         )
     );
