@@ -2,9 +2,8 @@
     "theme_color": "#f6c935",
     "background_color": "#f6c935",
     "display": "standalone",
-    "scope": "/pwa/improve",
-    "start_url": "/pwa/improve",
-    "name": "Improvement (mujdecisy)",
+    "start_url": "/pwa/improve/index.html",
+    "name": "Improve (mujdecisy)",
     "short_name": "Improve",
     "description": "A pwa for tracking own improvementments",
     "icons": [
