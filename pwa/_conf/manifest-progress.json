@@ -3,7 +3,7 @@
     "background_color": "#f6c935",
     "display": "standalone",
     "start_url": "/pwa/progress/index.html",
-    "name": "Progress (mujdecisy)",
+    "name": "Progress Mujdecisy",
     "short_name": "Progress",
     "description": "A pwa for tracking own progress",
     "icons": [
