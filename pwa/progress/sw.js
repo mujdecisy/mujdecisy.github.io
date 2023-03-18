@@ -15,7 +15,7 @@ const CACHE_LIST = [
 ];
 
 const CACHE_NAME_PREFIX = 'cache_progress';
-const VERSION = '1.0.1';
+const VERSION = '1.0.2';
 const CACHE_NAME = `${CACHE_NAME_PREFIX}=${VERSION}`;
 
 

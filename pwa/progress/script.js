@@ -230,6 +230,13 @@ function renderPageIo(content) {
 
 function renderAdditionalsDashboardPage() {
     const navAdds = document.getElementById('nav-additions');
+    
+    const infoButton = createAnchor(
+        'https://mujdecisy.github.io/app/progress-habit-tracker',
+        '<i class="fa-regular fa-circle-question"></i>');
+    infoButton.className = 'btn btn-tp';
+    infoButton.setAttribute('target', '_blank');
+    navAdds.appendChild(infoButton);
     const ioButton = createAnchor(`${PATH}?page=io`, '<i class="fa-regular fa-floppy-disk"></i>');
     ioButton.className = 'btn btn-tp';
     navAdds.appendChild(ioButton);

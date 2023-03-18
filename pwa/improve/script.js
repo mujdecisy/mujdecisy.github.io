@@ -155,6 +155,13 @@ function renderPageIo(content) {
 function renderNavAddsDashboardPage() {
     const navAdds = document.getElementById(ID_NAVADDS);
 
+    const infoButton = createAnchor(
+        'https://mujdecisy.github.io/app/improve-progressive-overload',
+        '<i class="fa-regular fa-circle-question"></i>');
+    infoButton.className = 'btn btn-tp';
+    infoButton.setAttribute('target', '_blank');
+    navAdds.appendChild(infoButton);
+
     const ioButton = createAnchor(`${PATH}?page=io`, '<i class="fa-regular fa-floppy-disk"></i>');
     ioButton.className = 'btn btn-tp';
     navAdds.appendChild(ioButton);

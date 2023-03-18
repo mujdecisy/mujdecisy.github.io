@@ -16,7 +16,7 @@ const CACHE_LIST = [
 ];
 
 const CACHE_NAME_PREFIX = 'cache_improve';
-const VERSION = '1.0.2';
+const VERSION = '1.0.3';
 const CACHE_NAME = `${CACHE_NAME_PREFIX}=${VERSION}`;
 
 
