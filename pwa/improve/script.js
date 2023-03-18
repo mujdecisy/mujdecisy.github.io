@@ -357,9 +357,29 @@ function renderTopicMetricsById(elId, topic, dates, eq) {
         );
     
     const x = (topic.targetVal-eq[1])/eq[0];
-    let remainingDay = 'Not Possible';
-    if (x > 0 & x != Infinity) {
-        remainingDay = Math.floor(x-dates.length);
+    let remainingDay = null;
+    
+    if (topic.initVal > topic.targetVal) {
+        for (const key in topic.iters) {
+            if (topic.iters[key] <= topic.targetVal) {
+                remainingDay = `Goal Reached`;
+                break;
+            }
+        }
+    } else {
+        for (const key in topic.iters) {
+            if (topic.iters[key] >= topic.targetVal) {
+                remainingDay = `Goal Reached`;
+                break;
+            }
+        }
+    }
+    
+    if (remainingDay === null) {
+        remainingDay = 'Not Possible';
+        if (x > 0 & x != Infinity) {
+            remainingDay = Math.floor(x-dates.length);
+        }
     }
     
     const metrics = {
@@ -378,7 +398,7 @@ function renderTopicMetricsById(elId, topic, dates, eq) {
 
 
 //?///////////////////////////////////////////////////////////////////////
-///////////////////////////// ASSIGNMENT /////////////////////////////////
+/////////////////////////////// ADD ITER /////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 function renderIterInfoById(elId, topic) {
     const nameLabel = document.createElement('label');
