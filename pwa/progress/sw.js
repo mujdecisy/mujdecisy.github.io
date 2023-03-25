@@ -8,7 +8,7 @@ const CACHE_LIST = [
     '/pwa/progress/style.css',
     '/pwa/_util/script.js',
     '/pwa/progress/script.js',
-    '/pwa/_conf/icon-192x192.png',
+    '/pwa/_conf/progress/icon-192x192.png',
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css',
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/webfonts/fa-solid-900.woff2',
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/webfonts/fa-regular-400.woff2'

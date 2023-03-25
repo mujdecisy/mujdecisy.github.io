@@ -8,7 +8,7 @@ const CACHE_LIST = [
     '/pwa/improve/style.css',
     '/pwa/_util/script.js',
     '/pwa/improve/script.js',
-    '/pwa/_conf/icon-192x192.png',
+    '/pwa/_conf/improve/icon-192x192.png',
     '/favicon.ico',
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css',
     'https://cdnjs.cloudflare.com/ajax/libs/regression/2.0.1/regression.min.js',
