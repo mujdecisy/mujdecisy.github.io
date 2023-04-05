@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <script>
+        function getTime() {
+            fetch("https://test-flask-2-2cx1.onrender.com/time")
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Current time:", data.time);
+                })
+                .catch(error => {
+                    console.error("Error getting time:", error);
+                });
+        }
+
+        getTime();
+    </script>
+
+</body>
+
+</html>
