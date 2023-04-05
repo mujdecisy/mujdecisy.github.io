@@ -14,9 +14,8 @@
     <script>
         function getTime() {
             fetch("https://test-flask-2-2cx1.onrender.com/time")
-                .then(response => response.json())
                 .then(data => {
-                    console.log("Current time:", data.time);
+                    console.log("Current time:", data);
                 })
                 .catch(error => {
                     console.error("Error getting time:", error);
