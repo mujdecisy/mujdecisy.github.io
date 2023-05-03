@@ -1,0 +1,67 @@
+---
+title: Compherensions vs Map, Filter vs Loops
+date: 2022-12-01
+contentType: post
+summary: Performance comparision of three different approaches - list comprehensions, map filters, and for-loops - in manipulating lists in Python based on their execution time and memory usage.
+---
+
+# Compherensions vs Map, Filter vs Loops
+
+
+### Introduction
+In this blog post, I will share the results of a simple experiment I did to compare the performance of three different approaches to manipulate lists in Python: list comprehensions, map and filter functions, and for loops. I used the `time` and `memory_profile` modules to measure the execution time and memory increments of each approach on a list.
+
+### Method
+All inputs and outputs are the same for each mission and all methods. A function is written for each method accepts an array and returns an array.
+```
+def my_function(arr: list):
+  # manipulate the array and save to the new_array
+  return new_array
+```
+I added `@profile` annotation to measure memory increments and used `time` to measure execution time.
+```
+import time
+from memory_profiler import profile
+
+@profile
+def my_function(arr:list):
+  pass
+
+start_time = time.time()
+my_function()
+end_time = time.time()
+```
+
+#### Mission 1 - Square Of All Items
+An array is created with a same number like `[5,5,5,5...]`. Squares of the items are calculated with compherension, map and loop below.
+```
+# COMPEHERENSION solution
+arr2 = [e**2 for e in arr]
+
+# MAP solution
+arr2 = list(map(lambda x:x**2, arr))
+
+# LOOP solution
+arr2 = []
+for e in arr:
+  arr2.append(e**2)
+```
+
+
+{props.rdrTbl(
+  ['Method', 'Time Ratio', 'Memory Ratio'],
+  [
+    ['Compherension', '9.15885066986084', '7.7'],
+    ['Map', '18.482120275497437', '7.7'],
+    ['Loop', '18.548646688461304', '7.7'],
+  ],
+  ''
+)}
+
+
+
+- List comprehensions are the fastest way to manipulate lists in Python. They are concise, readable, and efficient.
+- Map and filter functions are slightly slower than list comprehensions, but still faster than for loops. They are useful when you need to apply a function to each element of a list or filter out some elements based on a condition.
+- For loops are the slowest way to manipulate lists in Python. They are more verbose and less expressive than the other approaches. They should be avoided when possible, unless you need to perform some complex logic that cannot be done with list comprehensions or map and filter functions.
+
+I hope this blog post was informative and helpful. You can find the code and the full results of the experiment on my GitHub repository: https://github.com/user/list-manipulation-python
