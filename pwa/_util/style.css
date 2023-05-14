@@ -1,0 +1,149 @@
+:root {
+    --red: #ffb6b9;
+    --blue: #89bcce;
+    --green: #c8e6c9;
+    --yellow: #ffe0b2;
+    --pink: #ffb6ed;
+
+    --gold: #ffd700;
+  }
+
+* {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+html,
+body {
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+.pwa-main {
+    max-width: 500px;
+    margin: 0px auto;
+    padding: 10px;
+}
+
+.btn {
+    background-color: gainsboro;
+    border: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    min-width: 30px;
+    height: 50px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: black;
+    font-size: 1.2rem;
+}
+
+.btn-tp {
+    background-color: transparent;
+}
+
+.btn-ul {
+    text-decoration: underline;
+    text-decoration-color: gold;
+    text-decoration-thickness: 2px;
+    text-decoration-style: wavy;
+}
+
+.btn-sm {
+    height: 30px;
+    font-size: 1rem;
+}
+
+.no-deco {
+    text-decoration: none;
+    color: black;
+}
+
+input,
+select,
+textarea {
+    -webkit-appearance: none;
+    /* Remove default appearance */
+    appearance: none;
+    padding: 5px;
+    background-color: white;
+    border: 1px solid gainsboro;
+    border-radius: 5px;
+    font-size: 1.1rem;
+}
+
+label {
+    font-size: 1.2rem;
+}
+
+input:active,
+input:focus-visible,
+input:focus,
+select:active,
+select:focus-visible,
+select:focus,
+textarea:active,
+textarea:focus-visible,
+textarea:focus {
+    border-color: gold;
+    outline-color: gold !important;
+}
+
+
+/* ///////////////////////////////////// NAVIGATION */
+nav {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.nav-header {
+    font-weight: bolder;
+    font-size: xx-large;
+}
+
+
+#nav-additions {
+    display: flex;
+    font-size: 1.2rem;
+}
+
+#nav-additions > * {
+    margin-left: 10px;
+}
+
+
+/* ///////////////////////////////////// FORM*/
+.form-cont {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0px auto;
+    font-size: 1.3rem;
+}
+
+.form-cont>label {
+    margin-top: 20px;
+}
+
+
+/* ///////////////////////////////////// METRIC*/
+.metric-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+    max-width: 400px;
+    margin: 0px auto;
+}
+
+.metric-key {
+    font-weight: bold;
+}
+
+.metric-value {
+    text-align: right;
+}

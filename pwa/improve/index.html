@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="/pwa/_util/style.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Improve</title>
+    <link rel="manifest" href="/pwa/_conf/improve/manifest.json" />
+    <!-- ios support -->
+    <link rel="apple-touch-icon" href="/pwa/_conf/improve/icon-192x192.png" />
+    <link rel="apple-touch-icon" href="/pwa/_conf/improve/icon-256x256.png" />
+    <link rel="apple-touch-icon" href="/pwa/_conf/improve/icon-384x384.png" />
+    <link rel="apple-touch-icon" href="/pwa/_conf/improve/icon-512x512.png" />
+    <meta name="apple-mobile-web-app-status-bar" content="#f6c935" />
+    <meta name="theme-color" content="#f6c935" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+        integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <main class="pwa-main">
+        <div id="navigation"></div>
+        <div id="content"></div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/regression/2.0.1/regression.min.js" integrity="sha512-0k6FXllQktdobw8Nc8KQN2WtZrOuxpMn7jC2RKCF6LR7EdOhhrg3H5cBPxhs3CFzQVlO6ni1B9SDLUPhBs0Alg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <script src="/pwa/_util/script.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/pwa/improve/sw.js').then(_ => {
+                console.log('serviceworker registration SUCCESS!');
+            }).catch(err => {
+                console.error('serviceworker registration FAILED!', err);
+            });
+        }
+
+
+        window.onload = _ => {
+            const searchParams = new URLSearchParams(window.location.search);
+            const page = searchParams.get('page');
+            const content = document.getElementById('content');
+            renderNavigationBarById(PATH, 'Improve.');
+            if (page === 'topic-add') {
+                renderPageTopicAdd(content);
+            } else if (page === 'topic-detail') {
+                renderPageTopicDetail(content);
+            } else if (page === 'iter-add') {
+                renderPageIteration(content);
+            } else if (page === 'io') {
+                renderPageIo(content);
+            } else {
+                renderPageDashboard(content);
+            }
+            
+        };
+    </script>
+
+</body>
+
+</html>
