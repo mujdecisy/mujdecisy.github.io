@@ -4,6 +4,8 @@ import Header from '../components/header';
 import { MetaContentI } from '../contentlayer.config';
 import PostPreview, { PostPreviewI } from '../components/post-prev';
 import { allBlogs, allProjects, allApps } from 'contentlayer/generated';
+import { useEffect } from 'react';
+import { logVisit } from '../utils/firebase';
 
 export interface PostElement {
   navLabel: string
@@ -32,6 +34,9 @@ export const POST_ATTRIBUTES: Record<string, PostElement> = {
 export default function Home() {
   const navItems: string[] = ['project', 'post', 'app'];
 
+  useEffect(()=>{
+    logVisit("/");
+  }, []);
   
   let contentList: MetaContentI[] = [...allApps, ...allBlogs, ...allProjects].map(e => {
     return {
