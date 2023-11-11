@@ -3,7 +3,7 @@ import Footer from '../components/footer';
 import Header from '../components/header';
 import { MetaContentI } from '../contentlayer.config';
 import PostPreview, { PostPreviewI } from '../components/post-prev';
-import { allBlogs, allProjects, allApps } from 'contentlayer/generated';
+import { allPosts } from 'contentlayer/generated';
 import { useEffect } from 'react';
 import { logVisit } from '../utils/firebase';
 
@@ -13,36 +13,16 @@ export interface PostElement {
   color: string
 }
 
-export const POST_ATTRIBUTES: Record<string, PostElement> = {
-  project: {
-    navLabel: 'Project',
-    navHref: '/project',
-    color: 'var(--t1)'
-  },
-  post: {
-    navLabel: 'Blog',
-    navHref: '/blog',
-    color: 'var(--t2)'
-  },
-  app: {
-    navLabel: 'App',
-    navHref: '/app',
-    color: 'var(--t3)'
-  }
-}
-
 export default function Home() {
-  const navItems: string[] = ['project', 'post', 'app'];
 
   useEffect(()=>{
     logVisit("/");
   }, []);
   
-  let contentList: MetaContentI[] = [...allApps, ...allBlogs, ...allProjects].map(e => {
+  let contentList: MetaContentI[] = [...allPosts].map(e => {
+    console.log(e)
     return {
       ...e,
-      type: e.contentType,
-      link: e.url,
       date: new Date(e.date)
     }
   }) as MetaContentI[];
@@ -71,8 +51,8 @@ export default function Home() {
             {
               contentList.map(e =>
                 <PostPreview
-                  item={{ ...e, color: POST_ATTRIBUTES[e.type].color, date: e.date.toISOString().substring(2,10) } as PostPreviewI}
-                  key={e.link}
+                  item={{ ...e, date: e.date.toISOString().substring(2,10) } as PostPreviewI}
+                  key={e.url}
                 />
               )
             }
@@ -80,24 +60,10 @@ export default function Home() {
         </Box>
 
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', my: 1, mt: 3 }}>
-          {
-            navItems.map(e =>
-              <Chip
-                label={POST_ATTRIBUTES[e].navLabel}
-                component="a"
-                href={POST_ATTRIBUTES[e].navHref}
-                size="small"
-                clickable
-                sx={{ mx: 0.3, my: 0.3, backgroundColor: POST_ATTRIBUTES[e].color + ' !important',
-                  "&hover": {backgroundColor: POST_ATTRIBUTES[e].color + ' !important'}}}
-                key={e}
-              />
-            )
-          }
           <Chip
-            label='All'
+            label='All posts'
             component="a"
-            href='/all'
+            href="/posts"
             size="small"
             clickable
             sx={{ mx: 0.3, my: 0.3 }}

@@ -2,17 +2,19 @@ import { Box, Container, List} from '@mui/material';
 import Footer from '../../components/footer';
 import { MetaContentI } from '../../contentlayer.config';
 import PostPreview, { PostPreviewI } from '../../components/post-prev';
-import { allProjects, allApps, allBlogs } from 'contentlayer/generated';
-import { POST_ATTRIBUTES } from 'pages';
+import { allPosts } from 'contentlayer/generated';
 import HeaderSm from 'components/header-sm';
+import { useEffect } from 'react';
+import { logVisit } from 'utils/firebase';
 
 export default function HomeApps() {
+  useEffect(()=>{
+    logVisit("/posts");
+  }, []);
   
-  let contentList: MetaContentI[] = [...allProjects, ...allApps, ...allBlogs].map(e => {
+  let contentList: MetaContentI[] = [...allPosts].map(e => {
     return {
       ...e,
-      type: e.contentType,
-      link: e.url,
       date: new Date(e.date)
     }
   }) as MetaContentI[];
@@ -23,14 +25,14 @@ export default function HomeApps() {
     <>
       <Container maxWidth="sm">
         <HeaderSm />
-        <h2>All</h2>
+        <h2>All Posts</h2>
         <Box>
           <List sx={{ width: '100%' }}>
             {
               contentList.map(e =>
                 <PostPreview
-                  item={{ ...e, color: POST_ATTRIBUTES[e.type].color, date: e.date.toISOString().substring(2,10) } as PostPreviewI}
-                  key={e.link}
+                  item={{ ...e, date: e.date.toISOString().substring(2,10) } as PostPreviewI}
+                  key={e.url}
                 />
               )
             }

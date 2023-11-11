@@ -3,9 +3,8 @@ import { defineDocumentType, makeSource } from 'contentlayer/source-files'
 export interface MetaContentI {
   date: Date
   title: string
-  type: string
-  link: string
   summary: string
+  url: string
 }
 
 export interface ContentI extends MetaContentI {
@@ -15,10 +14,10 @@ export interface ContentI extends MetaContentI {
   },
 }
 
-function getDocType(docTypeName: string, folder: string) {
+function getDocType(docTypeName: string) {
   return defineDocumentType(() => ({
     name: docTypeName,
-    filePathPattern: `**/${folder}/*.mdx`,
+    filePathPattern: `**/*.mdx`,
     contentType: 'mdx',
     fields: {
       title: {
@@ -26,10 +25,6 @@ function getDocType(docTypeName: string, folder: string) {
         required: true
       },
       date: {
-        type: 'string',
-        required: true
-      },
-      contentType: {
         type: 'string',
         required: true
       },
@@ -41,17 +36,15 @@ function getDocType(docTypeName: string, folder: string) {
     computedFields: {
       url: {
         type: 'string',
-        resolve: content => `/${content._raw.flattenedPath}`
+        resolve: content => `/posts/${content._raw.flattenedPath}`
       }
     }
   }))
 }
 
-export const Blog = getDocType('Blog', 'blog');
-export const App = getDocType('App', 'app');
-export const Project = getDocType('Project', 'project');
+export const Post = getDocType('Post');
 
 export default makeSource({
-  contentDirPath: 'data',
-  documentTypes: [Blog, App, Project]
+  contentDirPath: 'contentlayer_data',
+  documentTypes: [Post]
 })

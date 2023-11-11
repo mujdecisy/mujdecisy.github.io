@@ -1,4 +1,4 @@
-import { Container, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { Container, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import Head from 'next/head'
 import { ContentI } from '../contentlayer.config';
 import { useMDXComponent } from 'next-contentlayer/hooks';
