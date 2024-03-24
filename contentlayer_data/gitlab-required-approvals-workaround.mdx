@@ -1,11 +1,169 @@
 ---
-title: Gitlab/Github Required Approvals Count Workaround
+title: Gitlab Required Approvals Count Workaround
 date: 2023-11-12
-summary: Even if you are not an enterprise user, you can protect your branches on your small private projects with your companions.
+summary: Even if you are not an Gitlab EE user, you can protect your branches with approval count requirement on your small private projects with your companions.
 ---
 
 # Gitlab Required Approvals Count Workaround
 
 If your side-project with your companions is nominated to be a big project, but not big enough to buy Gitlab/Github enterprise.
 Then you will not be able to use some beautiful features of Gitlab/Github like protecting branches with minimum approvals count.
-Here is a workaround for your project to achieve this feature over CI/CD steps. This implementation is done directly on Gitlab, and you can implement same steps on Github too.
+Here is a workaround for your project to achieve this feature over CI/CD steps.
+This implementation is done directly on Gitlab, and you can implement same steps on Github too.
+
+Simply you can run some job/workflow when there is a merge request to your protected branch.
+It can be anything like running unittests, checks for formatting, deployment on your test servers to prepare that future for QA developers.
+And you can set your MR to be possible only within some of these jobs done successfully.
+So we can use this feature with the purpose of required approvals for an MR to a protected branch.
+
+However this approach depends on trust in team, because you can simply break this flow by commiting on your job definitions.
+Here is the instruction set for the implementation on Gitlab.
+
+## 1. Create a Job/Workflow
+This job will be triggered on `merge_request_event`s to gather some data from Gitlab REST API.
+So we need some access token on our project's environment variables.
+
+### 1.1 Create Your Access Token
+Follow the link below to create a **personal access token**.
+Gitlab does not allow **project access tokens** for now to gitlab.com free users,
+however in case of being free in the future I left the link below.
+
+- [Personal Access Token Document](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html#create-a-personal-access-token)
+- [Project Access Token Document](https://docs.gitlab.com/ee/user/project/settings/project_access_tokens.html#create-a-project-access-token)
+
+You must define scopes below for the access token.
+- [x] api
+- [x] read_user
+- [x] read_api
+- [x] read_repository
+
+> Do not forget to copy your access token, you will not be able to do it after closing page.
+
+### 1.2 Set Access Token as a Variable
+The one who make this settings must be the owner or maintainer of the project.
+Set your copied access token as an environment variable which is named `ACCESS_TOKEN` and will be a masked variable.
+
+- [Variable Definition Document](https://docs.gitlab.com/ee/ci/variables/#for-a-project)
+
+The variable must be masked because we do not want to reveal our access token on job's output.
+And other users must have role `developer`, otherwise they can reveal your access token on settings page.
+
+
+### 1.3 Create an Approval-Check Step on Your CI
+On your `.gitlab-ci.yml` file add a step called **approval-check** and make this step triggered on `merge_request` events.
+And put it in a proper stage to run.
+```
+approval-check:
+  stage: sdlc
+  only:
+    - merge_requests
+  script:
+    - apt-get -qq update
+    - apt-get install -y jq
+    - ./.gitlab_approval.sh ${ACCESS_TOKEN} $CI_PROJECT_ID $CI_MERGE_REQUEST_IID
+```
+You should pass required parameters to the bash file.
+Since the file will call Gitlab API and evaluate the MR, it needs parameters below:
+- **$ACCESS_TOKEN** : to be authorized to Rest calls
+- **$CI_PROJECT_ID** : current project's id
+- **$CI_MERGE_REQUEST_IID** : current MR's id
+
+You will see on the second section, how these parameters are used.
+You must define your accesst_token variable on variables section, set a proper stage to your job.
+
+```
+stages:
+  - sdlc
+
+...
+
+variables:
+  ACCESS_TOKEN: $ACCESS_TOKEN
+
+...
+
+approval-check:
+  stage: sdlc
+  only:
+    - merge_requests
+  script:
+    - apt-get -qq update
+    - apt-get install -y jq
+    - ./.gitlab_approval.sh ${ACCESS_TOKEN} $CI_PROJECT_ID $CI_MERGE_REQUEST_IID
+
+```
+
+
+## 2. Create Job/Workflow Logic
+Create a bash file and make some Rest requests to gitlab.com to gather info about the MR.
+Evaluate approval info for that MR and return error if the approval count is not sufficient.
+
+#### 1.2 Install JQ
+You must install [jq](https://jqlang.github.io/jq/) command line tool for json parsing.
+Installation is already added to the `approval-check` job, and test purposes you can install it like below.
+
+```
+$ apt-get install jq
+```
+
+### 1.3 Create Bash file
+I named it `.gitlab-approval.sh` and located it in the root of repo folder.
+This bash file have 3 parameters as below.
+```
+# $1 AN_ACCESS_TOKEN with read_api
+# $2 CI_PROJECT_ID
+# $3 CI_MERGE_REQUEST_IID
+```
+
+### 1.4 Gather Related Authors
+Author of the MR, and other companions that approves current MR are needed.
+Thus [Merge Request Level Approvals](https://docs.gitlab.com/ee/api/merge_request_approvals.html#merge-request-level-mr-approvals) and [Get Single MR](https://docs.gitlab.com/ee/api/merge_requests.html#get-single-mr) endpoints are used.
+
+```
+# ----------------------------------- GATHER AUTHOR INFO
+resp_author=$(curl --header "Authorization: Bearer ${1}" -s "https://gitlab.com/api/v4/projects/${2}/merge_requests/${3}")
+author=$(echo $resp_author | tr -d '\n' | jq -r '.author.username')
+
+# ----------------------------------- GATHER APPROVALS
+resp_approvals=$(curl --header "Authorization: Bearer ${1}" -s "https://gitlab.com/api/v4/projects/${2}/merge_requests/${3}/approvals")
+approvals=$(echo $resp_approvals | tr -d '\n' | jq -r '.approved_by')
+
+```
+
+### 1.5 Counting Valid Approvals
+Self-approval is needed to be excluded, and proper approvals should be counted as valid approvals.
+
+```
+total_approval_count=$(echo $approvals | jq length)
+valid_approval_count=0
+for index in $(seq 0 $(($total_approval_count-1)) )
+do
+    approval_author=$(echo $approvals | jq -r ".[${index}].user.username")
+    if [ "${author}" != "${approval_author}" ]; then
+        ((valid_approval_count++))
+    fi
+done
+```
+
+### 1.6 Evaluate Valid Approval Count
+If valid_approval_count is less than required_approval_count then script must exit with an error number, like 1.
+Otherwise it should exit with 0.
+
+```
+required_approval_count=2
+
+if [ $valid_approval_count -lt $required_approval_count ]; then
+    echo ">>>FAILURE<<< At least ${required_approval_count} approvals are needed, from other than the MR author."
+    exit 1
+fi
+echo ">>>SUCCESS<<< This MR has ${required_approval_count} approvals, from other than the MR author."
+exit 0
+```
+
+## Conclusion
+With this approach you can simply allow your main branch protected over required approval count for merge requests without paying it.
+However it depends on the trust in team, anyone can remove this job directly from `.gitlab-ci.yml` file and merge the request.
+It is not that much strict as Gitlab/Github offers. That's why I called this as a workaround for only small teams.
+
+Hope this article will help you with your small projects tend to become a bigger one with multiple development participants.
+Have a nice day!
