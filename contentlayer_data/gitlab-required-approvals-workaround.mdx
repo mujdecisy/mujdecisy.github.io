@@ -94,13 +94,76 @@ approval-check:
 ```
 
 
+## 2. Create Job/Workflow Logic
+Create a bash file and make some Rest requests to gitlab.com to gather info about the MR.
+Evaluate approval info for that MR and return error if the approval count is not sufficient.
 
+#### 1.2 Install JQ
+You must install [jq](https://jqlang.github.io/jq/) command line tool for json parsing.
+Installation is already added to the `approval-check` job, and test purposes you can install it like below.
 
-## 2. Create a bash file
+```
+$ apt-get install jq
+```
+
+### 1.3 Create Bash file
 I named it `.gitlab-approval.sh` and located it in the root of repo folder.
-This bash file will do some checks on your MR over Gitlab REST API.
+This bash file have 3 parameters as below.
+```
+# $1 AN_ACCESS_TOKEN with read_api
+# $2 CI_PROJECT_ID
+# $3 CI_MERGE_REQUEST_IID
+```
 
+### 1.4 Gather Related Authors
+Author of the MR, and other companions that approves current MR are needed.
+Thus [Merge Request Level Approvals](https://docs.gitlab.com/ee/api/merge_request_approvals.html#merge-request-level-mr-approvals) and [Get Single MR](https://docs.gitlab.com/ee/api/merge_requests.html#get-single-mr) endpoints are used.
 
+```
+# ----------------------------------- GATHER AUTHOR INFO
+resp_author=$(curl --header "Authorization: Bearer ${1}" -s "https://gitlab.com/api/v4/projects/${2}/merge_requests/${3}")
+author=$(echo $resp_author | tr -d '\n' | jq -r '.author.username')
 
-import { NestCamWiredStand } from "@mui/icons-material"
+# ----------------------------------- GATHER APPROVALS
+resp_approvals=$(curl --header "Authorization: Bearer ${1}" -s "https://gitlab.com/api/v4/projects/${2}/merge_requests/${3}/approvals")
+approvals=$(echo $resp_approvals | tr -d '\n' | jq -r '.approved_by')
 
+```
+
+### 1.5 Counting Valid Approvals
+Self-approval is needed to be excluded, and proper approvals should be counted as valid approvals.
+
+```
+total_approval_count=$(echo $approvals | jq length)
+valid_approval_count=0
+for index in $(seq 0 $(($total_approval_count-1)) )
+do
+    approval_author=$(echo $approvals | jq -r ".[${index}].user.username")
+    if [ "${author}" != "${approval_author}" ]; then
+        ((valid_approval_count++))
+    fi
+done
+```
+
+### 1.6 Evaluate Valid Approval Count
+If valid_approval_count is less than required_approval_count then script must exit with an error number, like 1.
+Otherwise it should exit with 0.
+
+```
+required_approval_count=2
+
+if [ $valid_approval_count -lt $required_approval_count ]; then
+    echo ">>>FAILURE<<< At least ${required_approval_count} approvals are needed, from other than the MR author."
+    exit 1
+fi
+echo ">>>SUCCESS<<< This MR has ${required_approval_count} approvals, from other than the MR author."
+exit 0
+```
+
+## Conclusion
+With this approach you can simply allow your main branch protected over required approval count for merge requests without paying it.
+However it depends on the trust in team, anyone can remove this job directly from `.gitlab-ci.yml` file and merge the request.
+It is not that much strict as Gitlab/Github offers. That's why I called this as a workaround for only small teams.
+
+Hope this article will help you with your small projects tend to become a bigger one with multiple development participants.
+Have a nice day!
