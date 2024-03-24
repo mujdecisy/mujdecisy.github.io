@@ -1,7 +1,7 @@
 ---
-title: Gitlab/Github Required Approvals Count Workaround
+title: Gitlab Required Approvals Count Workaround
 date: 2023-11-12
-summary: Even if you are not an enterprise user, you can protect your branches on your small private projects with your companions.
+summary: Even if you are not an Gitlab EE user, you can protect your branches with approval count requirement on your small private projects with your companions.
 ---
 
 # Gitlab Required Approvals Count Workaround
@@ -39,17 +39,60 @@ You must define scopes below for the access token.
 
 > Do not forget to copy your access token, you will not be able to do it after closing page.
 
-### 1.2 Set Access Token as an Environment Variable
+### 1.2 Set Access Token as a Variable
 The one who make this settings must be the owner or maintainer of the project.
 Set your copied access token as an environment variable which is named `ACCESS_TOKEN` and will be a masked variable.
 
-- [Variable Definition](https://docs.gitlab.com/ee/ci/variables/#for-a-project)
+- [Variable Definition Document](https://docs.gitlab.com/ee/ci/variables/#for-a-project)
 
 The variable must be masked because we do not want to reveal our access token on job's output.
 And other users must have role `developer`, otherwise they can reveal your access token on settings page.
 
 
 ### 1.3 Create an Approval-Check Step on Your CI
+On your `.gitlab-ci.yml` file add a step called **approval-check** and make this step triggered on `merge_request` events.
+And put it in a proper stage to run.
+```
+approval-check:
+  stage: sdlc
+  only:
+    - merge_requests
+  script:
+    - apt-get -qq update
+    - apt-get install -y jq
+    - ./.gitlab_approval.sh ${ACCESS_TOKEN} $CI_PROJECT_ID $CI_MERGE_REQUEST_IID
+```
+You should pass required parameters to the bash file.
+Since the file will call Gitlab API and evaluate the MR, it needs parameters below:
+- **$ACCESS_TOKEN** : to be authorized to Rest calls
+- **$CI_PROJECT_ID** : current project's id
+- **$CI_MERGE_REQUEST_IID** : current MR's id
+
+You will see on the second section, how these parameters are used.
+You must define your accesst_token variable on variables section, set a proper stage to your job.
+
+```
+stages:
+  - sdlc
+
+...
+
+variables:
+  ACCESS_TOKEN: $ACCESS_TOKEN
+
+...
+
+approval-check:
+  stage: sdlc
+  only:
+    - merge_requests
+  script:
+    - apt-get -qq update
+    - apt-get install -y jq
+    - ./.gitlab_approval.sh ${ACCESS_TOKEN} $CI_PROJECT_ID $CI_MERGE_REQUEST_IID
+
+```
+
 
 
 
@@ -58,4 +101,6 @@ I named it `.gitlab-approval.sh` and located it in the root of repo folder.
 This bash file will do some checks on your MR over Gitlab REST API.
 
 
+
+import { NestCamWiredStand } from "@mui/icons-material"
 
