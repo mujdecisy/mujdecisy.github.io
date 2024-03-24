@@ -20,7 +20,6 @@ export default function Home() {
   }, []);
   
   let contentList: MetaContentI[] = [...allPosts].map(e => {
-    console.log(e)
     return {
       ...e,
       date: new Date(e.date)
@@ -31,8 +30,7 @@ export default function Home() {
   contentList = contentList.slice(0, 5)
 
   return (
-    <>
-      <Container maxWidth="sm">
+    <Container maxWidth="sm">
         <Header />
         <Box sx={{ marginTop: 3, lineHeight: '1.3rem' }}>
           I am a software engineer who loves to work on&nbsp;
@@ -72,7 +70,6 @@ export default function Home() {
 
         <Footer />
       </Container>
-    </>
   )
 }
 

@@ -8,4 +8,54 @@ summary: Even if you are not an enterprise user, you can protect your branches o
 
 If your side-project with your companions is nominated to be a big project, but not big enough to buy Gitlab/Github enterprise.
 Then you will not be able to use some beautiful features of Gitlab/Github like protecting branches with minimum approvals count.
-Here is a workaround for your project to achieve this feature over CI/CD steps. This implementation is done directly on Gitlab, and you can implement same steps on Github too.
+Here is a workaround for your project to achieve this feature over CI/CD steps.
+This implementation is done directly on Gitlab, and you can implement same steps on Github too.
+
+Simply you can run some job/workflow when there is a merge request to your protected branch.
+It can be anything like running unittests, checks for formatting, deployment on your test servers to prepare that future for QA developers.
+And you can set your MR to be possible only within some of these jobs done successfully.
+So we can use this feature with the purpose of required approvals for an MR to a protected branch.
+
+However this approach depends on trust in team, because you can simply break this flow by commiting on your job definitions.
+Here is the instruction set for the implementation on Gitlab.
+
+## 1. Create a Job/Workflow
+This job will be triggered on `merge_request_event`s to gather some data from Gitlab REST API.
+So we need some access token on our project's environment variables.
+
+### 1.1 Create Your Access Token
+Follow the link below to create a **personal access token**.
+Gitlab does not allow **project access tokens** for now to gitlab.com free users,
+however in case of being free in the future I left the link below.
+
+- [Personal Access Token Document](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html#create-a-personal-access-token)
+- [Project Access Token Document](https://docs.gitlab.com/ee/user/project/settings/project_access_tokens.html#create-a-project-access-token)
+
+You must define scopes below for the access token.
+- [x] api
+- [x] read_user
+- [x] read_api
+- [x] read_repository
+
+> Do not forget to copy your access token, you will not be able to do it after closing page.
+
+### 1.2 Set Access Token as an Environment Variable
+The one who make this settings must be the owner or maintainer of the project.
+Set your copied access token as an environment variable which is named `ACCESS_TOKEN` and will be a masked variable.
+
+- [Variable Definition](https://docs.gitlab.com/ee/ci/variables/#for-a-project)
+
+The variable must be masked because we do not want to reveal our access token on job's output.
+And other users must have role `developer`, otherwise they can reveal your access token on settings page.
+
+
+### 1.3 Create an Approval-Check Step on Your CI
+
+
+
+## 2. Create a bash file
+I named it `.gitlab-approval.sh` and located it in the root of repo folder.
+This bash file will do some checks on your MR over Gitlab REST API.
+
+
+
