@@ -1,0 +1,29 @@
+---
+title: ACID Prensipleri
+date: 2024-05-08
+summary: ACID (Atomicity, Consistency, Isolation, Durability) Prensipleri nedir? ACID Prensiplerinin gerçek hayattaki kullanım örnekleri.
+---
+
+# ACID Prensipleri
+
+ACID (Atomicity, Consistency, Isolation, Durability), veritabanı yönetim sistemlerinde veri bütünlüğünü sağlamak için kullanılan dört temel prensiptir. Bu prensipler, işlemlerin güvenilirliğini ve veri bütünlüğünü korumak için tasarlanmıştır.
+
+## *Atomiklik (Atomicity)*
+İşlemlerin tamamı veya hiçbiri gerçekleşir. Bir işlem, herhangi bir nedenle yarıda kesilirse, başladığı duruma geri döner (Rollback) ve değişiklikleri geri alır.
+
+Banka işlemleri, bu prensibi iyi bir örnek oluşturur. Bir kullanıcı bir hesaptan para transfer etmeye çalışıyorsa, işlem ya tamamıyla gerçekleşir ve paranın bir hesaptan diğerine geçişi tamamlanır ya da hiç gerçekleşmez. Örneğin, hesaptan para çekilirken bir hata olursa, işlem tamamen geri alınır ve hesaplar başlangıç durumuna döner.
+
+## *Tutarlılık (Consistency)*
+İşlem sonrası veritabanı her zaman tutarlı bir durumda kalır. Yapılan işlem, veritabanının bütünlüğünü bozmaz veya tutarsız hale getirmez.
+
+E-ticaret platformları, bu prensibi uygular. Bir kullanıcı bir ürünü sepete ekler ve ödeme yapar, veritabanında ürünün stok durumu azalır. Bu, tutarlılık gereksinimini yerine getirir. Aynı ürünü bir başkası aynı anda satın almaya çalışsa bile stok negatif olmamalıdır.
+
+## *İzolasyon (Isolation)*
+Eşzamanlı işlemler birbirinden bağımsızdır. Bir işlem, diğer işlemleri etkileyemez veya diğer işlemler tarafından etkilenemez.
+
+Online rezervasyon sistemleri, izolasyon prensibini kullanır. Bir otel odası rezervasyonu yapmaya çalışan iki kullanıcı aynı anda aynı odayı rezerve etmeye çalışsa bile, her rezervasyon işlemi diğerinden bağımsız olarak işlenir. İki kullanıcının aynı odayı rezerve etmesini engellemek için izolasyon sağlanır.
+
+## *Dayanıklılık (Durability)*
+İşlem sonrası yapılan değişikliklerin kalıcı olması gerekmektedir. Veri, sistem çökmesi veya başka bir felaket durumu olsa bile kaybolmamalıdır.
+
+Sosyal medya platformları, dayanıklılık prensibini uygular. Kullanıcılar fotoğrafları, paylaşımları ve verileri yükler. Bu veriler veritabanında saklanır ve kullanıcılar bu verilere istediği zaman erişebilir. Verilerin kalıcı olması, kullanıcıların verilere her zaman erişebilmesini sağlar, hatta sistem arızaları veya güncellemeleri sonrasında bile.
