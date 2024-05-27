@@ -1,0 +1,24 @@
+---
+title: Async vs Thread vs Process
+date: 2024-05-07
+summary: Asenkron işlem, Thread ve Process arasındaki farklar ve kullanım alanları. Asenkron işlem, Thread ve Process örnekleri.
+---
+
+# Asenkron İşlem, Thread ve Process
+
+## *Asenkron İşlem (Asynchronous Processing)*
+Asenkron işlem, işlemlerin sırayla tamamlanması yerine işlemlerin sırasız bir şekilde yürütüldüğü bir programlama yaklaşımıdır. Genellikle olaylar (events) veya iş parçacıkları (threads) arasında iletişim kurarken kullanılır. Bu, uzun süren işlemlerin başlatılmasına izin verirken ana iş akışının kesilmesini önler.
+
+*Örnek:* Bir web tarayıcısının sayfa yükleme işlemi. Tarayıcı, sayfayı yüklerken kullanıcı arayüzünün donmasını önlemek için asenkron işlemler kullanır.
+
+## **Çoklu İş Parçacığı (Multithreading)**
+Çoklu iş parçacığı, aynı program içinde birden fazla iş parçacığının (thread) aynı anda çalıştığı bir yaklaşımdır. Her iş parçacığı farklı bir görevi yürütebilir ve işletim sistemi bu iş parçacıklarını zaman dilimleri halinde sırayla çalıştırır. Bu, paralel işlem yapmanın bir yoludur ve paylaşılan kaynaklara erişimi yönetmek zor olabilir.
+
+*Örnek:* Bir medya oynatıcısının aynı anda sesi çalmak ve kullanıcı arayüzünü güncellemek için farklı iş parçacıkları kullanması.
+
+## *Çoklu İşlem (Multiprocessing)*
+Çoklu işlem, birden fazla işlemcinin veya çekirdeğin (CPU) kullanıldığı bir paralel işlem yaklaşımıdır. Her işlemci kendi bellek alanına sahiptir ve ayrı bir işlemi yürütebilir. Bu, daha büyük işlem yüklerini paralel olarak işlemek için kullanılır ve işletim sistemi tarafından yönetilen bağımsız işlemlerdir.
+
+*Örnek:* Bir sunucunun aynı anda birden fazla istemciye hizmet vermesi. Her istemci kendi işlemci kaynaklarını kullanarak işlemlerini gerçekleştirir.
+
+Özetle, asenkron işlem, olaylar arasında geçiş yapmak için kullanılırken, çoklu iş parçacığı aynı program içinde farklı görevleri aynı anda çalıştırmak için ve çoklu işlem ise birden fazla işlemci kullanarak büyük iş yüklerini işlemek için kullanılır.
