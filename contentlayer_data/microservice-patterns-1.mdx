@@ -1,0 +1,50 @@
+---
+title: Mikroservis Desenleri - 1
+date: 2024-05-09
+summary: En çok kullanılan mikro servis desenleri ve kullanım amaçları.
+---
+
+# Mikroservis Desenleri
+
+{props.rdrImg(
+    "/content-images/ms-patterns-1.png",
+    ""
+)}
+
+## *API Gateway*
+API Gateway, bir mikro hizmet mimarisi içinde bir merkezi nokta olarak hareket eder ve istemcilerin tüm hizmetlerle etkileşim kurmak yerine tek bir API aracılığıyla iletişim kurmalarını sağlar. Örneğin, bir e-ticaret uygulamasında, müşterilerin satın alma işlemlerini gerçekleştirmek için ödeme, envanter, kargo vb. hizmetlere ihtiyaçları vardır. API Gateway, müşterilerin tüm bu hizmetlere tek bir API aracılığıyla erişmelerini ve satın alma işlemlerini tamamlamalarını sağlar.
+
+## *Service Registry*
+Hizmet kaydı, tüm hizmetlerin (API'ler, veri tabanları vb.) adlarının ve adreslerinin tutulduğu bir merkezi kaynaktır. Örneğin, bir e-ticaret uygulamasında, ödeme hizmeti değişirse, hizmet kaydındaki ad ve adres bilgisi güncellenerek, diğer hizmetlerin ödeme hizmeti ile etkileşimini sürdürmesi sağlanır.
+
+## *Circuit Breaker*
+Circuit Breaker, hata toleransını artırmak için kullanılan bir tasarım desenidir. Örneğin, bir bankacılık uygulamasında, para transferi hizmeti için hata oluşursa Circuit Breaker devreye girerek, hizmeti geçici olarak durdurur ve müşteri verilerini korur.
+
+Circuit Breaker pattern, bir yazılım uygulamasının hata toleransını artırmak için kullanılan bir tasarım desenidir. Bu desen, bir hizmet çağrısı yaparken, olası hataların önüne geçmek ve sistemdeki diğer hizmetleri de etkilemeden hatalı hizmet çağrısını düzeltmek için kullanılır.
+
+Bu desen, hizmet çağrılarından önce belirli bir süre boyunca hizmet sağlayıcısına yapılan çağrı sayısını takip eder. Eğer bir hizmet sağlayıcısı belirlenen sayıda çağrıda hata verirse, Circuit Breaker devreye girerek çağrıları engeller ve sistemdeki diğer hizmetlere etki etmemesini sağlar.
+
+Circuit Breaker, hata sayısını belirli bir seviyenin üzerine çıktığında, hizmet çağrılarını otomatik olarak reddeder ve bir belirteç döndürür. Bu belirteç, uygulamanın hata sayısını belirleyebilmesini sağlar ve hata durumunda sistemdeki diğer bileşenleri korur.
+
+### Circuit Breaker States
+
+* Closed (Kapalı): İlk durumda Circuit Breaker kapalıdır ve normal hizmet çağrılarına izin verir. Hizmet sağlayıcısına yapılan çağrılar hata vermez ve Circuit Breaker açılmaz.
+* Open (Açık): İkinci durumda Circuit Breaker açıktır ve hizmet çağrıları reddedilir. Bu durum, belirli bir süre boyunca hizmet sağlayıcısına yapılan çağrıların belirli bir oranda hata vermesi sonucu meydana gelir.
+* Half-Open (Yarı Açık): Üçüncü durumda Circuit Breaker yarı açıktır ve birkaç hizmet çağrısını izin verir. Bu durumda, Circuit Breaker, bir hizmet çağrısı yaparak hizmet sağlayıcısının tekrar çalışıp çalışmadığını kontrol eder. Eğer hizmet çağrısı başarılı olursa, Circuit Breaker tekrar kapalı duruma geçer ve normal hizmet çağrılarına izin verir. Ancak, hizmet çağrısı başarısız olursa, Circuit Breaker tekrar açık duruma geçer ve hizmet çağrıları reddedilir.
+
+## *Saga Pattern*
+Bu pattern, bir işlem zinciri boyunca birden fazla mikroservis çağrısını yönetmek için kullanılır. Saga, bir işlemi birden fazla adımda gerçekleştiren bir işlem zinciri olarak düşünülebilir. Her adım, bir mikroservis çağrısını temsil eder ve hata toleransını sağlamak için geri alma (compensation) adımları eklenir. Örneğin, bir siparişin işlenmesi, bir müşteriye ödeme yapılması ve bir ürünün sevkiyatının yapılması gibi birçok adımdan oluşabilir.
+
+## *Event Sourcing Pattern*
+Bu pattern, bir uygulamada meydana gelen tüm olayların bir kayıdında saklandığı bir yaklaşımdır. Bu olaylar, uygulamanın durumunu oluşturur ve her bir olay, uygulamanın geçmiş durumuna dayalı olarak bir sonraki durumu etkiler. Bu pattern, birçok işlemi ve veri güncellemesini kolaylaştırır ve hata ayıklama ve geri alma işlemlerini kolaylaştırır. Örneğin, bir banka uygulamasında, bir müşterinin hesap hareketleri kaydedilebilir ve bu bilgiler, müşterinin hesap geçmişi veya raporlama için kullanılabilir.
+
+## *Strangler Pattern*
+Bu desen, mevcut bir uygulamanın veya sistemin sürdürülmesi veya yeniden geliştirilmesi gerektiğinde kullanılır. Temel amacı, mevcut sistemi yavaş yavaş terk ederek, yeni bir sistem veya uygulama inşa etmeyi ve eski sistem yerine kullanmayı hedefler.
+
+## *CQRS*
+Command Query Responsibility Segregation bir yazılım mimarisi desenidir. Bu desen, bir uygulamanın komutlarını (veri yazma işlemleri) ve sorgularını (veri okuma işlemleri) farklı işlemler olarak ele alarak, farklı birimlerde işlemesi fikrine dayanır.
+
+Geleneksel bir uygulama mimarisinde, hem veri yazma hem de veri okuma işlemleri aynı veri modeli üzerinde gerçekleştirilir. Bu, uygulamanın performansını olumsuz yönde etkileyebilir ve karmaşık iş mantığını zorlaştırabilir.
+
+CQRS yaklaşımında, veri yazma işlemleri ve veri okuma işlemleri farklı birimlerde ele alınır. Veri yazma işlemleri, veri modelinde değişiklik yapmak yerine, komutlar aracılığıyla bir durum değişikliği gerçekleştirir. Veri okuma işlemleri ise, okuma işlemleri için optimize edilmiş ayrı bir veri modeli kullanır. Bu, uygulamanın performansını artırabilir ve daha kolay bakım yapılabilmesini sağlayabilir.
+
