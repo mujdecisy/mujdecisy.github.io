@@ -1,0 +1,38 @@
+---
+title: CAP Teoremi
+date: 2024-05-06
+summary: CAP Teoremi nedir? CAP Teoremi'nin açılımı nedir? CAP Teoremi'nin açıklaması ve detayları nelerdir?
+---
+
+# CAP Teoremi
+
+{renderImg("/images/cap-theorem.png", "CAP Teoremi")}
+
+Bu teoreme göre, bir dağıtık sistem en fazla iki özelliği sağlayabilir; üçünü birden sağlamak mümkün değildir.
+* Tutarlılık (Consistency): Her istek sonucunda sistemdeki tüm düğümlerin aynı veriyi döndürmesi demektir. Yani, verilerin herhangi bir zamanda her düğümde aynı durumda olmasıdır.
+* Erişilebilirlik (Availability): Her istek için sistemdeki düğümlerden en az birinin başarılı bir şekilde yanıt vermesi demektir. Yani, sistem herhangi bir zamanda çalışır durumda olmasıdır.
+* Bölünme Toleransı (Partition Tolerance): Sistemdeki düğümler arasında oluşabilecek ağ problemleri ve aksaklıklara karşı dirençli olmasıdır. Yani, sistem herhangi bir zamanda bileşenleri arasında oluşabilecek aksaklıkların üstesinden gelebilmesidir.
+
+## PROJECTS
+
+### *CA (Consistency ve Availability):*
+Örnek Proje: Banka Müşteri Bilgi Sistemi
+Açıklama: Bankalar, müşteri bilgilerinin her zaman kesinlikle doğru ve güncel tutulmasını gerektirir. Bu nedenle, tutarlılık ve erişilebilirlik bu projede önceliklidir. Tutarlılık sağlamak için, herhangi bir işlem tamamlandığında müşteri bilgileri anında güncellenir ve tüm banka şubeleri ve ATM'ler arasında konsolide edilir. Erişilebilirlik ise müşterilerin her zaman hesaplarına erişebilmelerini sağlar.
+Partition Tolarance feragat ederek sisteminizin tutarlı ve erişilebilir olması gereken durumlar için seçilir. Nodelar arası iletişim kaybolduğunda ise bunu tolere edemez.
+Verilerin doğruluğunun garanti edilmesini istediğimiz durumlarda uygundur. (İlişkisel databaseler, transactional işlemler)
+
+Örnek: Microsoft Sql Server
+
+### *CP (Consistency ve Partition Tolerance):*
+Örnek Proje: Akıllı Tedarik Zinciri Yönetimi
+Açıklama: Tedarik zinciri yönetimi, envanter yönetimi ve lojistik süreçlerin tutarlılık gereksinimleri yüksektir. Ağ bölünmesi durumunda bile, envanterin doğru bir şekilde yönetilmesi ve envanterin kaybolmaması kritiktir. Bu projede, tutarlılık önceliklidir, ancak ağ bölünmesi durumunda bazı depo veya şube sistemlerine erişim kesilebilir.
+Veri yazmak üzerine kurulu iş modelleri için uygundur. (Uygulama logları)
+
+Örnek : Redis
+
+
+### *AP (Availability ve Partition Tolerance):*
+Örnek Proje: Sosyal Medya Uygulaması
+Açıklama: Sosyal medya uygulamaları, kullanıcıların içeriklerini hızlı bir şekilde paylaşmalarını ve görmelerini gerektirir. Bu projede, erişilebilirlik ve kullanıcı deneyimi önceliklidir. Ağ bölünmesi durumunda bile kullanıcıların içeriklere erişebilmeleri ve paylaşabilmeleri önemlidir. Bu nedenle, tutarlılık riski alınabilir.
+
+Örnek: Cassandra
