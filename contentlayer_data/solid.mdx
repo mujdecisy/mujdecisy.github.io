@@ -1,0 +1,29 @@
+---
+title: SOLID Prensipleri
+date: 2024-05-10
+summary: SOLID (Single Responsibility, Open-Close, Liskov Substitution, Interface Segregation, Dependency Inversion) Prensipleri nedir? SOLID Prensiplerinin amacı ve kullanım senaryoları
+---
+
+# SOLID Prensipleri
+
+SOLID prensipleri, yazılım geliştirme sürecinde daha temiz, esnek ve sürdürülebilir kod yazmak için kullanılan beş temel prensiptir. Bu prensipler, yazılım tasarımında karmaşıklığı azaltmak, kodun bakımını kolaylaştırmak ve kodun daha iyi anlaşılmasını sağlamak amacıyla geliştirilmiştir.
+
+## *Single Responsibility Principle*
+**Tek Sorumluluk Prensibi.**
+Bir sınıfın sadece bir sorumluluğu olmalıdır. Her sınıfın tek bir işlevi veya sorumluluğu olmalıdır. Böylece, değişikliklerin etkileri sınırlı olur ve kod daha anlaşılabilir hale gelir.
+
+## *Open-Closed Principle*
+**Açık Kapalı Prensibi.**
+Bir sınıf, mevcut davranışları değiştirmeden yeni davranışlar ekleyebilmelidir. Yani bir sınıf, genişletmeye açık (open for extension) ancak değişikliğe kapalı (closed for modification) olmalıdır. Bu prensip, kodun daha az kırılgan olmasını ve daha kolay genişletilebilir olmasını sağlar.
+
+## *Liskov Substitution Principle*
+**Liskov Yerine Geçme Prensibi.**
+Üst sınıflar, alt sınıflar tarafından sorunsuz bir şekilde yerine geçilebilir olmalıdır. Yani, bir üst sınıfın yerine alt sınıf geçtiğinde, hiçbir şey bozulmamalı veya hatalara yol açmamalıdır. Bu prensip, sınıf hiyerarşilerinin doğru bir şekilde yapılandırılmasını ve polimorfizmin etkin bir şekilde kullanılmasını sağlar.
+
+## *Interface Segregation Principle*
+**Arayüz Ayrımı Prensibi.**
+İstemciye gereksinim duymadığı özellikleri dayatmamak amacıyla, mümkün olduğunca özelleştirilmiş arayüzler kullanılmalıdır. Yani, bir sınıf, kullanılmayacak olan metotları içeren geniş arayüzler yerine daha küçük ve özelleştirilmiş arayüzler kullanmalıdır. Bu prensip, bağımlılıkları azaltır ve sınıflar arasındaki bağlantıları gevşetir.
+
+## *Dependency Inversion Principle*
+**Bağımlılığı Tersine Çevirme Prensibi.**
+Üst seviye modüller, alt seviye modüllere doğrudan bağımlı olmamalıdır. İstikrarlı ve yeniden kullanılabilir bir kod için, bağımlılıklar soyutlamalara (interface veya abstract class) dayandırılmalıdır. Bu prensip, birim testlerin daha kolay yapılabilmesini sağlar ve bağımlılıkları yönetmeyi kolaylaştırır.

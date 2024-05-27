@@ -16,7 +16,7 @@ Bu teoreme göre, bir dağıtık sistem en fazla iki özelliği sağlayabilir; �
 ## Kullanım Örnekleri
 
 ### *CA (Consistency ve Availability)*
-*Banka Müşteri Bilgi Sistemi*
+**Banka Müşteri Bilgi Sistemi**
 
 Bankalar, müşteri bilgilerinin her zaman kesinlikle doğru ve güncel tutulmasını gerektirir. Bu nedenle, tutarlılık ve erişilebilirlik bu projede önceliklidir. Tutarlılık sağlamak için, herhangi bir işlem tamamlandığında müşteri bilgileri anında güncellenir ve tüm banka şubeleri ve ATM'ler arasında konsolide edilir. Erişilebilirlik ise müşterilerin her zaman hesaplarına erişebilmelerini sağlar.
 Partition Tolarance feragat ederek sisteminizin tutarlı ve erişilebilir olması gereken durumlar için seçilir. Nodelar arası iletişim kaybolduğunda ise bunu tolere edemez.
@@ -25,7 +25,7 @@ Verilerin doğruluğunun garanti edilmesini istediğimiz durumlarda uygundur. (�
 Örnek Teknoloji: Microsoft Sql Server
 
 ### *CP (Consistency ve Partition Tolerance):*
-*Akıllı Tedarik Zinciri Yönetimi*
+**Akıllı Tedarik Zinciri Yönetimi**
 
 Tedarik zinciri yönetimi, envanter yönetimi ve lojistik süreçlerin tutarlılık gereksinimleri yüksektir. Ağ bölünmesi durumunda bile, envanterin doğru bir şekilde yönetilmesi ve envanterin kaybolmaması kritiktir. Bu projede, tutarlılık önceliklidir, ancak ağ bölünmesi durumunda bazı depo veya şube sistemlerine erişim kesilebilir.
 Veri yazmak üzerine kurulu iş modelleri için uygundur. (Uygulama logları)
@@ -34,7 +34,7 @@ Veri yazmak üzerine kurulu iş modelleri için uygundur. (Uygulama logları)
 
 
 ### *AP (Availability ve Partition Tolerance):*
-*Sosyal Medya Uygulaması*
+**Sosyal Medya Uygulaması**
 
 Sosyal medya uygulamaları, kullanıcıların içeriklerini hızlı bir şekilde paylaşmalarını ve görmelerini gerektirir. Bu projede, erişilebilirlik ve kullanıcı deneyimi önceliklidir. Ağ bölünmesi durumunda bile kullanıcıların içeriklere erişebilmeleri ve paylaşabilmeleri önemlidir. Bu nedenle, tutarlılık riski alınabilir.
 
